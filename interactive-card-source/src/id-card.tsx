@@ -188,7 +188,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   const vec = new THREE.Vector3()
   const ang = new THREE.Vector3()
   const rot = new THREE.Vector3()
-  const dir = new THREE.Vector3()
+  const dragPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)
   const cardQuat = new THREE.Quaternion()
 
   const segmentProps: RigidBodyProps = {
@@ -288,6 +288,24 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   })
 
   const [dragged, drag] = useState<THREE.Vector3 | false>(false)
+  const [returning,setReturning]=useState(false)
+  const dragActive=useRef(false)
+  const suppressClickUntil=useRef(0)
+  const identity=new THREE.Quaternion()
+  const returnTarget=new THREE.Vector3(0,4-3*.85-CARD_ROPE_ANCHOR_Y,0)
+  const finishDrag=()=>{
+    if(!dragActive.current)return
+    dragActive.current=false;suppressClickUntil.current=performance.now()+300;drag(false);setReturning(true)
+    document.body.style.userSelect='';document.body.classList.remove('card-dragging')
+  }
+  useEffect(()=>{
+    const suppressClick=(event:MouseEvent)=>{if(dragActive.current||performance.now()<suppressClickUntil.current){event.preventDefault();event.stopImmediatePropagation()}}
+    document.addEventListener('click',suppressClick,true)
+    const preventTouchScroll=(event:TouchEvent)=>{if(dragActive.current)event.preventDefault()}
+    window.addEventListener('touchmove',preventTouchScroll,{passive:false})
+    window.addEventListener('pointerup',finishDrag);window.addEventListener('pointercancel',finishDrag);window.addEventListener('blur',finishDrag)
+    return ()=>{document.removeEventListener('click',suppressClick,true);window.removeEventListener('touchmove',preventTouchScroll);window.removeEventListener('pointerup',finishDrag);window.removeEventListener('pointercancel',finishDrag);window.removeEventListener('blur',finishDrag);document.body.style.userSelect='';document.body.classList.remove('card-dragging')}
+  },[])
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.85])
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.85])
@@ -299,11 +317,34 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
 
   useFrame((state, delta) => {
     if (dragged) {
-      vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera)
-      dir.copy(vec).sub(state.camera.position).normalize()
-      vec.add(dir.multiplyScalar(state.camera.position.length()))
+      state.raycaster.setFromCamera(state.pointer,state.camera)
+      state.raycaster.ray.intersectPlane(dragPlane,vec)
+      const edge=64
+      const pointerY=(1-state.pointer.y)*state.size.height/2
+      const scrollSpeed=pointerY<edge?-12*(1-pointerY/edge):pointerY>state.size.height-edge?12*(1-(state.size.height-pointerY)/edge):0
+      if(scrollSpeed)window.scrollBy({top:scrollSpeed,behavior:'instant'})
       ;[card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp())
       card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z })
+    }
+
+    if(returning&&card.current){
+      const pos=card.current.translation()
+      const factor=matchMedia('(prefers-reduced-motion: reduce)').matches?1:1-Math.exp(-delta*7)
+      vec.set(pos.x,pos.y,pos.z).lerp(returnTarget,factor)
+      card.current.setNextKinematicTranslation(vec)
+      const rotation=card.current.rotation()
+      cardQuat.set(rotation.x,rotation.y,rotation.z,rotation.w).slerp(identity,factor)
+      card.current.setNextKinematicRotation(cardQuat)
+      if(vec.distanceTo(returnTarget)<.02&&Math.abs(cardQuat.dot(identity))>.999){
+        ;[card,j1,j2,j3].forEach(ref=>{ref.current?.setLinvel({x:0,y:0,z:0},true);ref.current?.setAngvel({x:0,y:0,z:0},true)})
+        setReturning(false)
+      }
+    }
+    if((dragged||returning)&&fixed.current&&card.current){
+      const pos=card.current.translation(),rotation=card.current.rotation(),anchor=fixed.current.translation()
+      cardQuat.set(rotation.x,rotation.y,rotation.z,rotation.w)
+      const end=new THREE.Vector3(0,CARD_ROPE_ANCHOR_Y,0).applyQuaternion(cardQuat).add(new THREE.Vector3(pos.x,pos.y,pos.z))
+      ;[j1,j2,j3].forEach((ref,index)=>ref.current?.setNextKinematicTranslation(new THREE.Vector3(anchor.x,anchor.y,anchor.z).lerp(end,(index+1)/3)))
     }
 
     if (fixed.current) {
@@ -350,31 +391,34 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
     <>
       <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type='fixed' />
-        <RigidBody position={[0.425, 0, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[0.425, 0, 0]} ref={j1} {...segmentProps} type={dragged||returning?'kinematicPosition':'dynamic'}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0.85, 0, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[0.85, 0, 0]} ref={j2} {...segmentProps} type={dragged||returning?'kinematicPosition':'dynamic'}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.275, 0, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[1.275, 0, 0]} ref={j3} {...segmentProps} type={dragged||returning?'kinematicPosition':'dynamic'}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.7, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+        <RigidBody position={[1.7, 0, 0]} ref={card} {...segmentProps} type={dragged||returning ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[1.42, 2.0, 0.018]} />
           <group
             scale={4}
             position={[0, -3.16, -0.09]}
             onPointerUp={(e: ThreeEvent<PointerEvent>) => {
               ;(e.target as Element).releasePointerCapture(e.pointerId)
-              drag(false)
-              document.body.style.userSelect = ''
+              finishDrag()
             }}
             onPointerDown={(e: ThreeEvent<PointerEvent>) => {
+              e.stopPropagation()
+              e.nativeEvent.preventDefault()
               ;(e.target as Element).setPointerCapture(e.pointerId)
+              dragActive.current=true;setReturning(false)
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current!.translation())))
 
               // Prevents native text-selection drag while dragging the card.
               document.body.style.userSelect = 'none'
+              document.body.classList.add('card-dragging')
             }}
           >
             <mesh geometry={nodes.card.geometry}>
@@ -447,18 +491,19 @@ const WORLD_UNITS_PER_PX = (2 * CAMERA_Z * Math.tan((CAMERA_FOV_DEG / 2) * (Math
 // Fixed to REFERENCE_HEIGHT_PX so px-per-world-unit stays pinned regardless of canvas size.
 const PX_PER_WORLD_UNIT = REFERENCE_HEIGHT_PX * WORLD_UNITS_PER_PX
 
-// Fraction of canvas width from the right edge where the resting card sits at xl and up.
-const TARGET_FROM_RIGHT_FRACTION = 0.3
-
-// Below the `lg` breakpoint's canvas width, that fraction leaves too much empty space beside
-// the card. Taper it down instead of resizing the canvas — resizing would also throw off the
-// zoom/dolly math above, shifting the whole scene rather than just the card.
-const TARGET_FROM_RIGHT_FRACTION_AT_LG = 0.15
-const LG_BREAKPOINT_PX = 1024
-const XL_BREAKPOINT_PX = 1280
-
+// A full-viewport camera keeps the same badge size while its fixed anchor
+// stays attached to the hero. Nothing is clipped by the hero column.
 const CameraAlign = () => {
-  useFrame(state => {state.camera.position.x=0;state.camera.position.z=CAMERA_Z*(state.size.height/REFERENCE_HEIGHT_PX)})
+  useFrame(state => {
+    const hero=document.querySelector('.hero-card')
+    if(!hero)return
+    const rect=hero.getBoundingClientRect()
+    const pixelScale=PX_PER_WORLD_UNIT*(window.innerWidth<768?.78:1)
+    const anchorX=rect.left+rect.width/2
+    const anchorY=rect.top-35*(window.innerWidth<768?.78:1)
+    state.camera.position.set((state.size.width/2-anchorX)/pixelScale,4+(anchorY-state.size.height/2)/pixelScale,CAMERA_Z*(state.size.height/REFERENCE_HEIGHT_PX)*(PX_PER_WORLD_UNIT/pixelScale))
+    state.camera.updateMatrixWorld()
+  },-1)
   return null
 }
 
@@ -510,6 +555,9 @@ const IdCard = ({ frontImage, className, onReady, active=true }: IdCardProps) =>
       observers.push(observer)
     }
 
+    const themeObserver=new MutationObserver(updateAccentColor)
+    themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']})
+    observers.push(themeObserver)
     return () => observers.forEach(observer => observer.disconnect())
   }, [])
 
@@ -528,6 +576,7 @@ const IdCard = ({ frontImage, className, onReady, active=true }: IdCardProps) =>
         gl={{ alpha: true, antialias: true, powerPreference: 'default' }}
         onCreated={state => {
           state.gl.setClearColor(new THREE.Color(0x000000), 0)
+          state.gl.domElement.setAttribute('aria-hidden','true')
 
           // Recovers via full remount — see contextLossKey above.
           state.gl.domElement.addEventListener('webglcontextlost', event => {

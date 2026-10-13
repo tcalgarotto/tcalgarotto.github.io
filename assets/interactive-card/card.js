@@ -45108,7 +45108,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 	let f = new J();
 	return f.setIndex(l), f.setAttribute("position", new q(o, 3)), f.setAttribute("normal", new q(s, 3)), f.setAttribute("uv", new q(c, 2)), f;
 }, HO = ({ frontImage: e, isMobile: t, accentColor: n, onReady: r }) => {
-	let i = (document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark", a = (0, v.useRef)(null), o = (0, v.useRef)(null), s = (0, v.useRef)(null), c = (0, v.useRef)(null), l = (0, v.useRef)(null), u = (0, v.useRef)(null), d = new G(), f = new G(), p = new G(), m = new G(), h = new Fn(), g = {
+	let i = (document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark", a = (0, v.useRef)(null), o = (0, v.useRef)(null), s = (0, v.useRef)(null), c = (0, v.useRef)(null), l = (0, v.useRef)(null), u = (0, v.useRef)(null), d = new G(), f = new G(), p = new G(), m = new na(new G(0, 0, 1), 0), h = new Fn(), g = {
 		type: "dynamic",
 		canSleep: !0,
 		colliders: !1,
@@ -45146,8 +45146,21 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			new G()
 		]);
 		return e.curveType = "chordal", e;
-	}), [T, E] = (0, v.useState)(!1);
-	return TD(o, s, [
+	}), [T, E] = (0, v.useState)(!1), [D, O] = (0, v.useState)(!1), k = (0, v.useRef)(!1), A = (0, v.useRef)(0), j = new Fn(), M = new G(0, 4 - 2.55 - wO, 0), N = () => {
+		k.current && (k.current = !1, A.current = performance.now() + 300, E(!1), O(!0), document.body.style.userSelect = "", document.body.classList.remove("card-dragging"));
+	};
+	return (0, v.useEffect)(() => {
+		let e = (e) => {
+			(k.current || performance.now() < A.current) && (e.preventDefault(), e.stopImmediatePropagation());
+		};
+		document.addEventListener("click", e, !0);
+		let t = (e) => {
+			k.current && e.preventDefault();
+		};
+		return window.addEventListener("touchmove", t, { passive: !1 }), window.addEventListener("pointerup", N), window.addEventListener("pointercancel", N), window.addEventListener("blur", N), () => {
+			document.removeEventListener("click", e, !0), window.removeEventListener("touchmove", t), window.removeEventListener("pointerup", N), window.removeEventListener("pointercancel", N), window.removeEventListener("blur", N), document.body.style.userSelect = "", document.body.classList.remove("card-dragging");
+		};
+	}, []), TD(o, s, [
 		[
 			0,
 			0,
@@ -45192,17 +45205,56 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 		wO,
 		0
 	]]), G_((e, n) => {
-		if (T && (d.set(e.pointer.x, e.pointer.y, .5).unproject(e.camera), m.copy(d).sub(e.camera.position).normalize(), d.add(m.multiplyScalar(e.camera.position.length())), [
-			u,
-			s,
-			c,
-			l,
-			o
-		].forEach((e) => e.current?.wakeUp()), u.current?.setNextKinematicTranslation({
-			x: d.x - T.x,
-			y: d.y - T.y,
-			z: d.z - T.z
-		})), o.current) {
+		if (T) {
+			e.raycaster.setFromCamera(e.pointer, e.camera), e.raycaster.ray.intersectPlane(m, d);
+			let t = (1 - e.pointer.y) * e.size.height / 2, n = t < 64 ? -12 * (1 - t / 64) : t > e.size.height - 64 ? 12 * (1 - (e.size.height - t) / 64) : 0;
+			n && window.scrollBy({
+				top: n,
+				behavior: "instant"
+			}), [
+				u,
+				s,
+				c,
+				l,
+				o
+			].forEach((e) => e.current?.wakeUp()), u.current?.setNextKinematicTranslation({
+				x: d.x - T.x,
+				y: d.y - T.y,
+				z: d.z - T.z
+			});
+		}
+		if (D && u.current) {
+			let e = u.current.translation(), t = matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 1 - Math.exp(-n * 7);
+			d.set(e.x, e.y, e.z).lerp(M, t), u.current.setNextKinematicTranslation(d);
+			let r = u.current.rotation();
+			h.set(r.x, r.y, r.z, r.w).slerp(j, t), u.current.setNextKinematicRotation(h), d.distanceTo(M) < .02 && Math.abs(h.dot(j)) > .999 && ([
+				u,
+				s,
+				c,
+				l
+			].forEach((e) => {
+				e.current?.setLinvel({
+					x: 0,
+					y: 0,
+					z: 0
+				}, !0), e.current?.setAngvel({
+					x: 0,
+					y: 0,
+					z: 0
+				}, !0);
+			}), O(!1));
+		}
+		if ((T || D) && o.current && u.current) {
+			let e = u.current.translation(), t = u.current.rotation(), n = o.current.translation();
+			h.set(t.x, t.y, t.z, t.w);
+			let r = new G(0, wO, 0).applyQuaternion(h).add(new G(e.x, e.y, e.z));
+			[
+				s,
+				c,
+				l
+			].forEach((e, t) => e.current?.setNextKinematicTranslation(new G(n.x, n.y, n.z).lerp(r, (t + 1) / 3)));
+		}
+		if (o.current) {
 			[s, c].forEach((e) => {
 				let t = BO(e.current), r = Math.max(.1, Math.min(1, t.distanceTo(e.current.translation())));
 				t.lerp(e.current.translation(), n * 50 * r);
@@ -45236,6 +45288,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: s,
 				...g,
+				type: T || D ? "kinematicPosition" : "dynamic",
 				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
 			}),
 			/* @__PURE__ */ (0, Eg.jsx)(vD, {
@@ -45246,6 +45299,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: c,
 				...g,
+				type: T || D ? "kinematicPosition" : "dynamic",
 				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
 			}),
 			/* @__PURE__ */ (0, Eg.jsx)(vD, {
@@ -45256,6 +45310,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: l,
 				...g,
+				type: T || D ? "kinematicPosition" : "dynamic",
 				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
 			}),
 			/* @__PURE__ */ (0, Eg.jsxs)(vD, {
@@ -45266,7 +45321,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: u,
 				...g,
-				type: T ? "kinematicPosition" : "dynamic",
+				type: T || D ? "kinematicPosition" : "dynamic",
 				children: [
 					/* @__PURE__ */ (0, Eg.jsx)(aD, { args: [
 						1.42,
@@ -45281,10 +45336,10 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 							-.09
 						],
 						onPointerUp: (e) => {
-							e.target.releasePointerCapture(e.pointerId), E(!1), document.body.style.userSelect = "";
+							e.target.releasePointerCapture(e.pointerId), N();
 						},
 						onPointerDown: (e) => {
-							e.target.setPointerCapture(e.pointerId), E(new G().copy(e.point).sub(d.copy(u.current.translation()))), document.body.style.userSelect = "none";
+							e.stopPropagation(), e.nativeEvent.preventDefault(), e.target.setPointerCapture(e.pointerId), k.current = !0, O(!1), E(new G().copy(e.point).sub(d.copy(u.current.translation()))), document.body.style.userSelect = "none", document.body.classList.add("card-dragging");
 						},
 						children: [/* @__PURE__ */ (0, Eg.jsx)("mesh", {
 							geometry: _.card.geometry,
@@ -45409,11 +45464,12 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			]
 		})
 	]
-}), WO = 520, GO = 20;
-WO * (40 * Math.tan(Math.PI / 180 * 10)) ** -1;
-var KO = () => (G_((e) => {
-	e.camera.position.x = 0, e.camera.position.z = GO * (e.size.height / WO);
-}), null), qO = ({ frontImage: e, className: t, onReady: n, active: r = !0 }) => {
+}), WO = 520, GO = 20, KO = WO * (40 * Math.tan(Math.PI / 180 * 10)) ** -1, qO = () => (G_((e) => {
+	let t = document.querySelector(".hero-card");
+	if (!t) return;
+	let n = t.getBoundingClientRect(), r = KO * (window.innerWidth < 768 ? .78 : 1), i = n.left + n.width / 2, a = n.top - 35 * (window.innerWidth < 768 ? .78 : 1);
+	e.camera.position.set((e.size.width / 2 - i) / r, 4 + (a - e.size.height / 2) / r, GO * (e.size.height / WO) * (KO / r)), e.camera.updateMatrixWorld();
+}, -1), null), JO = ({ frontImage: e, className: t, onReady: n, active: r = !0 }) => {
 	let [i, a] = (0, v.useState)(() => typeof window < "u" && window.innerWidth < 768), [o, s] = (0, v.useState)(0), c = (0, v.useRef)(typeof document < "u" ? document.body : null), l = (0, v.useRef)(null), [u, d] = (0, v.useState)("#000000");
 	return (0, v.useEffect)(() => {
 		let e = () => a(window.innerWidth < 768);
@@ -45431,7 +45487,11 @@ var KO = () => (G_((e) => {
 				attributeFilter: ["class", "style"]
 			}), t.push(r);
 		}
-		return () => t.forEach((e) => e.disconnect());
+		let n = new MutationObserver(e);
+		return n.observe(document.documentElement, {
+			attributes: !0,
+			attributeFilter: ["data-theme"]
+		}), t.push(n), () => t.forEach((e) => e.disconnect());
 	}, []), /* @__PURE__ */ (0, Eg.jsxs)("div", {
 		className: yO("pointer-events-none drop-shadow-xl", t),
 		children: [/* @__PURE__ */ (0, Eg.jsx)("span", {
@@ -45456,7 +45516,7 @@ var KO = () => (G_((e) => {
 				powerPreference: "default"
 			},
 			onCreated: (e) => {
-				e.gl.setClearColor(new K(0), 0), e.gl.domElement.addEventListener("webglcontextlost", (e) => {
+				e.gl.setClearColor(new K(0), 0), e.gl.domElement.setAttribute("aria-hidden", "true"), e.gl.domElement.addEventListener("webglcontextlost", (e) => {
 					e.preventDefault(), s((e) => e + 1);
 				}), e.setEvents({ compute: (e, t) => {
 					let n = t.gl.domElement.getBoundingClientRect(), r = e.clientX - n.left, i = e.clientY - n.top;
@@ -45464,7 +45524,7 @@ var KO = () => (G_((e) => {
 				} });
 			},
 			children: [
-				/* @__PURE__ */ (0, Eg.jsx)(KO, {}),
+				/* @__PURE__ */ (0, Eg.jsx)(qO, {}),
 				/* @__PURE__ */ (0, Eg.jsx)("ambientLight", { intensity: Math.PI }),
 				/* @__PURE__ */ (0, Eg.jsx)(GE, {
 					paused: !r,
@@ -45485,7 +45545,7 @@ var KO = () => (G_((e) => {
 			]
 		}, o)]
 	});
-}, JO = class extends v.Component {
+}, YO = class extends v.Component {
 	state = { failed: !1 };
 	static getDerivedStateFromError() {
 		return { failed: !0 };
@@ -45497,12 +45557,12 @@ var KO = () => (G_((e) => {
 		return this.state.failed ? null : this.props.children;
 	}
 };
-function YO(e, t, n) {
-	let r = (0, y.createRoot)(e), i = (e) => r.render(/* @__PURE__ */ (0, Eg.jsx)(JO, {
+function XO(e, t, n) {
+	let r = (0, y.createRoot)(e), i = (e) => r.render(/* @__PURE__ */ (0, Eg.jsx)(YO, {
 		onError: n,
 		children: /* @__PURE__ */ (0, Eg.jsx)(v.Suspense, {
 			fallback: null,
-			children: /* @__PURE__ */ (0, Eg.jsx)(qO, {
+			children: /* @__PURE__ */ (0, Eg.jsx)(JO, {
 				frontImage: "/assets/interactive-card/portrait.svg",
 				className: "lanyard-stage",
 				onReady: t,
@@ -45516,4 +45576,4 @@ function YO(e, t, n) {
 	};
 }
 //#endregion
-export { YO as mountBadge };
+export { XO as mountBadge };

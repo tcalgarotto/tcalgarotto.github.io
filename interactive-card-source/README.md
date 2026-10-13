@@ -4,7 +4,7 @@ O componente de crachá vem do bloco `@ss-blocks/hero-section-44`, instalado pel
 
 O source original identifica a implementação como adaptada do exemplo Lanyard do React Bits (MIT + Commons Clause). Essa atribuição foi preservada em `src/id-card.tsx`. O componente não é vendido como biblioteca ou serviço de componentes.
 
-Adaptações: câmera centralizada no espaço da hero, modelo GLB em arquivo separado, assets locais, integração com o tema da página e callbacks de carregamento. O visual estático continua disponível; o bundle 3D é carregado somente quando o visitante pede a interação.
+Adaptações: câmera de tela inteira alinhada à âncora da hero, arraste sem recorte pela coluna, corda que acompanha puxadas longas, retorno amortecido e rolagem na borda, modelo GLB em arquivo separado, assets locais, integração com o tema da página e callbacks de carregamento. O visual estático continua disponível; o bundle 3D carrega automaticamente após a apresentação inicial da página, sem botão de ativação ou desativação. A física é pausada enquanto a aba está oculta.
 
 ```sh
 npm ci
