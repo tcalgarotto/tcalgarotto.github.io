@@ -1,6 +1,6 @@
 # Thales Calgarotto
 
-> Portfólio de Thales Calgarotto — engenharia de software, automação e IA aplicada. Crio produtos digitais que conectam pessoas, processos e inteligência artificial. Site em português e inglês: https://tcalgarotto.github.io/
+> Portfólio de Thales Calgarotto — engenharia de software, automação e IA aplicada. Transformo problemas reais em produtos que funcionam. Site em português e inglês: https://tcalgarotto.github.io/
 
 Thales Calgarotto trabalha conectando desenvolvimento de produtos, automação e IA aplicada: interfaces web e mobile conectadas a APIs e dados; pesquisa com contexto, agentes e integração de ferramentas; Python, Git e processos que reduzem trabalho repetitivo.
 
