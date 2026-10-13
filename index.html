@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#171a1b">
   <title>Thales Calgarotto | Software, automação e IA</title>
-  <meta name="description" content="Portfólio de Thales Calgarotto. Engenharia de software, automação e inteligência artificial aplicada. Projetos públicos e formações IBM, Google e Johns Hopkins.">
+  <meta name="description" content="Portfólio de Thales Calgarotto. Engenharia de software, automação e inteligência artificial aplicada. DuckDooh, OrtoClean e formações IBM, Google e Johns Hopkins.">
   <link rel="canonical" href="https://tcalgarotto.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Thales Calgarotto | Código com intenção.">
@@ -16,7 +16,6 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/space-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/system-sculpture.webp" as="image" type="image/webp">
   <script>try{const t=localStorage.getItem('tc-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}</script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
@@ -39,64 +38,43 @@
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow" data-i18n="heroEyebrow">Software, automação & IA aplicada</p>
-        <h1 id="hero-title"><span data-i18n="heroLine1">Código com</span><br><span class="accent-text" data-i18n="heroLine2">intenção.</span></h1>
-        <p class="hero-description" data-i18n="heroDescription">Construo produtos digitais, automatizo processos e conecto inteligência artificial a problemas reais.</p>
-        <a class="button button-primary" href="#projetos"><span data-i18n="heroCta">Explore meu trabalho</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+        <p class="eyebrow" data-i18n="heroEyebrow">Engenharia de software & IA aplicada</p>
+        <h1 id="hero-title"><span data-i18n="heroLine1">Olá, eu sou</span><br><span data-i18n="heroLine2">Thales Calgarotto.</span></h1>
+        <p class="hero-role" data-i18n="heroRole">Software, automação & IA</p>
+        <p class="hero-description" data-i18n="heroDescription">Crio produtos digitais que conectam pessoas, processos e inteligência artificial.</p>
+        <div class="hero-actions"><a class="button button-outline" href="#projetos"><span data-i18n="navProjects">Projetos</span></a><a class="button button-outline" href="#certificacoes"><span data-i18n="navCerts">Certificações</span><span class="icon icon-arrow" aria-hidden="true"></span></a></div>
+        <div class="hero-credentials" aria-label="Badges com verificação no Credly">
+          <a href="https://www.credly.com/badges/2f0b9603-0b14-4795-9fbd-ba96c850fca0" target="_blank" rel="noopener noreferrer" title="IBM RAG and Agentic AI Professional Certificate V3"><img src="assets/badge-ibm-rag-agentic.png" width="90" height="90" alt="IBM RAG and Agentic AI Professional Certificate V3"><span>IBM RAG &<br>Agentic AI</span></a>
+          <a href="https://www.credly.com/badges/daea56c7-4d78-4d83-9213-f5bb58536e2b" target="_blank" rel="noopener noreferrer" title="Google IT Automation with Python Professional Certificate(v.1)"><img src="assets/badge-google-python.png" width="90" height="90" alt="Google IT Automation with Python Professional Certificate(v.1)"><span>Google IT Automation<br>with Python</span></a>
+          <a href="https://www.credly.com/badges/00885239-67e9-44b8-8aea-a4762a51d0a8" target="_blank" rel="noopener noreferrer" title="Build AI Agents Using MCP"><img src="assets/badge-ibm-mcp.png" width="90" height="90" alt="Build AI Agents Using MCP"><span>Build AI Agents<br>Using MCP</span></a>
+        </div>
+        <a class="credly-wallet" href="https://www.credly.com/users/thales-calgarotto/badges/credly" target="_blank" rel="noopener noreferrer" data-i18n="credlyCta">Ver carteira completa no Credly</a>
       </div>
-      <figure class="hero-art"><img src="assets/system-sculpture.webp" width="1536" height="1024" alt="Escultura de três estruturas de metal interligadas em torno de uma esfera verde" fetchpriority="high" decoding="async"></figure>
+      <figure class="hero-card"><img id="card-fallback" src="assets/card-dark.png" width="380" height="515" alt="Crachá de Thales Calgarotto com seu monograma" fetchpriority="high" decoding="async"><div id="lanyard-root" role="img" aria-label="Crachá interativo de Thales Calgarotto"></div><button class="card-interaction" id="card-toggle" aria-pressed="false" data-i18n="cardActivate">Interagir com o crachá</button><p id="card-status" class="sr-only" aria-live="polite"></p></figure>
     </section>
 
+    <div class="tool-strip wrap"><div class="tool-strip-heading"><p data-i18n="toolsLabel">Ferramentas no meu fluxo de trabalho</p><button id="tools-toggle" aria-pressed="false" data-i18n="pauseTools">Pausar movimento</button></div><div class="tools-viewport"><div class="tools-track"><ul aria-label="Ferramentas"><li title="TypeScript"><span class="tool-icon" style="mask-image:url('assets/tools/typescript.svg')" aria-hidden="true"></span><span>TypeScript</span></li><li title="Python"><span class="tool-icon" style="mask-image:url('assets/tools/python.svg')" aria-hidden="true"></span><span>Python</span></li><li title="React"><span class="tool-icon" style="mask-image:url('assets/tools/react.svg')" aria-hidden="true"></span><span>React</span></li><li title="Next.js"><span class="tool-icon" style="mask-image:url('assets/tools/nextjs.svg')" aria-hidden="true"></span><span>Next.js</span></li><li title="FastAPI"><span class="tool-icon" style="mask-image:url('assets/tools/fastapi.svg')" aria-hidden="true"></span><span>FastAPI</span></li><li title="Fastify"><span class="tool-icon" style="mask-image:url('assets/tools/fastify.svg')" aria-hidden="true"></span><span>Fastify</span></li><li title="PostgreSQL"><span class="tool-icon" style="mask-image:url('assets/tools/postgresql.svg')" aria-hidden="true"></span><span>PostgreSQL</span></li><li title="Supabase"><span class="tool-icon" style="mask-image:url('assets/tools/supabase.svg')" aria-hidden="true"></span><span>Supabase</span></li><li title="Docker"><span class="tool-icon" style="mask-image:url('assets/tools/docker.svg')" aria-hidden="true"></span><span>Docker</span></li><li title="Cloudflare"><span class="tool-icon" style="mask-image:url('assets/tools/cloudflare.svg')" aria-hidden="true"></span><span>Cloudflare</span></li><li title="GitHub"><span class="tool-icon" style="mask-image:url('assets/tools/github.svg')" aria-hidden="true"></span><span>GitHub</span></li><li title="Bun"><span class="tool-icon" style="mask-image:url('assets/tools/bun.svg')" aria-hidden="true"></span><span>Bun</span></li><li title="Cursor"><span class="tool-icon" style="mask-image:url('assets/tools/cursor.svg')" aria-hidden="true"></span><span>Cursor</span></li><li title="Qdrant"><span class="tool-icon" style="mask-image:url('assets/tools/qdrant.svg')" aria-hidden="true"></span><span>Qdrant</span></li><li title="Redis"><span class="tool-icon" style="mask-image:url('assets/tools/redis.svg')" aria-hidden="true"></span><span>Redis</span></li></ul><ul aria-hidden="true"><li title="TypeScript"><span class="tool-icon" style="mask-image:url('assets/tools/typescript.svg')" aria-hidden="true"></span><span>TypeScript</span></li><li title="Python"><span class="tool-icon" style="mask-image:url('assets/tools/python.svg')" aria-hidden="true"></span><span>Python</span></li><li title="React"><span class="tool-icon" style="mask-image:url('assets/tools/react.svg')" aria-hidden="true"></span><span>React</span></li><li title="Next.js"><span class="tool-icon" style="mask-image:url('assets/tools/nextjs.svg')" aria-hidden="true"></span><span>Next.js</span></li><li title="FastAPI"><span class="tool-icon" style="mask-image:url('assets/tools/fastapi.svg')" aria-hidden="true"></span><span>FastAPI</span></li><li title="Fastify"><span class="tool-icon" style="mask-image:url('assets/tools/fastify.svg')" aria-hidden="true"></span><span>Fastify</span></li><li title="PostgreSQL"><span class="tool-icon" style="mask-image:url('assets/tools/postgresql.svg')" aria-hidden="true"></span><span>PostgreSQL</span></li><li title="Supabase"><span class="tool-icon" style="mask-image:url('assets/tools/supabase.svg')" aria-hidden="true"></span><span>Supabase</span></li><li title="Docker"><span class="tool-icon" style="mask-image:url('assets/tools/docker.svg')" aria-hidden="true"></span><span>Docker</span></li><li title="Cloudflare"><span class="tool-icon" style="mask-image:url('assets/tools/cloudflare.svg')" aria-hidden="true"></span><span>Cloudflare</span></li><li title="GitHub"><span class="tool-icon" style="mask-image:url('assets/tools/github.svg')" aria-hidden="true"></span><span>GitHub</span></li><li title="Bun"><span class="tool-icon" style="mask-image:url('assets/tools/bun.svg')" aria-hidden="true"></span><span>Bun</span></li><li title="Cursor"><span class="tool-icon" style="mask-image:url('assets/tools/cursor.svg')" aria-hidden="true"></span><span>Cursor</span></li><li title="Qdrant"><span class="tool-icon" style="mask-image:url('assets/tools/qdrant.svg')" aria-hidden="true"></span><span>Qdrant</span></li><li title="Redis"><span class="tool-icon" style="mask-image:url('assets/tools/redis.svg')" aria-hidden="true"></span><span>Redis</span></li></ul></div></div></div>
     <section class="projects wrap section" id="projetos" aria-labelledby="projects-title">
-      <div class="section-heading"><h2 id="projects-title" data-i18n="projectsTitle">Ideias que viram sistemas.</h2><p data-i18n="projectsDescription">Produtos, ferramentas e os desafios de engenharia por trás de cada um.</p></div>
-      <div class="filters" role="group" aria-label="Filtrar projetos">
-        <button class="filter active" aria-pressed="true" data-filter="all" data-i18n="filterAll">Todos</button>
-        <button class="filter" aria-pressed="false" data-filter="ai" data-i18n="filterAi">IA & agentes</button>
-        <button class="filter" aria-pressed="false" data-filter="apps" data-i18n="filterApps">Web & mobile</button>
-      </div>
-      <p class="sr-only" id="filter-status" aria-live="polite"></p>
+      <div class="section-heading"><h2 id="projects-title" data-i18n="projectsTitle">Ideias que viram sistemas.</h2><p data-i18n="projectsDescription">Dois produtos reais: da interface à operação e aos dados.</p></div>
       <div class="project-grid">
-        <article class="project project-featured" data-category="ai apps">
+        <article class="project" data-category="apps">
+          <a class="project-preview" href="https://duckdooh.com" target="_blank" rel="noopener noreferrer"><img src="assets/duckdooh-preview.webp" alt="Preview da interface de DuckDooh" width="1280" height="800" loading="lazy"><span>duckdooh.com <span aria-hidden="true">↗</span></span></a>
           <div class="project-content">
-            <p class="project-type" data-i18n="justType">Software jurídico com IA</p>
-            <h3>JustOS<span class="project-alias"> / Lex</span></h3>
-            <p class="project-description" data-i18n="justDescription">Um sistema que conecta casos, documentos e pesquisa jurídica. IA com contexto e revisão humana no fluxo.</p>
-            <ul class="tech-list" aria-label="Tecnologias"><li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Qdrant</li></ul>
-            <a class="text-link" href="https://github.com/tcalgarotto/Lex" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCta">Explore o código</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
-          </div>
-          <div class="project-flow">
-            <p class="flow-label" data-i18n="flowTitle">Como as peças se conectam</p>
-            <div class="flow-controls" role="group" aria-label="Explorar etapas do JustOS">
-              <button class="flow-step selected" data-step="0" aria-pressed="true"><span class="flow-glyph" aria-hidden="true">{ }</span><span data-i18n="flowCase">Caso</span></button>
-              <span class="flow-connector" aria-hidden="true"></span>
-              <button class="flow-step" data-step="1" aria-pressed="false"><span class="flow-glyph" aria-hidden="true">[ ]</span><span data-i18n="flowContext">Contexto</span></button>
-              <span class="flow-connector" aria-hidden="true"></span>
-              <button class="flow-step" data-step="2" aria-pressed="false"><span class="flow-glyph" aria-hidden="true">&lt; &gt;</span><span data-i18n="flowSearch">Pesquisa</span></button>
-              <span class="flow-connector" aria-hidden="true"></span>
-              <button class="flow-step" data-step="3" aria-pressed="false"><span class="flow-glyph" aria-hidden="true">/ /</span><span data-i18n="flowDraft">Minuta</span></button>
-            </div>
-            <div class="flow-explanation" aria-live="polite"><strong id="flow-heading">O caso organiza o trabalho.</strong><p id="flow-description">Partes, fatos, pedidos e riscos reunidos em uma estrutura que acompanha o processo.</p></div>
-            <p class="flow-hint" data-i18n="flowHint">Selecione uma etapa para explorar a arquitetura.</p>
+            <p class="project-type" data-i18n="duckType">Mídia exterior digital</p><h3>DuckDooh</h3>
+            <p class="project-description" data-i18n="duckDescription">Plataforma self-service para descobrir telas, contratar campanhas e conectar mídia digital à veiculação.</p>
+            <ul class="tech-list" aria-label="Tecnologias"><li>Next.js</li><li>Python / FastAPI</li><li>PostgreSQL</li><li>Yodeck</li></ul>
+            <div class="build-notes"><h4 data-i18n="technicalDetails">Como foi feito</h4><p data-i18n="duckDetails">Interface em Next.js e TypeScript, API em Python/FastAPI e dados em PostgreSQL. Integrações com Asaas e Yodeck conectam contratação, pagamento e veiculação.</p></div>
+            <a class="text-link" href="https://duckdooh.com" target="_blank" rel="noopener noreferrer"><span data-i18n="productCta">Acessar e testar</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
           </div>
         </article>
-        <article class="project project-lucy" data-category="ai">
+        <article class="project" data-category="apps">
+          <a class="project-preview" href="https://ortoclean.duckdns.org/login-teste" target="_blank" rel="noopener noreferrer"><img src="assets/ortoclean-preview.webp" alt="Preview da interface de OrtoClean" width="1280" height="800" loading="lazy"><span>ortoclean.duckdns.org/login-teste <span aria-hidden="true">↗</span></span></a>
           <div class="project-content">
-            <p class="project-type" data-i18n="lucyType">Ferramentas para desenvolver com IA</p>
-            <h3>Lucy<span class="project-alias"> / loop-master</span></h3>
-            <p class="project-description" data-i18n="lucyDescription">Orquestração para agentes no Cursor. Planejamento por fases, memória entre sessões e ciclos de implementação e verificação.</p>
-            <ul class="tech-list" aria-label="Tecnologias"><li>Cursor</li><li>Agent workflows</li><li>MCP</li></ul>
-            <details><summary data-i18n="technicalDetails">O que há por trás</summary><p data-i18n="lucyDetails">Protocolos de memória, critérios de qualidade e roteamento de skills documentam como o agente conduz o trabalho.</p></details>
-            <a class="text-link" href="https://github.com/tcalgarotto/loop-master" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCta">Explore o código</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
-          </div>
-        </article>
-        <article class="project project-telemed" data-category="apps">
-          <div class="project-content">
-            <p class="project-type" data-i18n="teleType">Produto web & mobile</p>
-            <h3>TeleMed</h3>
-            <p class="project-description" data-i18n="teleDescription">Uma plataforma de telemedicina por assinatura. Aplicativo mobile e API organizados em um monorepo TypeScript.</p>
-            <ul class="tech-list" aria-label="Tecnologias"><li>React Native</li><li>Expo</li><li>Next.js</li><li>Supabase</li></ul>
-            <details><summary data-i18n="technicalDetails">O que há por trás</summary><p data-i18n="teleDetails">Pacotes compartilhados, migrações de banco e integrações de autenticação, pagamentos e chamadas de vídeo.</p></details>
-            <a class="text-link" href="https://github.com/tcalgarotto/telemed" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCta">Explore o código</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+            <p class="project-type" data-i18n="ortoType">Gestão odontológica</p><h3>OrtoClean</h3>
+            <p class="project-description" data-i18n="ortoDescription">Sistema para a operação da clínica: pacientes, agenda, vendas, financeiro e comunicação no mesmo produto.</p>
+            <ul class="tech-list" aria-label="Tecnologias"><li>Fastify</li><li>PostgreSQL</li><li>Docker</li><li>JavaScript</li></ul>
+            <div class="build-notes"><h4 data-i18n="technicalDetails">Como foi feito</h4><p data-i18n="ortoDetails">API em Fastify e TypeScript, persistência em PostgreSQL e implantação com Docker. Módulos por clínica e integração do CRM com um serviço de WhatsApp separado.</p></div>
+            <a class="text-link" href="https://ortoclean.duckdns.org/login-teste" target="_blank" rel="noopener noreferrer"><span data-i18n="productCta">Acessar e testar</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
           </div>
         </article>
       </div>
