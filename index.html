@@ -17,8 +17,8 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/space-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
   <script>try{const t=localStorage.getItem('tc-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}</script>
-  <link rel="stylesheet" href="styles.css?v=a2fdbc2c14af">
-  <script src="app.js?v=94d0c481038f" defer></script>
+  <link rel="stylesheet" href="styles.css?v=1455005fda11">
+  <script src="app.js?v=cf36cc7196ee" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
@@ -144,8 +144,22 @@
         <div><dt data-i18n="practiceAutomation">Automação</dt><dd data-i18n="practiceAutomationDescription">Python, Git e processos que reduzem trabalho repetitivo.</dd></div>
       </dl>
     </section>
-    <section class="contact wrap" aria-labelledby="contact-title"><div><p data-i18n="contactIntro">Do problema à próxima ideia.</p><h2 id="contact-title" data-i18n="contactTitle">Vamos construir?</h2></div><a class="button button-primary" href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer"><span data-i18n="contactCta">Encontre-me no GitHub</span><span class="icon icon-arrow" aria-hidden="true"></span></a></section>
   </main>
-  <footer class="site-footer wrap"><p>© <span id="year">2026</span> Thales Calgarotto</p><p data-i18n="footerNote">Feito com intenção. Publicado no GitHub.</p><a href="#main" data-i18n="backToTop">Voltar ao início</a></footer>
+  <!-- Adapted from Shadcn Studio Footer Component 11. -->
+  <footer class="footer-eleven wrap" id="rodape" aria-label="Thales Calgarotto">
+    <div class="footer-social-row">
+      <span class="footer-rule" aria-hidden="true"></span>
+      <div class="footer-shortcuts">
+        <a href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><span class="icon icon-github" aria-hidden="true"></span><span class="footer-tooltip">GitHub</span></a>
+        <a href="#projetos" aria-labelledby="footer-projects-label"><span class="icon footer-icon-projects" aria-hidden="true"></span><span class="footer-tooltip" id="footer-projects-label" data-i18n="navProjects">Projetos</span></a>
+        <a href="#certificacoes" aria-labelledby="footer-credentials-label"><span class="icon footer-icon-credentials" aria-hidden="true"></span><span class="footer-tooltip" id="footer-credentials-label" data-i18n="navCerts">Certificações</span></a>
+        <a href="#sobre" aria-labelledby="footer-about-label"><span class="icon footer-icon-about" aria-hidden="true"></span><span class="footer-tooltip" id="footer-about-label" data-i18n="navAbout">Sobre</span></a>
+      </div>
+      <span class="footer-rule" aria-hidden="true"></span>
+    </div>
+    <div class="footer-message"><p data-i18n="footerThanks">Obrigado pela visita.</p><img src="assets/footer-seal.svg" alt="" width="100" height="100" loading="lazy"><a href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer" data-i18n="footerInvitation">Vamos construir algo juntos.</a></div>
+    <div class="footer-signoff"><p class="footer-name">Thales <span>Calgarotto</span></p><p class="footer-copyright">@tcalgarotto · <span id="year">2026</span></p></div>
+    <a class="footer-top" href="#main"><span data-i18n="backToTop">Voltar ao início</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+  </footer>
 </body>
 </html>

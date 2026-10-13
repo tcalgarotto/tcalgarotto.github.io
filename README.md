@@ -16,6 +16,8 @@ python3 -m http.server 8766 --bind 127.0.0.1
 - OrtoClean: https://ortoclean.duckdns.org/login-teste. Fastify, PostgreSQL, Docker e JavaScript.
 - Previews: capturas reais das interfaces públicas e da conta Demo da OrtoClean, sem registros de pacientes. A demo estava vazia na captura.
 - Certificações: IBM RAG and Agentic AI e Google IT Automation with Python. O Google mantém o recorte transparente e a IBM mantém a arte original com fundo branco. Os dois badges usam as imagens selecionadas pelo titular e levam às credenciais públicas do Coursera.
+- Credenciais técnicas: seis badges IBM de agentes, MCP, RAG e IA multimodal, com títulos oficiais e links públicos individuais no Credly.
+- Rodapé: adaptado do Shadcn Studio Footer Component 11 (https://shadcnstudio.com/blocks/marketing-ui/footer-component), com atalhos funcionais, selo vetorial do monograma e nome tipográfico.
 - Fontes: Space Grotesk e IBM Plex Mono; ícones Phosphor e Simple Icons. Assets e licenças hospedados localmente em `assets/`.
 - Hero: referência Shadcn Studio Hero 44, adaptada com um monograma enquanto a fotografia não é fornecida. Atribuição do componente em `interactive-card-source/README.md` e no código.
 
