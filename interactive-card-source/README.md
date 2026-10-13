@@ -16,3 +16,5 @@ O build produz `../assets/interactive-card/card.js` e chunks. O diretório tamb�
 O comportamento de soltura usa o mecanismo original: somente o cartão se torna cinemático enquanto é segurado; os três segmentos da corda permanecem dinâmicos. Soltar troca o cartão diretamente para `dynamic`, deixando o impulso, a gravidade, as três juntas de corda e a junta esférica determinarem o balanço e a rotação. Não há retorno programado, pose alvo ou redefinição de velocidades na soltura.
 
 A interpolação visual da corda é exponencial e estável em frames lentos. O repouso usa amortecimento e sleep; a estabilização de yaw não desperta corpos adormecidos.
+
+O build também atualiza os identificadores de conteúdo do módulo, do JavaScript principal, do CSS e dos badges nos URLs da página. Isso evita servir versões anteriores pelo cache após uma atualização.
