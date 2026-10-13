@@ -20,7 +20,7 @@ import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Environment, Lightformer, useGLTF, useTexture } from '@react-three/drei'
-import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
+import { BallCollider, CuboidCollider, Physics, RigidBody, useSpringJoint, useSphericalJoint } from '@react-three/rapier'
 import type { RapierRigidBody, RigidBodyProps } from '@react-three/rapier'
 
 // Util Imports
@@ -288,14 +288,11 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   })
 
   const [dragged, drag] = useState<THREE.Vector3 | false>(false)
-  const [returning,setReturning]=useState(false)
   const dragActive=useRef(false)
   const suppressClickUntil=useRef(0)
-  const identity=new THREE.Quaternion()
-  const returnTarget=new THREE.Vector3(0,4-3*.85-CARD_ROPE_ANCHOR_Y,0)
   const finishDrag=()=>{
     if(!dragActive.current)return
-    dragActive.current=false;suppressClickUntil.current=performance.now()+300;drag(false);setReturning(true)
+    dragActive.current=false;suppressClickUntil.current=performance.now()+300;drag(false)
     document.body.style.userSelect='';document.body.classList.remove('card-dragging')
   }
   useEffect(()=>{
@@ -307,9 +304,9 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
     return ()=>{document.removeEventListener('click',suppressClick,true);window.removeEventListener('touchmove',preventTouchScroll);window.removeEventListener('pointerup',finishDrag);window.removeEventListener('pointercancel',finishDrag);window.removeEventListener('blur',finishDrag);document.body.style.userSelect='';document.body.classList.remove('card-dragging')}
   },[])
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.85])
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.85])
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.85])
+  useSpringJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.85, 120, 8])
+  useSpringJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.85, 120, 8])
+  useSpringJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.85, 120, 8])
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, CARD_ROPE_ANCHOR_Y, 0]
@@ -327,24 +324,13 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
       card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z })
     }
 
-    if(returning&&card.current){
-      const pos=card.current.translation()
-      const factor=matchMedia('(prefers-reduced-motion: reduce)').matches?1:1-Math.exp(-delta*7)
-      vec.set(pos.x,pos.y,pos.z).lerp(returnTarget,factor)
-      card.current.setNextKinematicTranslation(vec)
-      const rotation=card.current.rotation()
-      cardQuat.set(rotation.x,rotation.y,rotation.z,rotation.w).slerp(identity,factor)
-      card.current.setNextKinematicRotation(cardQuat)
-      if(vec.distanceTo(returnTarget)<.02&&Math.abs(cardQuat.dot(identity))>.999){
-        ;[card,j1,j2,j3].forEach(ref=>{ref.current?.setLinvel({x:0,y:0,z:0},true);ref.current?.setAngvel({x:0,y:0,z:0},true)})
-        setReturning(false)
-      }
-    }
-    if((dragged||returning)&&fixed.current&&card.current){
-      const pos=card.current.translation(),rotation=card.current.rotation(),anchor=fixed.current.translation()
-      cardQuat.set(rotation.x,rotation.y,rotation.z,rotation.w)
-      const end=new THREE.Vector3(0,CARD_ROPE_ANCHOR_Y,0).applyQuaternion(cardQuat).add(new THREE.Vector3(pos.x,pos.y,pos.z))
-      ;[j1,j2,j3].forEach((ref,index)=>ref.current?.setNextKinematicTranslation(new THREE.Vector3(anchor.x,anchor.y,anchor.z).lerp(end,(index+1)/3)))
+    // Elastic joints preserve real pendulum motion while allowing long pulls.
+    // Bound release speed, rather than forcing a straight pose or a fixed path.
+    if(!dragged&&card.current){
+      ;[card,j1,j2,j3].forEach(ref=>{
+        const velocity=ref.current.linvel(),speed=Math.hypot(velocity.x,velocity.y,velocity.z)
+        if(speed>10)ref.current.setLinvel({x:velocity.x*10/speed,y:velocity.y*10/speed,z:velocity.z*10/speed},true)
+      })
     }
 
     if (fixed.current) {
@@ -391,16 +377,16 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
     <>
       <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type='fixed' />
-        <RigidBody position={[0.425, 0, 0]} ref={j1} {...segmentProps} type={dragged||returning?'kinematicPosition':'dynamic'}>
+        <RigidBody position={[0.425, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0.85, 0, 0]} ref={j2} {...segmentProps} type={dragged||returning?'kinematicPosition':'dynamic'}>
+        <RigidBody position={[0.85, 0, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.275, 0, 0]} ref={j3} {...segmentProps} type={dragged||returning?'kinematicPosition':'dynamic'}>
+        <RigidBody position={[1.275, 0, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.7, 0, 0]} ref={card} {...segmentProps} type={dragged||returning ? 'kinematicPosition' : 'dynamic'}>
+        <RigidBody position={[1.7, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[1.42, 2.0, 0.018]} />
           <group
             scale={4}
@@ -413,7 +399,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
               e.stopPropagation()
               e.nativeEvent.preventDefault()
               ;(e.target as Element).setPointerCapture(e.pointerId)
-              dragActive.current=true;setReturning(false)
+              dragActive.current=true
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current!.translation())))
 
               // Prevents native text-selection drag while dragging the card.

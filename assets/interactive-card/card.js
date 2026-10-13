@@ -44395,9 +44395,9 @@ var CD = (e, t, n) => {
 }, wD = (e, t, [n, r]) => {
 	let { rapier: i } = RE();
 	return CD(e, t, i.JointData.spherical(cE(n), cE(r)));
-}, TD = (e, t, [n, r, i]) => {
-	let { rapier: a } = RE(), o = cE(n), s = cE(r);
-	return CD(e, t, a.JointData.rope(i, o, s));
+}, TD = (e, t, [n, r, i, a, o]) => {
+	let { rapier: s } = RE(), c = cE(n), l = cE(r);
+	return CD(e, t, s.JointData.spring(i, a, o, c, l));
 }, ED = 48, DD = (e, t = 0) => {
 	let n = new Int32Array(e.length);
 	for (let r = 0; r < e.length; r++) n[r] = e.charCodeAt(r) - ED - t;
@@ -45146,19 +45146,19 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			new G()
 		]);
 		return e.curveType = "chordal", e;
-	}), [T, E] = (0, v.useState)(!1), [D, O] = (0, v.useState)(!1), k = (0, v.useRef)(!1), A = (0, v.useRef)(0), j = new Fn(), M = new G(0, 4 - 2.55 - wO, 0), N = () => {
-		k.current && (k.current = !1, A.current = performance.now() + 300, E(!1), O(!0), document.body.style.userSelect = "", document.body.classList.remove("card-dragging"));
+	}), [T, E] = (0, v.useState)(!1), D = (0, v.useRef)(!1), O = (0, v.useRef)(0), k = () => {
+		D.current && (D.current = !1, O.current = performance.now() + 300, E(!1), document.body.style.userSelect = "", document.body.classList.remove("card-dragging"));
 	};
 	return (0, v.useEffect)(() => {
 		let e = (e) => {
-			(k.current || performance.now() < A.current) && (e.preventDefault(), e.stopImmediatePropagation());
+			(D.current || performance.now() < O.current) && (e.preventDefault(), e.stopImmediatePropagation());
 		};
 		document.addEventListener("click", e, !0);
 		let t = (e) => {
-			k.current && e.preventDefault();
+			D.current && e.preventDefault();
 		};
-		return window.addEventListener("touchmove", t, { passive: !1 }), window.addEventListener("pointerup", N), window.addEventListener("pointercancel", N), window.addEventListener("blur", N), () => {
-			document.removeEventListener("click", e, !0), window.removeEventListener("touchmove", t), window.removeEventListener("pointerup", N), window.removeEventListener("pointercancel", N), window.removeEventListener("blur", N), document.body.style.userSelect = "", document.body.classList.remove("card-dragging");
+		return window.addEventListener("touchmove", t, { passive: !1 }), window.addEventListener("pointerup", k), window.addEventListener("pointercancel", k), window.addEventListener("blur", k), () => {
+			document.removeEventListener("click", e, !0), window.removeEventListener("touchmove", t), window.removeEventListener("pointerup", k), window.removeEventListener("pointercancel", k), window.removeEventListener("blur", k), document.body.style.userSelect = "", document.body.classList.remove("card-dragging");
 		};
 	}, []), TD(o, s, [
 		[
@@ -45171,7 +45171,9 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			0,
 			0
 		],
-		.85
+		.85,
+		120,
+		8
 	]), TD(s, c, [
 		[
 			0,
@@ -45183,7 +45185,9 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			0,
 			0
 		],
-		.85
+		.85,
+		120,
+		8
 	]), TD(c, l, [
 		[
 			0,
@@ -45195,7 +45199,9 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			0,
 			0
 		],
-		.85
+		.85,
+		120,
+		8
 	]), wD(l, u, [[
 		0,
 		0,
@@ -45223,38 +45229,19 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				z: d.z - T.z
 			});
 		}
-		if (D && u.current) {
-			let e = u.current.translation(), t = matchMedia("(prefers-reduced-motion: reduce)").matches ? 1 : 1 - Math.exp(-n * 7);
-			d.set(e.x, e.y, e.z).lerp(M, t), u.current.setNextKinematicTranslation(d);
-			let r = u.current.rotation();
-			h.set(r.x, r.y, r.z, r.w).slerp(j, t), u.current.setNextKinematicRotation(h), d.distanceTo(M) < .02 && Math.abs(h.dot(j)) > .999 && ([
-				u,
-				s,
-				c,
-				l
-			].forEach((e) => {
-				e.current?.setLinvel({
-					x: 0,
-					y: 0,
-					z: 0
-				}, !0), e.current?.setAngvel({
-					x: 0,
-					y: 0,
-					z: 0
-				}, !0);
-			}), O(!1));
-		}
-		if ((T || D) && o.current && u.current) {
-			let e = u.current.translation(), t = u.current.rotation(), n = o.current.translation();
-			h.set(t.x, t.y, t.z, t.w);
-			let r = new G(0, wO, 0).applyQuaternion(h).add(new G(e.x, e.y, e.z));
-			[
-				s,
-				c,
-				l
-			].forEach((e, t) => e.current?.setNextKinematicTranslation(new G(n.x, n.y, n.z).lerp(r, (t + 1) / 3)));
-		}
-		if (o.current) {
+		if (!T && u.current && [
+			u,
+			s,
+			c,
+			l
+		].forEach((e) => {
+			let t = e.current.linvel(), n = Math.hypot(t.x, t.y, t.z);
+			n > 10 && e.current.setLinvel({
+				x: t.x * 10 / n,
+				y: t.y * 10 / n,
+				z: t.z * 10 / n
+			}, !0);
+		}), o.current) {
 			[s, c].forEach((e) => {
 				let t = BO(e.current), r = Math.max(.1, Math.min(1, t.distanceTo(e.current.translation())));
 				t.lerp(e.current.translation(), n * 50 * r);
@@ -45288,7 +45275,6 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: s,
 				...g,
-				type: T || D ? "kinematicPosition" : "dynamic",
 				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
 			}),
 			/* @__PURE__ */ (0, Eg.jsx)(vD, {
@@ -45299,7 +45285,6 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: c,
 				...g,
-				type: T || D ? "kinematicPosition" : "dynamic",
 				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
 			}),
 			/* @__PURE__ */ (0, Eg.jsx)(vD, {
@@ -45310,7 +45295,6 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: l,
 				...g,
-				type: T || D ? "kinematicPosition" : "dynamic",
 				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
 			}),
 			/* @__PURE__ */ (0, Eg.jsxs)(vD, {
@@ -45321,7 +45305,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				ref: u,
 				...g,
-				type: T || D ? "kinematicPosition" : "dynamic",
+				type: T ? "kinematicPosition" : "dynamic",
 				children: [
 					/* @__PURE__ */ (0, Eg.jsx)(aD, { args: [
 						1.42,
@@ -45336,10 +45320,10 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 							-.09
 						],
 						onPointerUp: (e) => {
-							e.target.releasePointerCapture(e.pointerId), N();
+							e.target.releasePointerCapture(e.pointerId), k();
 						},
 						onPointerDown: (e) => {
-							e.stopPropagation(), e.nativeEvent.preventDefault(), e.target.setPointerCapture(e.pointerId), k.current = !0, O(!1), E(new G().copy(e.point).sub(d.copy(u.current.translation()))), document.body.style.userSelect = "none", document.body.classList.add("card-dragging");
+							e.stopPropagation(), e.nativeEvent.preventDefault(), e.target.setPointerCapture(e.pointerId), D.current = !0, E(new G().copy(e.point).sub(d.copy(u.current.translation()))), document.body.style.userSelect = "none", document.body.classList.add("card-dragging");
 						},
 						children: [/* @__PURE__ */ (0, Eg.jsx)("mesh", {
 							geometry: _.card.geometry,
