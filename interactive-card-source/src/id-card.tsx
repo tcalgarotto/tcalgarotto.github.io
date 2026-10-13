@@ -7,7 +7,7 @@
  * Keep as a single component (don't split, don't duplicate `useGLTF`) — an earlier split
  * crashed WebGL. Two required fixes:
  * 1. `colliders: false` on every RigidBody, or Rapier's auto-collider fights our manual ones.
- * 2. No `enabledRotations` — counter-rotate angular velocity instead (see `setAngvel` below).
+ * 2. Leave rotation free and use damping; do not inject angular velocity every idle frame.
  */
 
 // React Imports
@@ -20,7 +20,7 @@ import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Environment, Lightformer, useGLTF, useTexture } from '@react-three/drei'
-import { BallCollider, CuboidCollider, Physics, RigidBody, useSpringJoint, useSphericalJoint } from '@react-three/rapier'
+import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
 import type { RapierRigidBody, RigidBodyProps } from '@react-three/rapier'
 
 // Util Imports
@@ -43,6 +43,7 @@ const ROPE_TAPER_FRACTION = 0.06
 
 // Card-local y where the rope ties on, shared with the per-frame curve endpoint below.
 const CARD_ROPE_ANCHOR_Y = 1.1
+const INITIAL_TILT = .06
 
 // Extends the rendered rope past the joint's physical slack to close the visual gap.
 const ROPE_TOP_EXTENSION = -0.5
@@ -289,6 +290,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
 
   const [dragged, drag] = useState<THREE.Vector3 | false>(false)
   const dragActive=useRef(false)
+  const motionTick=useRef(0)
   const suppressClickUntil=useRef(0)
   const finishDrag=()=>{
     if(!dragActive.current)return
@@ -304,9 +306,9 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
     return ()=>{document.removeEventListener('click',suppressClick,true);window.removeEventListener('touchmove',preventTouchScroll);window.removeEventListener('pointerup',finishDrag);window.removeEventListener('pointercancel',finishDrag);window.removeEventListener('blur',finishDrag);document.body.style.userSelect='';document.body.classList.remove('card-dragging')}
   },[])
 
-  useSpringJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.85, 120, 8])
-  useSpringJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.85, 120, 8])
-  useSpringJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.85, 120, 8])
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.85])
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.85])
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.85])
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, CARD_ROPE_ANCHOR_Y, 0]
@@ -324,13 +326,14 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
       card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z })
     }
 
-    // Elastic joints preserve real pendulum motion while allowing long pulls.
-    // Bound release speed, rather than forcing a straight pose or a fixed path.
-    if(!dragged&&card.current){
-      ;[card,j1,j2,j3].forEach(ref=>{
-        const velocity=ref.current.linvel(),speed=Math.hypot(velocity.x,velocity.y,velocity.z)
-        if(speed>10)ref.current.setLinvel({x:velocity.x*10/speed,y:velocity.y*10/speed,z:velocity.z*10/speed},true)
-      })
+    motionTick.current+=delta
+    if(motionTick.current>.2&&card.current){
+      motionTick.current=0
+      const energy=[card,j1,j2,j3].reduce((sum,ref)=>{const v=ref.current.linvel(),a=ref.current.angvel();return sum+v.x*v.x+v.y*v.y+v.z*v.z+a.x*a.x+a.y*a.y+a.z*a.z},0)
+      const stage=document.getElementById('lanyard-root')
+      stage?.setAttribute('data-motion-energy',energy.toFixed(5))
+      stage?.setAttribute('data-card-sleeping',String(card.current.isSleeping()))
+      stage?.setAttribute('data-motion-state',dragged?'dragging':'dynamic')
     }
 
     if (fixed.current) {
@@ -338,7 +341,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
         const lerped = getLerped(ref.current)
         const clampedDistance = Math.max(0.1, Math.min(1, lerped.distanceTo(ref.current.translation())))
 
-        lerped.lerp(ref.current.translation(), delta * 50 * clampedDistance)
+        lerped.lerp(ref.current.translation(), 1-Math.exp(-delta*50*clampedDistance))
       })
 
       // Keeps the rope glued to the pin at any card orientation, not just at rest.
@@ -365,11 +368,12 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
         ROPE_TAPER_FRACTION
       )
       oldRopeGeometry.dispose()
+      if(!dragged&&!card.current.isSleeping()){
+        ang.copy(card.current.angvel())
+        rot.copy(card.current.rotation() as unknown as THREE.Vector3)
+        card.current.setAngvel({x:ang.x,y:ang.y-rot.y*.25*Math.min(delta,1/30)*60,z:ang.z},false)
+      }
 
-      // Fix 2 — see file header.
-      ang.copy(card.current.angvel())
-      rot.copy(card.current.rotation() as unknown as THREE.Vector3)
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, true)
     }
   })
 
@@ -377,16 +381,16 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
     <>
       <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type='fixed' />
-        <RigidBody position={[0.425, 0, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[0, -.85, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0.85, 0, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[0, -1.7, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.275, 0, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[0, -2.55, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.7, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+        <RigidBody position={[Math.sin(INITIAL_TILT)*CARD_ROPE_ANCHOR_Y,-2.55-Math.cos(INITIAL_TILT)*CARD_ROPE_ANCHOR_Y,0]} rotation={[0,0,INITIAL_TILT]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[1.42, 2.0, 0.018]} />
           <group
             scale={4}
@@ -585,7 +589,7 @@ const IdCard = ({ frontImage, className, onReady, active=true }: IdCardProps) =>
       >
         <CameraAlign />
         <ambientLight intensity={Math.PI} />
-        <Physics paused={!active} gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+        <Physics paused={!active} numSolverIterations={8} gravity={[0, -40, 0]} timeStep={isMobile ? 1 / 30 : 1 / 60}>
           <Band frontImage={frontImage} isMobile={isMobile} accentColor={accentColor} onReady={onReady} />
         </Physics>
         <StudioLighting />
