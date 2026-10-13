@@ -42,4 +42,4 @@ body.card-dragging #lanyard-root{touch-action:none}
 :root[data-theme=dark]{--footer-bg:#171a1b;--footer-border:#41494a;--footer-muted:#b0b8b7;--signature-filter:invert(1)}
 @media(prefers-color-scheme:light){:root:not([data-theme=dark]){--footer-bg:#fff;--footer-border:#e5e7eb;--footer-muted:#737373;--signature-filter:none}}
 @media(max-width:1023px){.footer-eleven{padding-block:64px}}
-@media(max-width:639px){.footer-eleven{padding-block:32px}.footer-message{margin-left:0;gap:20px;display:flex}.footer-message>p:first-child,.footer-message>p:last-child{text-align:center}.footer-message{flex-direction:column}.footer-message>img{display:block;order:0;margin-inline:auto}.footer-signoff{padding-top:24px}}
+@media(max-width:639px){.footer-eleven{padding-block:32px}.footer-message{margin-left:0;gap:20px;display:flex}.footer-message>p:first-child,.footer-message>p:last-child{text-align:center}.footer-message{flex-direction:column}.footer-message>img{display:block;order:0;margin-inline:auto}.footer-message>p:last-child{display:none}.footer-signoff{padding-top:24px}}
