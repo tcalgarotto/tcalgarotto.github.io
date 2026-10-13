@@ -4,11 +4,10 @@ Meu portfólio: https://tcalgarotto.github.io/
 
 Projetos, certificações e contato, em português e inglês, com tema claro e escuro.
 
-## Rodar localmente
+## Projetos
 
-```sh
-python3 -m http.server 8766
-```
+- [DuckDooh](https://duckdooh.com/)
+- [OrtoClean](https://ortoclean.duckdns.org/login-teste)
 
 ## Créditos
 
