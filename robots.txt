@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tcalgarotto.github.io/sitemap.xml

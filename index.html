@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#171a1b">
+  <title>Thales Calgarotto | Software, automação e IA</title>
+  <meta name="description" content="Portfólio de Thales Calgarotto. Engenharia de software, automação e inteligência artificial aplicada. Projetos públicos e formações IBM, Google e Johns Hopkins.">
+  <link rel="canonical" href="https://tcalgarotto.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Thales Calgarotto | Código com intenção.">
+  <meta property="og:description" content="Software, automação e IA aplicada. Explore os projetos e as certificações.">
+  <meta property="og:url" content="https://tcalgarotto.github.io/">
+  <meta property="og:image" content="https://tcalgarotto.github.io/assets/social-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/space-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/system-sculpture.webp" as="image" type="image/webp">
+  <script>try{const t=localStorage.getItem('tc-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}</script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+  <header class="site-header wrap">
+    <a class="brand" href="#" aria-label="tc_ Thales Calgarotto, início"><span class="monogram" aria-hidden="true">tc<span>_</span></span><span>Thales<br>Calgarotto</span></a>
+    <nav aria-label="Navegação principal">
+      <a href="#projetos" data-i18n="navProjects">Projetos</a>
+      <a href="#certificacoes" data-i18n="navCerts">Certificações</a>
+      <a href="#sobre" data-i18n="navAbout">Sobre</a>
+    </nav>
+    <div class="header-controls">
+      <button class="language-button" id="language-toggle" aria-label="EN: Switch to English" lang="en">EN</button>
+      <button class="icon-button" id="theme-toggle" aria-label="Mudar tema" title="Mudar tema"><span class="icon icon-sun" aria-hidden="true"></span><span class="icon icon-moon" aria-hidden="true"></span></button>
+      <a class="github-link" href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Thales Calgarotto (abre em nova aba)"><span class="icon icon-github" aria-hidden="true"></span><span>GitHub</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="heroEyebrow">Software, automação & IA aplicada</p>
+        <h1 id="hero-title"><span data-i18n="heroLine1">Código com</span><br><span class="accent-text" data-i18n="heroLine2">intenção.</span></h1>
+        <p class="hero-description" data-i18n="heroDescription">Construo produtos digitais, automatizo processos e conecto inteligência artificial a problemas reais.</p>
+        <a class="button button-primary" href="#projetos"><span data-i18n="heroCta">Explore meu trabalho</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+      </div>
+      <figure class="hero-art"><img src="assets/system-sculpture.webp" width="1536" height="1024" alt="Escultura de três estruturas de metal interligadas em torno de uma esfera verde" fetchpriority="high" decoding="async"></figure>
+    </section>
+
+    <section class="projects wrap section" id="projetos" aria-labelledby="projects-title">
+      <div class="section-heading"><h2 id="projects-title" data-i18n="projectsTitle">Ideias que viram sistemas.</h2><p data-i18n="projectsDescription">Produtos, ferramentas e os desafios de engenharia por trás de cada um.</p></div>
+      <div class="filters" role="group" aria-label="Filtrar projetos">
+        <button class="filter active" aria-pressed="true" data-filter="all" data-i18n="filterAll">Todos</button>
+        <button class="filter" aria-pressed="false" data-filter="ai" data-i18n="filterAi">IA & agentes</button>
+        <button class="filter" aria-pressed="false" data-filter="apps" data-i18n="filterApps">Web & mobile</button>
+      </div>
+      <p class="sr-only" id="filter-status" aria-live="polite"></p>
+      <div class="project-grid">
+        <article class="project project-featured" data-category="ai apps">
+          <div class="project-content">
+            <p class="project-type" data-i18n="justType">Software jurídico com IA</p>
+            <h3>JustOS<span class="project-alias"> / Lex</span></h3>
+            <p class="project-description" data-i18n="justDescription">Um sistema que conecta casos, documentos e pesquisa jurídica. IA com contexto e revisão humana no fluxo.</p>
+            <ul class="tech-list" aria-label="Tecnologias"><li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Qdrant</li></ul>
+            <a class="text-link" href="https://github.com/tcalgarotto/Lex" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCta">Explore o código</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+          </div>
+          <div class="project-flow">
+            <p class="flow-label" data-i18n="flowTitle">Como as peças se conectam</p>
+            <div class="flow-controls" role="group" aria-label="Explorar etapas do JustOS">
+              <button class="flow-step selected" data-step="0" aria-pressed="true"><span class="flow-glyph" aria-hidden="true">{ }</span><span data-i18n="flowCase">Caso</span></button>
+              <span class="flow-connector" aria-hidden="true"></span>
+              <button class="flow-step" data-step="1" aria-pressed="false"><span class="flow-glyph" aria-hidden="true">[ ]</span><span data-i18n="flowContext">Contexto</span></button>
+              <span class="flow-connector" aria-hidden="true"></span>
+              <button class="flow-step" data-step="2" aria-pressed="false"><span class="flow-glyph" aria-hidden="true">&lt; &gt;</span><span data-i18n="flowSearch">Pesquisa</span></button>
+              <span class="flow-connector" aria-hidden="true"></span>
+              <button class="flow-step" data-step="3" aria-pressed="false"><span class="flow-glyph" aria-hidden="true">/ /</span><span data-i18n="flowDraft">Minuta</span></button>
+            </div>
+            <div class="flow-explanation" aria-live="polite"><strong id="flow-heading">O caso organiza o trabalho.</strong><p id="flow-description">Partes, fatos, pedidos e riscos reunidos em uma estrutura que acompanha o processo.</p></div>
+            <p class="flow-hint" data-i18n="flowHint">Selecione uma etapa para explorar a arquitetura.</p>
+          </div>
+        </article>
+        <article class="project project-lucy" data-category="ai">
+          <div class="project-content">
+            <p class="project-type" data-i18n="lucyType">Ferramentas para desenvolver com IA</p>
+            <h3>Lucy<span class="project-alias"> / loop-master</span></h3>
+            <p class="project-description" data-i18n="lucyDescription">Orquestração para agentes no Cursor. Planejamento por fases, memória entre sessões e ciclos de implementação e verificação.</p>
+            <ul class="tech-list" aria-label="Tecnologias"><li>Cursor</li><li>Agent workflows</li><li>MCP</li></ul>
+            <details><summary data-i18n="technicalDetails">O que há por trás</summary><p data-i18n="lucyDetails">Protocolos de memória, critérios de qualidade e roteamento de skills documentam como o agente conduz o trabalho.</p></details>
+            <a class="text-link" href="https://github.com/tcalgarotto/loop-master" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCta">Explore o código</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+          </div>
+        </article>
+        <article class="project project-telemed" data-category="apps">
+          <div class="project-content">
+            <p class="project-type" data-i18n="teleType">Produto web & mobile</p>
+            <h3>TeleMed</h3>
+            <p class="project-description" data-i18n="teleDescription">Uma plataforma de telemedicina por assinatura. Aplicativo mobile e API organizados em um monorepo TypeScript.</p>
+            <ul class="tech-list" aria-label="Tecnologias"><li>React Native</li><li>Expo</li><li>Next.js</li><li>Supabase</li></ul>
+            <details><summary data-i18n="technicalDetails">O que há por trás</summary><p data-i18n="teleDetails">Pacotes compartilhados, migrações de banco e integrações de autenticação, pagamentos e chamadas de vídeo.</p></details>
+            <a class="text-link" href="https://github.com/tcalgarotto/telemed" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCta">Explore o código</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="certifications wrap section" id="certificacoes" aria-labelledby="certs-title">
+      <div class="section-heading"><h2 id="certs-title" data-i18n="certsTitle">Aprender. Aplicar. Evoluir.</h2><p data-i18n="certsDescription">Três formações concluídas no Coursera. Cada uma com sua credencial pública.</p></div>
+      <div class="credential-list">
+        <a class="credential" href="https://www.coursera.org/account/accomplishments/specialization/TBLJ0PQF1DGQ" target="_blank" rel="noopener noreferrer">
+          <div class="issuer-logo"><img src="assets/ibm.png" alt="IBM" width="80" height="80" loading="lazy"></div>
+          <div class="credential-content"><p class="credential-issuer">IBM</p><h3>IBM RAG and Agentic AI</h3><p class="credential-description" data-i18n="ibmDescription">RAG, bancos vetoriais, agentes e Model Context Protocol.</p><p class="credential-meta"><span data-i18n="specialization">Especialização</span><span aria-hidden="true"> / </span><time datetime="2026-08-26" data-i18n="ibmDate">26 ago 2026</time></p></div>
+          <span class="credential-cta"><span data-i18n="verifyCta">Verificar credencial</span><span class="icon icon-arrow" aria-hidden="true"></span></span>
+        </a>
+        <a class="credential" href="https://www.coursera.org/account/accomplishments/specialization/O7S722GGTAOK" target="_blank" rel="noopener noreferrer">
+          <div class="issuer-logo"><img src="assets/google.png" alt="Google" width="80" height="80" loading="lazy"></div>
+          <div class="credential-content"><p class="credential-issuer">Google</p><h3>Google IT Automation with Python</h3><p class="credential-description" data-i18n="googleDescription">Python, Git, depuração e automação de infraestrutura.</p><p class="credential-meta"><span data-i18n="professionalCertificate">Certificado profissional</span><span aria-hidden="true"> / </span><time datetime="2026-07-22" data-i18n="julyDate">22 jul 2026</time></p></div>
+          <span class="credential-cta"><span data-i18n="verifyCta">Verificar credencial</span><span class="icon icon-arrow" aria-hidden="true"></span></span>
+        </a>
+        <a class="credential" href="https://www.coursera.org/account/accomplishments/specialization/ZEYD9IMM47R9" target="_blank" rel="noopener noreferrer">
+          <div class="issuer-logo"><img src="assets/johns-hopkins.png" alt="Johns Hopkins University" width="80" height="80" loading="lazy"></div>
+          <div class="credential-content"><p class="credential-issuer">Johns Hopkins University</p><h3>Social Computing</h3><p class="credential-description" data-i18n="jhuDescription">Análise de redes sociais, chatbots e IA com participação humana.</p><p class="credential-meta"><span data-i18n="specialization">Especialização</span><span aria-hidden="true"> / </span><time datetime="2026-07-22" data-i18n="julyDate">22 jul 2026</time></p></div>
+          <span class="credential-cta"><span data-i18n="verifyCta">Verificar credencial</span><span class="icon icon-arrow" aria-hidden="true"></span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="about wrap section" id="sobre" aria-labelledby="about-title">
+      <div class="about-intro"><h2 id="about-title" data-i18n="aboutTitle">Curiosidade para entender.<br>Engenharia para construir.</h2><p data-i18n="aboutDescription">Sou Thales Calgarotto. Meu trabalho conecta desenvolvimento de produtos, automação e IA aplicada. Gosto de entender o problema inteiro e fazer as peças funcionarem juntas.</p></div>
+      <dl class="practice-list">
+        <div><dt data-i18n="practiceProduct">Produto</dt><dd data-i18n="practiceProductDescription">Interfaces web e mobile conectadas a APIs e dados.</dd></div>
+        <div><dt data-i18n="practiceAi">IA aplicada</dt><dd data-i18n="practiceAiDescription">Pesquisa com contexto, agentes e integração de ferramentas.</dd></div>
+        <div><dt data-i18n="practiceAutomation">Automação</dt><dd data-i18n="practiceAutomationDescription">Python, Git e processos que reduzem trabalho repetitivo.</dd></div>
+      </dl>
+    </section>
+    <section class="contact wrap" aria-labelledby="contact-title"><div><p data-i18n="contactIntro">Do problema à próxima ideia.</p><h2 id="contact-title" data-i18n="contactTitle">Vamos construir?</h2></div><a class="button button-primary" href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer"><span data-i18n="contactCta">Encontre-me no GitHub</span><span class="icon icon-arrow" aria-hidden="true"></span></a></section>
+  </main>
+  <footer class="site-footer wrap"><p>© <span id="year">2026</span> Thales Calgarotto</p><p data-i18n="footerNote">Feito com intenção. Publicado no GitHub.</p><a href="#main" data-i18n="backToTop">Voltar ao início</a></footer>
+</body>
+</html>
