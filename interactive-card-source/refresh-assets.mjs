@@ -9,7 +9,7 @@ if((app.match(importPath)||[]).length!==1)throw new Error('Expected exactly one 
 app=app.replace(importPath,'./assets/interactive-card/card.js?v='+await version('assets/interactive-card/card.js'))
 await writeFile(base+'app.js',app)
 let html=await readFile(base+'index.html','utf8')
-for(const asset of ['app.js','styles.css','assets/badge-google-python.png','assets/badge-ibm-rag-agentic.png']){
+for(const asset of ['app.js','styles.css','assets/badge-google-python.png','assets/badge-ibm-rag-agentic.png','assets/credential-agentic-langchain-langgraph.png','assets/credential-agents-mcp.png','assets/credential-agentic-workflows.png','assets/credential-multimodal-ai.png','assets/credential-rag-applications.png','assets/credential-advanced-rag.png']){
  const pattern=new RegExp(asset.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?:\\?v=[a-f0-9]+)?','g')
  html=html.replace(pattern,asset+'?v='+await version(asset))
 }
