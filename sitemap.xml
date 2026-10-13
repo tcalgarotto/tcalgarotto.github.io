@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://tcalgarotto.github.io/</loc></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://tcalgarotto.github.io/</loc>
+    <lastmod>2026-10-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tcalgarotto.github.io/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcalgarotto.github.io/"/>
+    <image:image><image:loc>https://tcalgarotto.github.io/assets/og-image.png</image:loc></image:image>
+  </url>
+</urlset>

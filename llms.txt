@@ -1,0 +1,31 @@
+# Thales Calgarotto
+
+> Portfólio de Thales Calgarotto — engenharia de software, automação e IA aplicada. Crio produtos digitais que conectam pessoas, processos e inteligência artificial. Site em português e inglês: https://tcalgarotto.github.io/
+
+Thales Calgarotto trabalha conectando desenvolvimento de produtos, automação e IA aplicada: interfaces web e mobile conectadas a APIs e dados; pesquisa com contexto, agentes e integração de ferramentas; Python, Git e processos que reduzem trabalho repetitivo.
+
+## Projetos
+
+- [DuckDooh](https://duckdooh.com/): mídia exterior digital. Plataforma self-service para descobrir telas, contratar campanhas e conectar mídia digital à veiculação. Interface em Next.js e TypeScript, API em Python/FastAPI, dados em PostgreSQL; integrações com Asaas e Yodeck.
+- [OrtoClean](https://ortoclean.duckdns.org/login-teste): gestão odontológica. Sistema para a operação da clínica: pacientes, agenda, vendas, financeiro e comunicação. API em Fastify, persistência em PostgreSQL, implantação com Docker; integração do CRM com um serviço de WhatsApp separado.
+
+## Certificações
+
+- [IBM RAG and Agentic AI](https://www.coursera.org/account/accomplishments/specialization/TBLJ0PQF1DGQ)
+- [Google IT Automation with Python](https://www.coursera.org/account/accomplishments/specialization/O7S722GGTAOK)
+- [Agentic AI with LangChain and LangGraph](https://www.credly.com/badges/2517e0cd-b82a-4d91-a8ce-118a3ab8d623)
+- [Build AI Agents Using MCP](https://www.credly.com/badges/00885239-67e9-44b8-8aea-a4762a51d0a8)
+- [Building AI Agents and Agentic Workflows Specialization](https://www.credly.com/badges/b7f819d9-feb2-4109-aee9-38e73e832e21)
+- [Build Multimodal Generative AI Applications](https://www.credly.com/badges/5c376cfb-5b16-4902-85e7-1d450603060d)
+- [RAG for Generative AI Applications Specialization](https://www.credly.com/badges/a544a088-6bc7-4713-b3fb-a6b8244dbda2)
+- [Advanced RAG with Vector Databases and Retrievers](https://www.credly.com/badges/afbbb50d-3af3-4f1a-b9a6-2970b3e1bca9)
+
+## Ferramentas
+
+TypeScript, JavaScript, Python, React, Next.js, FastAPI, Fastify, PostgreSQL, Supabase, Docker, Cloudflare, GitHub, Bun, Cursor, Qdrant, Redis.
+
+## Contato
+
+- [GitHub](https://github.com/tcalgarotto)
+- [LinkedIn](https://www.linkedin.com/in/thalescalgarotto/)
+- E-mail: tcalgarotto96@gmail.com
