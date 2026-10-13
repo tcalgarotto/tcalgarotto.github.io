@@ -79,6 +79,7 @@ const HOLE_PATCH_UV_OFFSET = [0.2308, 0.0443] as const
 const HOLE_PATCH_UV_REPEAT = [0.0375, 0.0405] as const
 
 // Front/back face UVs on the badge's texture atlas.
+const COMPOSITE_SIZE = 2048
 const FRONT_UV_RECT = { x: 0, y: 0, w: 0.5, h: 0.755 }
 const BACK_UV_RECT = { x: 0.5, y: 0, w: 0.5, h: 0.755 }
 
@@ -214,8 +215,10 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   const cardMap = useMemo(() => {
     const baseMap = materials.base.map as THREE.Texture
     const baseImage = baseMap.image as HTMLImageElement
-    const width = baseImage.width
-    const height = baseImage.height
+    // Composite at 2048² (power of two) so the 600×800 SVG face is rasterized
+    // straight at its final size instead of being upscaled as a bitmap.
+    const width = COMPOSITE_SIZE
+    const height = COMPOSITE_SIZE
 
     const canvas = document.createElement('canvas')
 
@@ -245,6 +248,9 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
       ctx.beginPath()
       ctx.rect(rx, ry, rw, rh)
       ctx.clip()
+      // SVG images rasterize vectors at the destination size in drawImage.
+      ctx.imageSmoothingEnabled = true
+      ctx.imageSmoothingQuality = 'high'
       ctx.drawImage(image, dx, dy, dw, dh)
 
       // accentColor is the resolved `fill-primary` color from IdCard — Canvas 2D can't apply
@@ -259,6 +265,9 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
     composite.colorSpace = THREE.SRGBColorSpace
     composite.flipY = baseMap.flipY
     composite.anisotropy = 16
+    composite.generateMipmaps = true
+    composite.minFilter = THREE.LinearMipmapLinearFilter
+    composite.magFilter = THREE.LinearFilter
     composite.needsUpdate = true
 
     return composite
@@ -562,7 +571,7 @@ const IdCard = ({ frontImage, className, onReady, active=true }: IdCardProps) =>
         key={contextLossKey}
         eventSource={eventSourceRef as RefObject<HTMLElement>}
         camera={{ position: [0, 0, 20], fov: 20 }}
-        dpr={[1, isMobile ? 1.25 : 1.5]}
+        dpr={[1, 2]}
         gl={{ alpha: true, antialias: true, powerPreference: 'default' }}
         onCreated={state => {
           state.gl.setClearColor(new THREE.Color(0x000000), 0)

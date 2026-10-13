@@ -29,7 +29,7 @@ applyLanguage(requestedLanguage==='en'||requestedLanguage==='pt'?requestedLangua
 async function startCard(){
  const fail=()=>{document.querySelector('.hero-card').classList.remove('card-ready');document.getElementById('card-status').textContent=language==='pt'?'Crachá exibido como imagem neste navegador.':'Badge displayed as an image in this browser.';queueMicrotask(()=>{cardInstance?.unmount();cardInstance=null})};
  try{
-  const {mountBadge}=await import('./assets/interactive-card/card.js?v=84a55d1e1e30');
+  const {mountBadge}=await import('./assets/interactive-card/card.js?v=ab0e414f2960');
   cardInstance=mountBadge(document.getElementById('lanyard-root'),()=>{document.querySelector('.hero-card').classList.add('card-ready');document.getElementById('card-status').textContent=language==='pt'?'Crachá interativo pronto. Arraste-o pela página.':'Interactive badge ready. Drag it across the page.'},fail);
   const updateVisibility=()=>cardInstance?.setActive(!document.hidden);
   document.addEventListener('visibilitychange',updateVisibility);

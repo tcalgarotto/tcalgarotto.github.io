@@ -45082,17 +45082,17 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 vO.merge;
 //#endregion
 //#region src/id-card.tsx
-var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1.1, TO = .06, EO = "/assets/interactive-card/pin.png", DO = 1024 / 1536, OO = 1.4, kO = OO * DO, AO = .8352083333333334, jO = 0, MO = .16, NO = 0, PO = .942, FO = .055, IO = [.2308, .0443], LO = [.0375, .0405], RO = {
+var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1.1, TO = .06, EO = "/assets/interactive-card/pin.png", DO = 1024 / 1536, OO = 1.4, kO = OO * DO, AO = .8352083333333334, jO = 0, MO = .16, NO = 0, PO = .942, FO = .055, IO = [.2308, .0443], LO = [.0375, .0405], RO = 2048, zO = {
 	x: 0,
 	y: 0,
 	w: .5,
 	h: .755
-}, zO = {
+}, BO = {
 	x: .5,
 	y: 0,
 	w: .5,
 	h: .755
-}, BO = .03, VO = (e) => (e.lerped ||= new G().copy(e.translation()), e.lerped), HO = (e, t, n, r, i) => {
+}, VO = .03, HO = (e) => (e.lerped ||= new G().copy(e.translation()), e.lerped), UO = (e, t, n, r, i) => {
 	let a = e.computeFrenetFrames(t, !1), o = [], s = [], c = [], l = [], u = new G(), d = new G();
 	for (let l = 0; l <= t; l++) {
 		let f = l / t, p = e.getPointAt(f), m = a.normals[l], h = a.binormals[l], g = f < i ? f / i * n : n;
@@ -45107,7 +45107,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 	}
 	let f = new J();
 	return f.setIndex(l), f.setAttribute("position", new q(o, 3)), f.setAttribute("normal", new q(s, 3)), f.setAttribute("uv", new q(c, 2)), f;
-}, UO = ({ frontImage: e, isMobile: t, accentColor: n, onReady: r }) => {
+}, WO = ({ frontImage: e, isMobile: t, accentColor: n, onReady: r }) => {
 	let i = (document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark", a = (0, v.useRef)(null), o = (0, v.useRef)(null), s = (0, v.useRef)(null), c = (0, v.useRef)(null), l = (0, v.useRef)(null), u = (0, v.useRef)(null), d = new G(), f = new G(), p = new G(), m = new na(new G(0, 0, 1), 0), h = new Fn(), g = {
 		type: "dynamic",
 		canSleep: !0,
@@ -45119,18 +45119,18 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 		r?.();
 	}, [r]);
 	let x = Sx(EO), S = (0, v.useMemo)(() => {
-		let e = y.base.map, t = e.image, r = t.width, i = t.height, a = document.createElement("canvas");
+		let e = y.base.map, t = e.image, r = RO, i = RO, a = document.createElement("canvas");
 		a.width = r, a.height = i;
 		let o = a.getContext("2d");
 		if (!o) return e;
 		o.drawImage(t, 0, 0, r, i);
 		let s = b.image;
-		for (let e of [RO, zO]) {
+		for (let e of [zO, BO]) {
 			let t = e.x * r, a = e.y * i, c = e.w * r, l = e.h * i, u = Math.max(c / s.width, l / s.height), d = s.width * u, f = s.height * u, p = t + (c - d) / 2, m = a + (l - f) / 2;
-			o.save(), o.beginPath(), o.rect(t, a, c, l), o.clip(), o.drawImage(s, p, m, d, f), o.fillStyle = n, o.fillRect(t, a, c, l * BO), o.restore();
+			o.save(), o.beginPath(), o.rect(t, a, c, l), o.clip(), o.imageSmoothingEnabled = !0, o.imageSmoothingQuality = "high", o.drawImage(s, p, m, d, f), o.fillStyle = n, o.fillRect(t, a, c, l * VO), o.restore();
 		}
 		let c = new ms(a);
-		return c.colorSpace = _t, c.flipY = e.flipY, c.anisotropy = 16, c.needsUpdate = !0, c;
+		return c.colorSpace = _t, c.flipY = e.flipY, c.anisotropy = 16, c.generateMipmaps = !0, c.minFilter = P, c.magFilter = M, c.needsUpdate = !0, c;
 	}, [
 		b,
 		y.base.map,
@@ -45238,13 +45238,13 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 		}
 		if (o.current) {
 			[s, c].forEach((e) => {
-				let t = VO(e.current), r = Math.max(.1, Math.min(1, t.distanceTo(e.current.translation())));
+				let t = HO(e.current), r = Math.max(.1, Math.min(1, t.distanceTo(e.current.translation())));
 				t.lerp(e.current.translation(), 1 - Math.exp(-n * 50 * r));
 			});
 			let e = u.current.translation(), r = u.current.rotation();
-			h.set(r.x, r.y, r.z, r.w), w.points[0].set(0, .6000000000000001, 0).applyQuaternion(h).add(d.set(e.x, e.y, e.z)), w.points[1].copy(VO(c.current)), w.points[2].copy(VO(s.current)), w.points[3].copy(o.current.translation());
+			h.set(r.x, r.y, r.z, r.w), w.points[0].set(0, .6000000000000001, 0).applyQuaternion(h).add(d.set(e.x, e.y, e.z)), w.points[1].copy(HO(c.current)), w.points[2].copy(HO(s.current)), w.points[3].copy(o.current.translation());
 			let i = a.current.geometry;
-			a.current.geometry = HO(w, t ? 16 : 32, xO, SO, CO), i.dispose(), !T && !u.current.isSleeping() && (f.copy(u.current.angvel()), p.copy(u.current.rotation()), u.current.setAngvel({
+			a.current.geometry = UO(w, t ? 16 : 32, xO, SO, CO), i.dispose(), !T && !u.current.isSleeping() && (f.copy(u.current.angvel()), p.copy(u.current.rotation()), u.current.setAngvel({
 				x: f.x,
 				y: f.y - p.y * .25 * Math.min(n, 1 / 30) * 60,
 				z: f.z
@@ -45368,7 +45368,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			metalness: .15
 		})
 	})] });
-}, WO = () => /* @__PURE__ */ (0, Eg.jsxs)(cS, {
+}, GO = () => /* @__PURE__ */ (0, Eg.jsxs)(cS, {
 	blur: .75,
 	children: [
 		/* @__PURE__ */ (0, Eg.jsx)(lS, {
@@ -45448,12 +45448,12 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			]
 		})
 	]
-}), GO = 520, KO = 20, qO = GO * (40 * Math.tan(Math.PI / 180 * 10)) ** -1, JO = () => (G_((e) => {
+}), KO = 520, qO = 20, JO = KO * (40 * Math.tan(Math.PI / 180 * 10)) ** -1, YO = () => (G_((e) => {
 	let t = document.querySelector(".hero-card");
 	if (!t) return;
-	let n = t.getBoundingClientRect(), r = qO * (window.innerWidth < 768 ? .78 : 1), i = n.left + n.width / 2, a = n.top - 35 * (window.innerWidth < 768 ? .78 : 1);
-	e.camera.position.set((e.size.width / 2 - i) / r, 4 + (a - e.size.height / 2) / r, KO * (e.size.height / GO) * (qO / r)), e.camera.updateMatrixWorld();
-}, -1), null), YO = ({ frontImage: e, className: t, onReady: n, active: r = !0 }) => {
+	let n = t.getBoundingClientRect(), r = JO * (window.innerWidth < 768 ? .78 : 1), i = n.left + n.width / 2, a = n.top - 35 * (window.innerWidth < 768 ? .78 : 1);
+	e.camera.position.set((e.size.width / 2 - i) / r, 4 + (a - e.size.height / 2) / r, qO * (e.size.height / KO) * (JO / r)), e.camera.updateMatrixWorld();
+}, -1), null), XO = ({ frontImage: e, className: t, onReady: n, active: r = !0 }) => {
 	let [i, a] = (0, v.useState)(() => typeof window < "u" && window.innerWidth < 768), [o, s] = (0, v.useState)(0), c = (0, v.useRef)(typeof document < "u" ? document.body : null), l = (0, v.useRef)(null), [u, d] = (0, v.useState)("#000000");
 	return (0, v.useEffect)(() => {
 		let e = () => a(window.innerWidth < 768);
@@ -45493,7 +45493,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				],
 				fov: 20
 			},
-			dpr: [1, i ? 1.25 : 1.5],
+			dpr: [1, 2],
 			gl: {
 				alpha: !0,
 				antialias: !0,
@@ -45508,7 +45508,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				} });
 			},
 			children: [
-				/* @__PURE__ */ (0, Eg.jsx)(JO, {}),
+				/* @__PURE__ */ (0, Eg.jsx)(YO, {}),
 				/* @__PURE__ */ (0, Eg.jsx)("ambientLight", { intensity: Math.PI }),
 				/* @__PURE__ */ (0, Eg.jsx)(GE, {
 					paused: !r,
@@ -45519,18 +45519,18 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 						0
 					],
 					timeStep: i ? 1 / 30 : 1 / 60,
-					children: /* @__PURE__ */ (0, Eg.jsx)(UO, {
+					children: /* @__PURE__ */ (0, Eg.jsx)(WO, {
 						frontImage: e,
 						isMobile: i,
 						accentColor: u,
 						onReady: n
 					})
 				}),
-				/* @__PURE__ */ (0, Eg.jsx)(WO, {})
+				/* @__PURE__ */ (0, Eg.jsx)(GO, {})
 			]
 		}, o)]
 	});
-}, XO = class extends v.Component {
+}, ZO = class extends v.Component {
 	state = { failed: !1 };
 	static getDerivedStateFromError() {
 		return { failed: !0 };
@@ -45542,12 +45542,12 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 		return this.state.failed ? null : this.props.children;
 	}
 };
-function ZO(e, t, n) {
-	let r = (0, y.createRoot)(e), i = (e) => r.render(/* @__PURE__ */ (0, Eg.jsx)(XO, {
+function QO(e, t, n) {
+	let r = (0, y.createRoot)(e), i = (e) => r.render(/* @__PURE__ */ (0, Eg.jsx)(ZO, {
 		onError: n,
 		children: /* @__PURE__ */ (0, Eg.jsx)(v.Suspense, {
 			fallback: null,
-			children: /* @__PURE__ */ (0, Eg.jsx)(YO, {
+			children: /* @__PURE__ */ (0, Eg.jsx)(XO, {
 				frontImage: "/assets/interactive-card/portrait.svg",
 				className: "lanyard-stage",
 				onReady: t,
@@ -45561,4 +45561,4 @@ function ZO(e, t, n) {
 	};
 }
 //#endregion
-export { ZO as mountBadge };
+export { QO as mountBadge };
