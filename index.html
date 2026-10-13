@@ -17,8 +17,8 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/space-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
   <script>try{const t=localStorage.getItem('tc-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}</script>
-  <link rel="stylesheet" href="styles.css?v=1455005fda11">
-  <script src="app.js?v=cf36cc7196ee" defer></script>
+  <link rel="stylesheet" href="styles.css?v=da3409844ddf">
+  <script src="app.js?v=b1ffdb518519" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
@@ -145,21 +145,23 @@
       </dl>
     </section>
   </main>
-  <!-- Adapted from Shadcn Studio Footer Component 11. -->
-  <footer class="footer-eleven wrap" id="rodape" aria-label="Thales Calgarotto">
-    <div class="footer-social-row">
-      <span class="footer-rule" aria-hidden="true"></span>
-      <div class="footer-shortcuts">
-        <a href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><span class="icon icon-github" aria-hidden="true"></span><span class="footer-tooltip">GitHub</span></a>
-        <a href="#projetos" aria-labelledby="footer-projects-label"><span class="icon footer-icon-projects" aria-hidden="true"></span><span class="footer-tooltip" id="footer-projects-label" data-i18n="navProjects">Projetos</span></a>
-        <a href="#certificacoes" aria-labelledby="footer-credentials-label"><span class="icon footer-icon-credentials" aria-hidden="true"></span><span class="footer-tooltip" id="footer-credentials-label" data-i18n="navCerts">Certificações</span></a>
-        <a href="#sobre" aria-labelledby="footer-about-label"><span class="icon footer-icon-about" aria-hidden="true"></span><span class="footer-tooltip" id="footer-about-label" data-i18n="navAbout">Sobre</span></a>
+  <!-- Shadcn Studio Footer Component 11: original seal and social artwork. -->
+  <footer class="footer-eleven" id="rodape" aria-label="Thales Calgarotto">
+    <div class="footer-inner wrap">
+      <div class="footer-social-row">
+        <span class="footer-rule" aria-hidden="true"></span>
+        <div class="footer-shortcuts">
+          <a href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><img src="assets/footer-original-github-logo.png" alt="" width="16" height="16" loading="lazy"></a>
+          <a href="mailto:tcalgarotto96@gmail.com" aria-label="E-mail: tcalgarotto96@gmail.com" title="E-mail"><img src="assets/footer-original-gmail.png" alt="" width="16" height="16" loading="lazy"></a>
+          <a href="https://www.linkedin.com/in/thalescalgarotto/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Thales Calgarotto" title="LinkedIn"><img src="assets/footer-original-linkedin.png" alt="" width="16" height="16" loading="lazy"></a>
+          <a href="https://duckdooh.com/" target="_blank" rel="noopener noreferrer" aria-label="DuckDooh" title="DuckDooh"><img src="assets/footer-duckdooh.svg" alt="" width="16" height="16" loading="lazy"></a>
+          <a href="https://ortoclean.duckdns.org/login-teste" target="_blank" rel="noopener noreferrer" aria-label="OrtoClean — acessar demo" title="OrtoClean"><img src="assets/footer-ortoclean.svg" alt="" width="16" height="16" loading="lazy"></a>
+        </div>
+        <span class="footer-rule" aria-hidden="true"></span>
       </div>
-      <span class="footer-rule" aria-hidden="true"></span>
+      <div class="footer-message"><p data-i18n="footerThanks">Obrigado por passar por aqui.</p><img src="assets/footer-original-seal.png" alt="" width="100" height="100" loading="lazy"><p data-i18n="footerInvitation">Vamos criar algo bonito.</p></div>
+      <div class="footer-signoff"><img class="footer-signature" src="assets/footer-signature-thales.png" alt="Assinatura manuscrita Thales" width="180" height="68" loading="lazy"><p class="footer-copyright">@Thales Calgarotto <span id="year">2026</span></p></div>
     </div>
-    <div class="footer-message"><p data-i18n="footerThanks">Obrigado pela visita.</p><img src="assets/footer-seal.svg" alt="" width="100" height="100" loading="lazy"><a href="https://github.com/tcalgarotto" target="_blank" rel="noopener noreferrer" data-i18n="footerInvitation">Vamos construir algo juntos.</a></div>
-    <div class="footer-signoff"><p class="footer-name">Thales <span>Calgarotto</span></p><p class="footer-copyright">@tcalgarotto · <span id="year">2026</span></p></div>
-    <a class="footer-top" href="#main"><span data-i18n="backToTop">Voltar ao início</span><span class="icon icon-arrow" aria-hidden="true"></span></a>
   </footer>
 </body>
 </html>

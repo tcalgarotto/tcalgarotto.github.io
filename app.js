@@ -9,8 +9,8 @@ Object.assign(translations.pt,{heroEyebrow:'Engenharia de software & IA aplicada
 Object.assign(translations.en,{heroEyebrow:'Software engineering & applied AI',heroLine1:'Hello, I’m',heroLine2:'Thales Calgarotto.',heroRole:'Software, automation & AI',heroDescription:'I build digital products that connect people, processes, and artificial intelligence.',toolsLabel:'Tools in my workflow',pauseTools:'Pause motion'});
 Object.assign(translations.pt,{skillsCredentialsTitle:'Agentes, RAG e IA generativa.',skillsCredentialsDescription:'Seis credenciais IBM emitidas pelo Coursera, com verificação individual no Credly.',credlyDate:'27 ago 2026'});
 Object.assign(translations.en,{skillsCredentialsTitle:'Agents, RAG, and generative AI.',skillsCredentialsDescription:'Six IBM credentials issued by Coursera, each with individual verification on Credly.',credlyDate:'Aug 27, 2026'});
-Object.assign(translations.pt,{footerThanks:'Obrigado pela visita.',footerInvitation:'Vamos construir algo juntos.'});
-Object.assign(translations.en,{footerThanks:'Thank you for visiting.',footerInvitation:'Let’s build something together.'});
+Object.assign(translations.pt,{footerThanks:'Obrigado por passar por aqui.',footerInvitation:'Vamos criar algo bonito.'});
+Object.assign(translations.en,{footerThanks:'Thank you, for visiting here',footerInvitation:'Let’s create something beautiful'});
 let language='pt';
 let cardInstance=null;
 const savePreference=(key,value)=>{try{localStorage.setItem(key,value)}catch{}};
