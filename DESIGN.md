@@ -18,6 +18,10 @@ A seção Sobre segue as referências fornecidas em 14/10: painel de apresentaç
 
 Em 14/10, por pedido do titular, todos os botões de pausar/retomar foram removidos. As pausas automáticas por hover/foco, visibilidade e preferência de movimento reduzido permanecem.
 
+Revisão do título em 14/10 após comparação do titular: o título agora ocupa duas linhas entre faixas azul, verde e laranja e utiliza as cinco formas SVG originais do HTML fornecido. Removidos os desenhos próprios em estilo clipart e o painel cinza da introdução. O texto e a lista vertical lenta foram preservados. A paleta adicional pertence apenas à composição gráfica escolhida pelo titular.
+
 No layout de duas colunas, o cordão do crachá entra pela borda superior sem expor sua ponta. A âncora física fica 48px acima do documento, com o primeiro segmento alongado para preservar a posição de repouso do cartão. O desenho segue apenas os corpos físicos, sem prolongamento artificial.
 
 Na composição empilhada de até 800px, a âncora física se alinha ao centro vertical do botão principal. O alinhamento acompanha redimensionamento, tradução e rolagem; a prévia estática usa a mesma altura. O cartão mantém sua posição de repouso.
+
+Em 14/10, por pedido do titular, o nome da hero recebe o light leak do Animated Text 11, adaptado em CSS nativo: dois véus diagonais, verde da marca e âmbar, em loop, só com movimento permitido. Os quatro títulos de seção recebem o reveal do Animated Text 06, por palavra, uma vez, ao entrar na tela. No título ilustrado, cada palavra e cada faixa entra como uma unidade; os SVGs permanecem. Nomes de projeto, títulos internos e certificações individuais ficam parados. Sem JavaScript ou com movimento reduzido, o texto nasce visível.

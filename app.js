@@ -315,7 +315,7 @@ if (!reducedMotion.matches && 'IntersectionObserver' in window) {
       entrances.unobserve(element);
     }
   }, {threshold:.08});
-  document.querySelectorAll('.section-heading,.about-intro,.practice-carousel,.project-preview,.project-content,.featured-credential,.contact>div').forEach(el=>entrances.observe(el));
+  document.querySelectorAll('.practice-carousel,.project-preview,.project-content,.featured-credential').forEach(el=>entrances.observe(el));
 }
 
 // Keep the tools rail idle outside the viewport.
@@ -449,3 +449,55 @@ scheduleFooterReveal();
   window.addEventListener('pageshow', configure);
   configure();
 })();
+
+// Animated Text 06, word reveal, once per section title.
+const titleRevealObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+  for (const entry of entries) if (entry.isIntersecting) {
+    entry.target.dataset.revealState = 'visible';
+    titleRevealObserver.unobserve(entry.target);
+  }
+}, { threshold: 0.2 }) : null;
+
+function armTitleReveal(heading, alreadyVisible) {
+  if (reducedMotion.matches || !titleRevealObserver || alreadyVisible) {
+    heading.dataset.revealState = 'visible';
+    titleRevealObserver?.unobserve(heading);
+    return;
+  }
+  heading.dataset.revealState = 'pending';
+  titleRevealObserver.observe(heading);
+}
+
+function mountTitleReveals() {
+  document.querySelectorAll('[data-text-reveal="words"]').forEach(heading => {
+    const label = heading.textContent.replace(/\s+/g, ' ').trim();
+    const revealed = heading.dataset.revealState === 'visible';
+    heading.replaceChildren();
+    label.split(' ').forEach((word, index) => {
+      if (index) heading.append(document.createTextNode(' '));
+      const unit = document.createElement('span');
+      unit.className = 'reveal-unit';
+      unit.style.setProperty('--i', String(index));
+      unit.textContent = word;
+      heading.append(unit);
+    });
+    armTitleReveal(heading, revealed);
+  });
+  const about = document.getElementById('about-title');
+  if (!about) return;
+  const revealed = about.dataset.revealState === 'visible';
+  about.querySelectorAll('.about-title-line > span').forEach((part, index) => {
+    part.classList.add('reveal-unit');
+    part.style.setProperty('--i', String(index));
+  });
+  armTitleReveal(about, revealed);
+}
+
+document.addEventListener('tc-language-change', mountTitleReveals);
+reducedMotion.addEventListener('change', () => {
+  if (!reducedMotion.matches) return;
+  document.querySelectorAll('[data-reveal-state]').forEach(heading => {
+    heading.dataset.revealState = 'visible';
+  });
+});
+mountTitleReveals();
