@@ -2,7 +2,7 @@
 
 Meu portfólio: https://tcalgarotto.github.io/
 
-Produtos web desenvolvidos de ponta a ponta: arquitetura, frontend, backend, APIs e banco de dados. Projetos, tecnologias, formação e contato, em português e inglês, com tema claro e escuro.
+Engenharia de software, automação e inteligência artificial aplicada. Trabalhos selecionados, ferramentas abertas e certificações, em português e inglês, com tema claro e escuro.
 
 ## Prévia local
 
@@ -14,8 +14,13 @@ A tradução engloba conteúdo, rótulos acessíveis, metadados e dados estrutur
 
 - [DuckDooh](https://duckdooh.com/)
 - [OrtoClean](https://ortoclean.duckdns.org/login-teste)
+- [Lucy](https://github.com/tcalgarotto/loop-master)
 
 ## Créditos
 
 - Hero e rodapé adaptados do [Shadcn Studio](https://shadcnstudio.com/).
 - Fontes Space Grotesk e IBM Plex Mono; ícones Phosphor e Simple Icons.
+
+## Performance e movimento
+
+O conteúdo é HTML estático, com fontes locais e imagens em WebP. O CSS editorial contém apenas os estilos usados na página. As animações de entrada mantêm o conteúdo visível desde o início e respeitam movimento reduzido. O crachá conserva a implementação e os assets existentes.

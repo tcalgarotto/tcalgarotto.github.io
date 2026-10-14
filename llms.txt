@@ -1,13 +1,15 @@
 # Thales Calgarotto
 
-> Portfólio de Thales Calgarotto — desenvolvimento completo de produtos web, APIs e integrações. Site em português e inglês: https://tcalgarotto.github.io/
+> Portfólio de Thales Calgarotto: engenharia de software, automação e inteligência artificial aplicada. Site em português e inglês: https://tcalgarotto.github.io/
 
-Thales Calgarotto desenvolveu DuckDooh e OrtoClean de ponta a ponta, como desenvolvedor independente, incluindo arquitetura, frontend, backend, APIs e banco de dados. Possui formação complementar em automação com Python e IA pelo Google e pela IBM.
+Thales Calgarotto trabalha com desenvolvimento de produtos, arquitetura de sistemas, integrações, automação e agentes de IA. DuckDooh e OrtoClean são projetos próprios desenvolvidos integralmente por ele, incluindo arquitetura, frontend, backend, APIs e banco de dados. São trabalhos selecionados, não uma relação completa de sua atuação.
 
 ## Projetos
 
 - [DuckDooh](https://duckdooh.com/): Plataforma para anunciantes encontrarem telas e contratarem campanhas de mídia exterior digital. Contratação, pagamento e veiculação conectados em um mesmo fluxo. Interface em Next.js e TypeScript, API em Python/FastAPI e dados em PostgreSQL. Integrações com Asaas para pagamentos e Yodeck para veiculação de campanhas.
 - [OrtoClean](https://ortoclean.duckdns.org/login-teste): Sistema de gestão odontológica que reúne pacientes, agenda, vendas e financeiro. A comunicação por WhatsApp se integra ao CRM para apoiar o acompanhamento dos pacientes. API em Fastify e TypeScript, banco PostgreSQL e implantação com Docker. O CRM se conecta a um serviço de WhatsApp separado da API principal.
+
+- [Lucy](https://github.com/tcalgarotto/loop-master): Orquestração para agentes de desenvolvimento. Uma skill aberta para o Cursor, com memória entre sessões, organização de entregas e rotinas de verificação.
 
 ## Certificações
 
