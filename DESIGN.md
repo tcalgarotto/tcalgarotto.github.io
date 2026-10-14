@@ -20,4 +20,4 @@ Em 14/10, por pedido do titular, todos os botões de pausar/retomar foram removi
 
 No layout de duas colunas, o cordão do crachá entra pela borda superior sem expor sua ponta. A âncora física fica 48px acima do documento, com o primeiro segmento alongado para preservar a posição de repouso do cartão. O desenho segue apenas os corpos físicos, sem prolongamento artificial.
 
-Na composição empilhada de até 800px, o cordão curto fica na área do crachá para não atravessar a apresentação.
+Na composição empilhada de até 800px, a âncora física se alinha ao centro vertical do botão principal. O alinhamento acompanha redimensionamento, tradução e rolagem; a prévia estática usa a mesma altura. O cartão mantém sua posição de repouso.

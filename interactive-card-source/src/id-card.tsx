@@ -329,7 +329,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   useBeforePhysicsStep(() => {
     if (!fixed.current || !j1.current) return
     const lift = getAnchorLift()
-    if (topJoint.current && Math.abs(lift - anchorLift.current) < 0.005) return
+    if (topJoint.current && Math.abs(lift - anchorLift.current) < 0.00001) return
     if (topJoint.current?.isValid()) world.removeImpulseJoint(topJoint.current, true)
     fixed.current.setTranslation({ x: 0, y: 4 + lift, z: 0 }, true)
     topJoint.current = world.createImpulseJoint(
@@ -398,7 +398,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
       curve.points[2].copy(getLerped(j1.current))
       curve.points[3].copy(fixed.current.translation())
 
-      // All four points follow real bodies; the only fixed point is above the page.
+      // All four points follow real bodies and their single physical pivot.
       curve.updateArcLengths()
 
       // Rebuild + swap each frame to follow the curve; dispose the old geometry.
@@ -525,13 +525,21 @@ const WORLD_UNITS_PER_PX = (2 * CAMERA_Z * Math.tan((CAMERA_FOV_DEG / 2) * (Math
 // Fixed to REFERENCE_HEIGHT_PX so px-per-world-unit stays pinned regardless of canvas size.
 const PX_PER_WORLD_UNIT = REFERENCE_HEIGHT_PX * WORLD_UNITS_PER_PX
 
-// Keep the real desktop pivot 48px above the document, independent of scrolling.
-// Lengthen only the top segment so all dynamic bodies keep their original rest positions.
+// Desktop pivots above the page; mobile pivots at the primary button's vertical center.
+// Changing only the top segment keeps the dynamic bodies at the same rest positions.
 function getAnchorLift() {
   const hero = document.querySelector('.hero-card')
-  if (!hero || window.innerWidth <= 800) return 0
-  const anchorPageY = hero.getBoundingClientRect().top + window.scrollY - 35
-  return Math.max(0, (anchorPageY + 48) / PX_PER_WORLD_UNIT)
+  if (!hero) return 0
+  const scale = window.innerWidth < 768 ? 0.78 : 1
+  const anchorPageY = hero.getBoundingClientRect().top + window.scrollY - 35 * scale
+  let targetPageY = -48
+  if (window.innerWidth <= 800) {
+    const button = document.querySelector('.hero-actions .button-primary')
+    if (!button) return 0
+    const rect = button.getBoundingClientRect()
+    targetPageY = rect.top + rect.height / 2 + window.scrollY
+  }
+  return (anchorPageY - targetPageY) / (PX_PER_WORLD_UNIT * scale)
 }
 
 // Align the badge rest pose with the hero while the real desktop pivot stays above

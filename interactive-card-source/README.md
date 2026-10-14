@@ -23,4 +23,4 @@ A prévia de carregamento é gerada por `generate-preview.mjs`, com a mesma text
 
 No layout de duas colunas, a âncora física fica 48px acima do documento. O primeiro segmento aumenta pelo deslocamento da âncora, preservando a posição de repouso do cartão. A junta superior é recriada apenas quando o layout muda; a rolagem não altera seu comprimento. A curva segue os quatro corpos reais e recalcula seus comprimentos durante o movimento. A prévia estática mantém o cordão até fora da tela.
 
-Na composição empilhada de até 800px, o cordão curto fica na área do crachá para não atravessar a apresentação.
+Na composição empilhada de até 800px, a âncora física se alinha ao centro vertical do botão principal. O alinhamento acompanha redimensionamento, tradução e rolagem; a prévia estática usa a mesma altura. O cartão mantém sua posição de repouso.

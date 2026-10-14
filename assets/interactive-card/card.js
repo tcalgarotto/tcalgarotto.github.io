@@ -45178,7 +45178,7 @@ var SO = "/assets/interactive-card/card.glb", CO = .1, wO = 24, TO = .06, EO = 1
 	}, []), BE(() => {
 		if (!d.current || !f.current) return;
 		let e = ZO();
-		l.current && Math.abs(e - c.current) < .005 || (l.current?.isValid() && a.removeImpulseJoint(l.current, !0), d.current.setTranslation({
+		l.current && Math.abs(e - c.current) < 1e-5 || (l.current?.isValid() && a.removeImpulseJoint(l.current, !0), d.current.setTranslation({
 			x: 0,
 			y: 4 + e,
 			z: 0
@@ -45480,9 +45480,15 @@ var SO = "/assets/interactive-card/card.glb", CO = .1, wO = 24, TO = .06, EO = 1
 }), JO = 520, YO = 20, XO = JO * (40 * Math.tan(Math.PI / 180 * 10)) ** -1;
 function ZO() {
 	let e = document.querySelector(".hero-card");
-	if (!e || window.innerWidth <= 800) return 0;
-	let t = e.getBoundingClientRect().top + window.scrollY - 35;
-	return Math.max(0, (t + 48) / XO);
+	if (!e) return 0;
+	let t = window.innerWidth < 768 ? .78 : 1, n = e.getBoundingClientRect().top + window.scrollY - 35 * t, r = -48;
+	if (window.innerWidth <= 800) {
+		let e = document.querySelector(".hero-actions .button-primary");
+		if (!e) return 0;
+		let t = e.getBoundingClientRect();
+		r = t.top + t.height / 2 + window.scrollY;
+	}
+	return (n - r) / (XO * t);
 }
 var QO = () => (G_((e) => {
 	let t = document.querySelector(".hero-card");
