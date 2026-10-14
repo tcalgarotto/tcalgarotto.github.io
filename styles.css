@@ -51,3 +51,29 @@
 @keyframes tools-scroll{to{transform:translateX(-50%)}}
 @media(max-width:800px){.tool-strip{padding-top:0;padding-bottom:35px}.tools-track li{width:96px;height:88px}.tools-track ul{gap:14px;padding-right:14px}}
 @media(prefers-reduced-motion:reduce){.tools-track{animation:none;width:100%;display:block}.tools-track ul{flex-wrap:wrap;gap:12px;padding:0}.tools-track ul[aria-hidden]{display:none}.tool-strip-heading{display:none}}
+
+/* Match the complete startup preview to the real rig's camera and initial pose. */
+.hero-card picture{display:contents}
+.hero-card #card-fallback{position:absolute;left:50%;transform:translateX(-50%);width:380px;height:555px;max-width:none;top:-35px;bottom:auto;border-radius:0;opacity:1;visibility:visible;transition:opacity .12s}
+.hero-card.card-ready #card-fallback{opacity:0;visibility:hidden}
+#lanyard-root{opacity:0;transition:opacity .12s}
+body.badge-rendered #lanyard-root{opacity:1}
+@media(max-width:767px){.hero-card #card-fallback{width:296.4px;height:432.9px;top:-27.3px}}
+/* The seal remains on the page centerline, with a message on either side. */
+.footer-message{display:grid;grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr);gap:20px;margin-left:0}
+.footer-message>p:first-child{justify-self:end;text-align:right}
+.footer-message>p:last-child{display:block;justify-self:start;text-align:left}
+.footer-message>img{order:0;margin:0;width:100px;height:100px}
+@media(max-width:639px){.footer-message{grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);gap:12px;font-size:12px;line-height:18px}.footer-message>img{width:72px;height:72px}}
+/* One compact section for all eight credentials. */
+.certifications.section{padding-block:40px}.certifications .section-heading{margin-bottom:20px}.certifications h2{font-size:32px}.credentials-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:0;border-top:1px solid var(--border);border-left:1px solid var(--border)}.credential-badge{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-width:0;text-align:center}.credential-badge>img{width:112px;height:112px;object-fit:contain}.credential-badge h3{font-size:14px;font-weight:500;line-height:1.4;letter-spacing:-.01em;max-width:230px}.credential-badge:hover{background:var(--surface)}.credential-badge:focus-visible{outline:2px solid var(--accent-text);outline-offset:-3px}
+@media(max-width:800px){.credentials-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.certifications.section{padding-block:28px}.credential-badge{padding:16px 10px;gap:10px}.credential-badge>img{width:96px;height:96px}.credential-badge h3{font-size:12px}}
+
+/* DuckDooh SiteFooterReveal: opaque page lifts above the sticky footer. */
+.site-shell{position:relative;isolation:isolate;display:flex;flex-direction:column;min-height:100dvh;background:var(--footer-bg,var(--bg))}
+.site-lift{position:relative;z-index:1;min-height:100dvh;background:var(--bg)}
+.footer-eleven{position:sticky;bottom:0;z-index:-1;width:100%}
+.footer-reveal-fade{width:100%;overflow-x:clip}
+.footer-reveal-shell{width:100%;transform-origin:50% 100%}
+.footer-eleven.footer-reveal-static{position:static}
+@media(prefers-reduced-motion:reduce){.footer-reveal-fade{opacity:1!important}.footer-reveal-shell{transform:none!important;filter:none!important}}

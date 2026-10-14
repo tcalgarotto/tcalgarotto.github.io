@@ -4,7 +4,7 @@ O componente de crachá vem do bloco `@ss-blocks/hero-section-44`, instalado pel
 
 O source original identifica a implementação como adaptada do exemplo Lanyard do React Bits (MIT + Commons Clause). Essa atribuição foi preservada em `src/id-card.tsx`. O componente não é vendido como biblioteca ou serviço de componentes.
 
-Adaptações: câmera de tela inteira alinhada à âncora da hero, arraste sem recorte pela coluna, corda que acompanha puxadas longas, soltura física do componente original e rolagem na borda, modelo GLB em arquivo separado, assets locais, integração com o tema da página e callbacks de carregamento. O visual estático continua disponível; o bundle 3D carrega automaticamente após a apresentação inicial da página, sem botão de ativação ou desativação. A física é pausada enquanto a aba está oculta.
+Adaptações: câmera de tela inteira alinhada à âncora da hero, arraste sem recorte pela coluna, corda que acompanha puxadas longas, soltura física do componente original e rolagem na borda, modelo GLB em arquivo separado, assets locais, integração com o tema da página e callbacks de carregamento. O visual estático continua disponível; o bundle 3D começa a carregar imediatamente, sem botão de ativação ou desativação. A física é pausada enquanto a aba está oculta.
 
 ```sh
 npm ci
@@ -18,3 +18,5 @@ O comportamento de soltura usa o mecanismo original: somente o cartão se torna 
 A interpolação visual da corda é exponencial e estável em frames lentos. O repouso usa amortecimento e sleep; a estabilização de yaw não desperta corpos adormecidos.
 
 O build também atualiza os identificadores de conteúdo do módulo, do JavaScript principal, do CSS e dos badges nos URLs da página. Isso evita servir versões anteriores pelo cache após uma atualização.
+
+A prévia de carregamento é gerada por `generate-preview.mjs`, com a mesma textura frontal e prendedor do modelo, os limites do GLB, a câmera, a âncora e a inclinação inicial. Os SVGs completos para cada tema evitam mostrar a textura plana como se fosse o crachá. A cena só sinaliza pronta após dois frames de renderização; a troca usa uma transição curta de opacidade.

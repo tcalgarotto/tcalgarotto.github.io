@@ -45116,7 +45116,12 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 		linearDamping: 1.5
 	}, { nodes: _, materials: y } = Ex(bO), b = Sx(e);
 	(0, v.useEffect)(() => {
-		r?.();
+		let e = 0, t = requestAnimationFrame(() => {
+			e = requestAnimationFrame(() => r?.());
+		});
+		return () => {
+			cancelAnimationFrame(t), cancelAnimationFrame(e);
+		};
 	}, [r]);
 	let x = Sx(EO), S = (0, v.useMemo)(() => {
 		let e = y.base.map, t = e.image, r = RO, i = RO, a = document.createElement("canvas");
@@ -45548,7 +45553,7 @@ function QO(e, t, n) {
 		children: /* @__PURE__ */ (0, Eg.jsx)(v.Suspense, {
 			fallback: null,
 			children: /* @__PURE__ */ (0, Eg.jsx)(XO, {
-				frontImage: "/assets/interactive-card/portrait.svg",
+				frontImage: "/assets/interactive-card/portrait.svg?v=d6d077a9e791",
 				className: "lanyard-stage",
 				onReady: t,
 				active: e

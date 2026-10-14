@@ -6,8 +6,8 @@ Manter Space Grotesk, a paleta carvão e verde da marca, temas claro e escuro e 
 
 Texto de corpo a partir de 16px, títulos equilibrados, margens consistentes, foco visível e movimento breve. Evitar rótulos pequenos acima dos títulos, decoração em monospace, grades de cards idênticos, linhas decorativas, gradients e sombras sem função. Preferir HTML e CSS nativos; componentes Shadcn Studio já adaptados são a referência existente.
 
-O crachá mantém os assets, a aparência, o comportamento e o carregamento da versão existente. Não redesenhar nem otimizar esse componente sem um pedido explícito do titular.
+O crachá mantém a física, os assets do modelo e a aparência. Por pedido do titular, a prévia inicial agora inclui corda e prendedor e acompanha a textura e projeção do 3D; o carregamento começa imediatamente. Não redesenhar a física sem pedido explícito.
 
-O rodapé usa a composição original do Shadcn Studio Footer 11: atalhos entre linhas, selo vermelho central entre as mensagens e assinatura abaixo. Preservar esse tratamento visual, inclusive as linhas e os detalhes originais.
+O rodapé usa a composição original do Shadcn Studio Footer 11: atalhos entre linhas, selo vermelho central entre as mensagens e assinatura abaixo. Preservar esse tratamento visual, inclusive as linhas e os detalhes originais. Por pedido do titular, o rodapé é revelado por trás do conteúdo, seguindo SiteFooterReveal da DuckDooh; o selo ocupa o centro horizontal com frases de cada lado.
 
 O trilho de ferramentas fica entre a apresentação e a biografia, com ícones existentes, controle de pausa e alternativa estática para movimento reduzido. Substitui o antigo bloco de texto sobre ferramentas.

@@ -181,6 +181,7 @@ const translations = {
 };
 let language = 'pt';
 let cardInstance = null;
+const badgePreviews={light:'assets/interactive-card/fallback-light.svg?v=336a7536511b',dark:'assets/interactive-card/fallback-dark.svg?v=ef60970b65f3'};
 const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch {} };
 const readPreference = key => { try { return localStorage.getItem(key); } catch { return null; } };
 const themeButton = document.getElementById('theme-toggle');
@@ -193,6 +194,9 @@ function updateThemeLabel() {
   themeButton.setAttribute('aria-label', label);
   themeButton.title = label;
   document.querySelector('meta[name="theme-color"]').content = currentTheme() === 'dark' ? '#171a1b' : '#f5f6f2';
+  const fallback=document.getElementById('card-fallback');
+  fallback.src=badgePreviews[currentTheme()];
+  document.querySelector('.hero-card source').srcset=fallback.src;
   cardInstance?.setActive(!document.hidden);
 }
 themeButton.addEventListener('click', () => {
@@ -268,16 +272,16 @@ const requestedLanguage = new URLSearchParams(location.search).get('lang');
 applyLanguage(requestedLanguage === 'en' || requestedLanguage === 'pt' ? requestedLanguage : readPreference('tc-language') === 'en' ? 'en' : 'pt');
 
 async function startCard(){
- const fail=()=>{document.querySelector('.hero-card').classList.remove('card-ready');document.getElementById('card-status').textContent=translations[language].cardFallback;queueMicrotask(()=>{cardInstance?.unmount();cardInstance=null})};
+ const fail=()=>{document.querySelector('.hero-card').classList.remove('card-ready');document.body.classList.remove('badge-rendered');document.getElementById('card-status').textContent=translations[language].cardFallback;queueMicrotask(()=>{cardInstance?.unmount();cardInstance=null})};
  try{
-  const {mountBadge}=await import('./assets/interactive-card/card.js?v=ab0e414f2960');
-  cardInstance=mountBadge(document.getElementById('lanyard-root'),()=>{document.querySelector('.hero-card').classList.add('card-ready');document.getElementById('card-status').textContent=translations[language].cardReady},fail);
+  const {mountBadge}=await import('./assets/interactive-card/card.js?v=a779557e8d9b');
+  cardInstance=mountBadge(document.getElementById('lanyard-root'),()=>{document.querySelector('.hero-card').classList.add('card-ready');document.body.classList.add('badge-rendered');document.getElementById('card-status').textContent=translations[language].cardReady},fail);
   const updateVisibility=()=>cardInstance?.setActive(!document.hidden);
   document.addEventListener('visibilitychange',updateVisibility);
  }catch{fail()}
 }
-// Load automatically after the main content has had a chance to paint.
-if('requestIdleCallback' in window)requestIdleCallback(startCard,{timeout:1000});else setTimeout(startCard,0);
+// Fetch immediately; the complete hanging preview remains until WebGL has rendered.
+startCard();
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 // Brief, varied entrances. Content starts visible and remains readable without JS.
@@ -317,3 +321,31 @@ if ('IntersectionObserver' in window) {
 }
 document.addEventListener('visibilitychange', updateToolsActivity);
 updateToolsActivity();
+
+// Same reveal progress and visual treatment as DuckDooh's SiteFooterReveal.
+const revealFooter=document.querySelector('.footer-eleven');
+const revealFade=document.querySelector('.footer-reveal-fade');
+const revealShell=document.querySelector('.footer-reveal-shell');
+const siteLift=document.querySelector('[data-site-lift]');
+let revealFrame=0;
+function updateFooterReveal(){
+ revealFrame=0;
+ const height=revealFooter.offsetHeight;
+ const staticFooter=height>innerHeight;
+ revealFooter.classList.toggle('footer-reveal-static',staticFooter);
+ if(reducedMotion.matches||staticFooter||!height){
+  revealFade.dataset.p='1';revealFade.style.opacity='1';revealShell.style.transform='none';revealShell.style.filter='none';return;
+ }
+ const uncovered=Math.min(height,Math.max(0,innerHeight-siteLift.getBoundingClientRect().bottom));
+ const p=uncovered/height;
+ revealFade.dataset.p=p.toFixed(3);
+ revealFade.style.opacity=String(.45+.55*p);
+ revealShell.style.transform=`scale(${.96+.04*p})`;
+ revealShell.style.filter=`blur(${(6*(1-p)).toFixed(2)}px)`;
+}
+function scheduleFooterReveal(){if(!revealFrame)revealFrame=requestAnimationFrame(updateFooterReveal)}
+window.addEventListener('scroll',scheduleFooterReveal,{passive:true});
+window.addEventListener('resize',scheduleFooterReveal);
+reducedMotion.addEventListener('change',scheduleFooterReveal);
+if('ResizeObserver' in window){const observer=new ResizeObserver(scheduleFooterReveal);observer.observe(revealFooter);observer.observe(siteLift)}
+scheduleFooterReveal();

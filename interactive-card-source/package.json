@@ -24,6 +24,6 @@
   },
   "type": "module",
   "scripts": {
-    "build": "vite build && node refresh-assets.mjs"
+    "build": "node generate-preview.mjs && vite build && node refresh-assets.mjs"
   }
 }

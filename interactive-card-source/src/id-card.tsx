@@ -207,7 +207,12 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
 
   const { nodes, materials } = useGLTF(CARD_MODEL_URL) as unknown as CardGltf
   const frontTexture = useTexture(frontImage)
-  useEffect(()=>{onReady?.()},[onReady])
+  useEffect(()=>{
+    // Wait for the mounted scene and aligned camera to paint before replacing the preview.
+    let second=0
+    const first=requestAnimationFrame(()=>{second=requestAnimationFrame(()=>onReady?.())})
+    return ()=>{cancelAnimationFrame(first);cancelAnimationFrame(second)}
+  },[onReady])
 
   // Camera-facing plane, not procedural geometry — reads the same from this angle.
   const pinTexture = useTexture(PIN_IMAGE_URL)
