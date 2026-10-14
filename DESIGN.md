@@ -9,3 +9,5 @@ Texto de corpo a partir de 16px, títulos equilibrados, margens consistentes, fo
 O crachá mantém os assets, a aparência, o comportamento e o carregamento da versão existente. Não redesenhar nem otimizar esse componente sem um pedido explícito do titular.
 
 O rodapé usa a composição original do Shadcn Studio Footer 11: atalhos entre linhas, selo vermelho central entre as mensagens e assinatura abaixo. Preservar esse tratamento visual, inclusive as linhas e os detalhes originais.
+
+O trilho de ferramentas fica entre a apresentação e a biografia, com ícones existentes, controle de pausa e alternativa estática para movimento reduzido. Substitui o antigo bloco de texto sobre ferramentas.

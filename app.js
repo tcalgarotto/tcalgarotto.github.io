@@ -2,6 +2,9 @@
 const translations = {
   "pt": {
     "skip": "Pular para o conteúdo",
+    "toolsListLabel": "Ferramentas",
+    "pauseTools": "Pausar movimento",
+    "resumeTools": "Retomar movimento",
     "navProjects": "Projetos",
     "navAbout": "Sobre",
     "navCerts": "Certificações",
@@ -43,8 +46,6 @@ const translations = {
     "practiceAutomationDescription": "Processos que conectam serviços e reduzem trabalho repetitivo. Python e Git se encontram com pagamentos, comunicação e operação dos produtos.",
     "practiceAi": "Inteligência artificial",
     "practiceAiDescription": "Agentes, busca com contexto e integração de ferramentas. Meu repertório inclui RAG, LangChain, LangGraph, MCP e bancos vetoriais.",
-    "toolsLabel": "Ferramentas no meu trabalho",
-    "toolsDescription": "Escolho a stack a partir do problema. Também trabalho com Redis, Supabase, Cloudflare, Qdrant e Bun, além de GitHub e Cursor no desenvolvimento.",
     "certsTitle": "Certificações",
     "certsDescription": "Aprofundamento em automação, agentes e aplicações de IA, com certificações IBM e Google.",
     "specialization": "Especialização",
@@ -90,6 +91,9 @@ const translations = {
   },
   "en": {
     "skip": "Skip to content",
+    "toolsListLabel": "Tools",
+    "pauseTools": "Pause motion",
+    "resumeTools": "Resume motion",
     "navProjects": "Projects",
     "navAbout": "About",
     "navCerts": "Credentials",
@@ -131,8 +135,6 @@ const translations = {
     "practiceAutomationDescription": "Workflows that connect services and reduce repetitive work. Python and Git meet payments, communication, and product operations.",
     "practiceAi": "Artificial intelligence",
     "practiceAiDescription": "Agents, contextual search, and tool integration. My technical repertoire includes RAG, LangChain, LangGraph, MCP, and vector databases.",
-    "toolsLabel": "Tools in my work",
-    "toolsDescription": "I choose the stack to fit the problem. I also work with Redis, Supabase, Cloudflare, Qdrant, and Bun, with GitHub and Cursor in my development workflow.",
     "certsTitle": "Credentials",
     "certsDescription": "Further study in automation, agents, and AI applications, with IBM and Google credentials.",
     "specialization": "Specialization",
@@ -199,6 +201,11 @@ themeButton.addEventListener('click', () => {
   updateThemeLabel();
 });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeLabel);
+function updateToolsLabel() {
+  const button = document.getElementById('tools-toggle');
+  const paused = button.getAttribute('aria-pressed') === 'true';
+  button.textContent = translations[language][paused ? 'resumeTools' : 'pauseTools'];
+}
 function applyLanguage(lang) {
   language = lang;
   const copy = translations[lang];
@@ -253,6 +260,7 @@ function applyLanguage(lang) {
   }
   schemaElement.textContent = JSON.stringify(schema);
   updateThemeLabel();
+  updateToolsLabel();
   savePreference('tc-language', lang);
 }
 document.getElementById('language-toggle').addEventListener('click', () => applyLanguage(language === 'pt' ? 'en' : 'pt'));
@@ -287,3 +295,25 @@ if (!reducedMotion.matches && 'IntersectionObserver' in window) {
   }, {threshold:.08});
   document.querySelectorAll('.section-heading,.about-intro,.practice-list>div,.project-preview,.project-content,.featured-credential,.contact>div').forEach(el=>entrances.observe(el));
 }
+
+// Keep the restored tools rail controllable and idle outside the viewport.
+const toolsStrip = document.querySelector('.tool-strip');
+const toolsToggle = document.getElementById('tools-toggle');
+toolsToggle.hidden = false;
+toolsToggle.addEventListener('click', () => {
+  const paused = toolsStrip.classList.toggle('paused');
+  toolsToggle.setAttribute('aria-pressed', String(paused));
+  updateToolsLabel();
+});
+let toolsInView = !('IntersectionObserver' in window);
+function updateToolsActivity() {
+  toolsStrip.dataset.active = String(toolsInView && !document.hidden);
+}
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(entries => {
+    toolsInView = entries[0].isIntersecting;
+    updateToolsActivity();
+  }).observe(toolsStrip);
+}
+document.addEventListener('visibilitychange', updateToolsActivity);
+updateToolsActivity();
