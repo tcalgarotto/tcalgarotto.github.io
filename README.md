@@ -2,7 +2,7 @@
 
 Meu portfólio: https://tcalgarotto.github.io/
 
-Engenharia de software, automação e inteligência artificial aplicada. Trabalhos selecionados, ferramentas abertas e certificações, em português e inglês, com tema claro e escuro.
+Engenharia de software, automação e inteligência artificial aplicada. Trabalhos selecionados e certificações, em português e inglês, com tema claro e escuro.
 
 ## Prévia local
 
@@ -14,7 +14,6 @@ A tradução engloba conteúdo, rótulos acessíveis, metadados e dados estrutur
 
 - [DuckDooh](https://duckdooh.com/)
 - [OrtoClean](https://ortoclean.duckdns.org/login-teste)
-- [Lucy](https://github.com/tcalgarotto/loop-master)
 
 ## Créditos
 

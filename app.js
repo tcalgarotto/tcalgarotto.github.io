@@ -11,7 +11,7 @@ const translations = {
     "heroCta": "Conhecer meu trabalho",
     "contactCta": "Conversar",
     "projectsTitle": "Trabalhos selecionados",
-    "projectsDescription": "Produtos próprios e ferramentas abertas que mostram diferentes frentes do meu trabalho.",
+    "projectsDescription": "Produtos próprios que mostram diferentes frentes do meu trabalho.",
     "ownership": "Desenvolvimento completo",
     "ownershipDescription": "Criei a arquitetura, o frontend, o backend, as APIs e o banco de dados.",
     "duckType": "Mídia exterior digital",
@@ -60,11 +60,11 @@ const translations = {
     "contactDescription": "Para conversar sobre um projeto, uma oportunidade ou uma ideia que merece sair do papel.",
     "emailCta": "Enviar e-mail",
     "linkedinCta": "LinkedIn",
-    "footerThanks": "Thales Calgarotto",
-    "footerInvitation": "Software, automação e inteligência artificial.",
+    "footerThanks": "Obrigado por passar por aqui.",
+    "footerInvitation": "Vamos criar algo bonito.",
     "backToTop": "Voltar ao início",
     "pageTitle": "Thales Calgarotto | Software, automação e inteligência artificial",
-    "pageDescription": "Thales Calgarotto. Engenharia de software, automação e inteligência artificial aplicada. Conheça trabalhos selecionados, ferramentas abertas e certificações.",
+    "pageDescription": "Thales Calgarotto. Engenharia de software, automação e inteligência artificial aplicada. Conheça trabalhos selecionados e certificações.",
     "imageAlt": "Portfólio de Thales Calgarotto",
     "brandLabel": "tc_ Thales Calgarotto, início",
     "navLabel": "Navegação principal",
@@ -86,13 +86,7 @@ const translations = {
     "newTab": "abre em nova aba",
     "aboutContinuation": "Assumo projetos inteiros quando o contexto pede. Investigo, desenho, implemento e testo. Aprender algo novo e voltar para melhorar o que já existe fazem parte da mesma rotina.",
     "practiceSystems": "Arquitetura e sistemas",
-    "practiceSystemsDescription": "Backend, APIs, modelagem de dados e serviços externos. Python, FastAPI, Fastify, PostgreSQL e Docker estão entre as ferramentas que uso.",
-    "lucyTitle": "Lucy",
-    "lucyDescription": "Orquestração para agentes de desenvolvimento. Uma skill aberta para o Cursor, com memória entre sessões, organização de entregas e rotinas de verificação.",
-    "lucyCta": "Ver a Lucy no GitHub",
-    "lucyLabel": "Ver a Lucy no GitHub (abre em nova aba)",
-    "moreWork": "Outros projetos e experimentos no GitHub",
-    "signatureNote": "Thales Calgarotto"
+    "practiceSystemsDescription": "Backend, APIs, modelagem de dados e serviços externos. Python, FastAPI, Fastify, PostgreSQL e Docker estão entre as ferramentas que uso."
   },
   "en": {
     "skip": "Skip to content",
@@ -105,7 +99,7 @@ const translations = {
     "heroCta": "Explore my work",
     "contactCta": "Get in touch",
     "projectsTitle": "Selected work",
-    "projectsDescription": "Independent products and open tools that show different sides of my work.",
+    "projectsDescription": "Independent products that show different sides of my work.",
     "ownership": "End-to-end development",
     "ownershipDescription": "I designed the architecture and built the frontend, backend, APIs, and database.",
     "duckType": "Digital out-of-home advertising",
@@ -154,11 +148,11 @@ const translations = {
     "contactDescription": "Get in touch about a project, an opportunity, or an idea worth building.",
     "emailCta": "Send an email",
     "linkedinCta": "LinkedIn",
-    "footerThanks": "Thales Calgarotto",
-    "footerInvitation": "Software, automation, and artificial intelligence.",
+    "footerThanks": "Thank you for visiting.",
+    "footerInvitation": "Let’s create something beautiful.",
     "backToTop": "Back to top",
     "pageTitle": "Thales Calgarotto | Software, automation, and artificial intelligence",
-    "pageDescription": "Thales Calgarotto. Software engineering, automation, and applied artificial intelligence. Explore selected work, open tools, and credentials.",
+    "pageDescription": "Thales Calgarotto. Software engineering, automation, and applied artificial intelligence. Explore selected work and credentials.",
     "imageAlt": "Thales Calgarotto’s portfolio",
     "brandLabel": "tc_ Thales Calgarotto, home",
     "navLabel": "Main navigation",
@@ -180,13 +174,7 @@ const translations = {
     "newTab": "opens in a new tab",
     "aboutContinuation": "I take on complete projects when the context calls for it. I investigate, design, implement, and test. Learning something new and returning to improve existing work are part of the same practice.",
     "practiceSystems": "Architecture and systems",
-    "practiceSystemsDescription": "Backend services, APIs, data modeling, and external services. Python, FastAPI, Fastify, PostgreSQL, and Docker are among the tools I use.",
-    "lucyTitle": "Lucy",
-    "lucyDescription": "Orchestration for development agents. An open Cursor skill with cross-session memory, delivery coordination, and verification workflows.",
-    "lucyCta": "Explore Lucy on GitHub",
-    "lucyLabel": "Explore Lucy on GitHub (opens in a new tab)",
-    "moreWork": "More projects and experiments on GitHub",
-    "signatureNote": "Thales Calgarotto"
+    "practiceSystemsDescription": "Backend services, APIs, data modeling, and external services. Python, FastAPI, Fastify, PostgreSQL, and Docker are among the tools I use."
   }
 };
 let language = 'pt';
@@ -263,7 +251,6 @@ function applyLanguage(lang) {
   } else if (document.getElementById('card-status').textContent) {
     document.getElementById('card-status').textContent = copy.cardFallback;
   }
-  schema['@graph'].find(item => item.name === 'Lucy').description = copy.lucyDescription;
   schemaElement.textContent = JSON.stringify(schema);
   updateThemeLabel();
   savePreference('tc-language', lang);

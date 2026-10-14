@@ -9,7 +9,6 @@ Thales Calgarotto trabalha com desenvolvimento de produtos, arquitetura de siste
 - [DuckDooh](https://duckdooh.com/): Plataforma para anunciantes encontrarem telas e contratarem campanhas de mídia exterior digital. Contratação, pagamento e veiculação conectados em um mesmo fluxo. Interface em Next.js e TypeScript, API em Python/FastAPI e dados em PostgreSQL. Integrações com Asaas para pagamentos e Yodeck para veiculação de campanhas.
 - [OrtoClean](https://ortoclean.duckdns.org/login-teste): Sistema de gestão odontológica que reúne pacientes, agenda, vendas e financeiro. A comunicação por WhatsApp se integra ao CRM para apoiar o acompanhamento dos pacientes. API em Fastify e TypeScript, banco PostgreSQL e implantação com Docker. O CRM se conecta a um serviço de WhatsApp separado da API principal.
 
-- [Lucy](https://github.com/tcalgarotto/loop-master): Orquestração para agentes de desenvolvimento. Uma skill aberta para o Cursor, com memória entre sessões, organização de entregas e rotinas de verificação.
 
 ## Certificações
 
