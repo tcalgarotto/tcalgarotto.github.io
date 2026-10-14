@@ -39,6 +39,12 @@ const translations = {
     "architecture": "Implementação",
     "scope": "O que desenvolvi",
     "aboutTitle": "Como penso e construo",
+    "aboutWordHow": "Como",
+    "aboutWordThink": "penso",
+    "aboutWordBuild": "e construo",
+    "practiceLabel": "Áreas de atuação",
+    "previousPractice": "Área anterior",
+    "nextPractice": "Próxima área",
     "aboutDescription": "Gosto de entender como as coisas funcionam e de construir soluções que façam sentido para quem usa. Meu trabalho passa por arquitetura, desenvolvimento de produtos, automação e inteligência artificial.",
     "practiceProduct": "Produtos e experiência",
     "practiceProductDescription": "Interfaces, regras de negócio e dados pensados como partes de uma mesma experiência. Trabalho com TypeScript, React e Next.js.",
@@ -128,6 +134,12 @@ const translations = {
     "architecture": "Implementation",
     "scope": "What I built",
     "aboutTitle": "How I think and build",
+    "aboutWordHow": "How",
+    "aboutWordThink": "I think",
+    "aboutWordBuild": "and build",
+    "practiceLabel": "Areas of expertise",
+    "previousPractice": "Previous area",
+    "nextPractice": "Next area",
     "aboutDescription": "I like understanding how things work and building solutions that make sense to the people using them. My work spans architecture, product development, automation, and artificial intelligence.",
     "practiceProduct": "Products and experience",
     "practiceProductDescription": "Interfaces, business logic, and data designed as parts of one experience. I work with TypeScript, React, and Next.js.",
@@ -266,6 +278,7 @@ function applyLanguage(lang) {
   updateThemeLabel();
   updateToolsLabel();
   savePreference('tc-language', lang);
+  document.dispatchEvent(new Event('tc-language-change'));
 }
 document.getElementById('language-toggle').addEventListener('click', () => applyLanguage(language === 'pt' ? 'en' : 'pt'));
 const requestedLanguage = new URLSearchParams(location.search).get('lang');
@@ -297,7 +310,7 @@ if (!reducedMotion.matches && 'IntersectionObserver' in window) {
       entrances.unobserve(element);
     }
   }, {threshold:.08});
-  document.querySelectorAll('.section-heading,.about-intro,.practice-list>div,.project-preview,.project-content,.featured-credential,.contact>div').forEach(el=>entrances.observe(el));
+  document.querySelectorAll('.section-heading,.about-intro,.practice-carousel,.project-preview,.project-content,.featured-credential,.contact>div').forEach(el=>entrances.observe(el));
 }
 
 // Keep the restored tools rail controllable and idle outside the viewport.
@@ -349,3 +362,100 @@ window.addEventListener('resize',scheduleFooterReveal);
 reducedMotion.addEventListener('change',scheduleFooterReveal);
 if('ResizeObserver' in window){const observer=new ResizeObserver(scheduleFooterReveal);observer.observe(revealFooter);observer.observe(siteLift)}
 scheduleFooterReveal();
+
+// Vertical reading rail: 12-second dwell, 900ms travel, native controls and static fallback.
+(() => {
+  const section = document.getElementById('sobre');
+  const rail = section.querySelector('.practice-carousel');
+  const viewport = rail.querySelector('.practice-viewport');
+  const track = rail.querySelector('.practice-list');
+  const originals = [...track.children];
+  const count = originals.length;
+  const controls = rail.querySelector('.practice-controls');
+  const toggle = document.getElementById('practice-toggle');
+  let index = count, timer = 0, settleTimer = 0;
+  let inView = false, paused = false, hovered = false, focused = false, traveling = false;
+  const copies = () => originals.map(item => {
+    const clone = item.cloneNode(true);
+    clone.dataset.clone = 'true';
+    clone.setAttribute('aria-hidden', 'true');
+    return clone;
+  });
+  track.prepend(...copies());
+  track.append(...copies());
+  const items = [...track.children];
+  const position = () => (index % count + count) % count;
+  const enhanced = () => !reducedMotion.matches;
+  const moving = () => enhanced() && inView && !document.hidden && !paused && !hovered && !focused;
+  function paint(instant = false) {
+    items.forEach((item, i) => {
+      item.dataset.active = String(i === index);
+      item.dataset.neighbor = String(Math.abs(i - index) === 1);
+    });
+    if (enhanced()) {
+      const rowHeight = items[index].getBoundingClientRect().height;
+      track.style.transition = instant ? 'none' : '';
+      track.style.transform = `translate3d(0,${viewport.clientHeight / 2 - rowHeight / 2 - index * rowHeight}px,0)`;
+    } else {
+      track.style.transform = '';
+      track.style.transition = '';
+    }
+    controls.querySelector('.practice-count').textContent = `${position() + 1} / ${count}`;
+    rail.dataset.index = String(position());
+  }
+  function schedule() {
+    clearTimeout(timer);
+    section.dataset.running = String(moving());
+    if (moving() && !traveling) timer = setTimeout(() => advance(1), 12000);
+  }
+  function advance(direction, manual = false) {
+    if (!enhanced() || traveling) return;
+    clearTimeout(timer);
+    traveling = true;
+    index += direction;
+    paint();
+    if (manual) rail.querySelector('.practice-announcement').textContent = originals[position()].querySelector('dt').textContent;
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => {
+      if (index >= count * 2 || index < count) {
+        index = count + position();
+        paint(true);
+      }
+      traveling = false;
+      schedule();
+    }, 950);
+  }
+  function configure() {
+    clearTimeout(timer);
+    clearTimeout(settleTimer);
+    traveling = false;
+    index = count + position();
+    rail.dataset.enhanced = String(enhanced());
+    controls.hidden = !enhanced();
+    paint(true);
+    schedule();
+  }
+  toggle.addEventListener('click', () => {
+    paused = !paused;
+    toggle.setAttribute('aria-pressed', String(paused));
+    toggle.dataset.i18n = paused ? 'resumeTools' : 'pauseTools';
+    toggle.textContent = translations[language][toggle.dataset.i18n];
+    schedule();
+  });
+  document.getElementById('practice-prev').addEventListener('click', () => advance(-1, true));
+  document.getElementById('practice-next').addEventListener('click', () => advance(1, true));
+  rail.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovered = true; schedule(); } });
+  rail.addEventListener('pointerleave', () => { hovered = false; schedule(); });
+  rail.addEventListener('focusin', () => { focused = true; schedule(); });
+  rail.addEventListener('focusout', event => { if (!rail.contains(event.relatedTarget)) { focused = false; schedule(); } });
+  document.addEventListener('visibilitychange', schedule);
+  document.addEventListener('tc-language-change', () => { paint(true); schedule(); });
+  reducedMotion.addEventListener('change', configure);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => { inView = entries[0].isIntersecting; schedule(); }, {threshold:.15}).observe(section);
+  } else { inView = true; }
+  if ('ResizeObserver' in window) new ResizeObserver(() => paint(true)).observe(viewport);
+  window.addEventListener('pagehide', () => { clearTimeout(timer); clearTimeout(settleTimer); });
+  window.addEventListener('pageshow', configure);
+  configure();
+})();
