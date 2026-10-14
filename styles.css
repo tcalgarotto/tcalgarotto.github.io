@@ -37,20 +37,18 @@
 @media(max-width:1023px){.footer-eleven{padding-block:64px}}
 @media(max-width:639px){.footer-eleven{padding-block:32px}.footer-message{margin-left:0;gap:20px;display:flex}.footer-message>p:first-child,.footer-message>p:last-child{text-align:center}.footer-message{flex-direction:column}.footer-message>img{display:block;order:0;margin-inline:auto}.footer-message>p:last-child{display:none}.footer-signoff{padding-top:24px}}
 
-/* Restored tools rail with pause control and a static reduced-motion layout. */
+/* Tools rail with hover pause and a static reduced-motion layout. */
 .tool-strip{padding:12px 0 48px;overflow:hidden}
-.tool-strip-heading{display:flex;justify-content:flex-end;margin-bottom:18px}
-.tool-strip-heading button{font-size:14px;min-height:44px;text-decoration:underline;text-underline-offset:4px;color:var(--muted)}
 .tools-viewport{overflow:hidden}
 .tools-track{display:flex;width:max-content;animation:tools-scroll 60s linear infinite;animation-play-state:paused}
 .tool-strip[data-active=true] .tools-track{animation-play-state:running}
 .tools-track ul{display:flex;gap:22px;list-style:none;padding:0 22px 0 0;margin:0}
 .tools-track li{width:104px;height:92px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--surface);border-radius:8px;font-size:14px}
 .tool-icon{width:34px;height:34px;display:block;background:var(--text);mask-size:contain;mask-repeat:no-repeat;mask-position:center}
-.tool-strip:hover .tools-track,.tool-strip:focus-within .tools-track,.tool-strip.paused .tools-track{animation-play-state:paused}
+.tool-strip:hover .tools-track,.tool-strip:focus-within .tools-track{animation-play-state:paused}
 @keyframes tools-scroll{to{transform:translateX(-50%)}}
 @media(max-width:800px){.tool-strip{padding-top:0;padding-bottom:35px}.tools-track li{width:96px;height:88px}.tools-track ul{gap:14px;padding-right:14px}}
-@media(prefers-reduced-motion:reduce){.tools-track{animation:none;width:100%;display:block}.tools-track ul{flex-wrap:wrap;gap:12px;padding:0}.tools-track ul[aria-hidden]{display:none}.tool-strip-heading{display:none}}
+@media(prefers-reduced-motion:reduce){.tools-track{animation:none;width:100%;display:block}.tools-track ul{flex-wrap:wrap;gap:12px;padding:0}.tools-track ul[aria-hidden]{display:none}}
 
 /* Match the complete startup preview to the real rig's camera and initial pose. */
 .hero-card picture{display:contents}
@@ -119,7 +117,6 @@ body.badge-rendered #lanyard-root{opacity:1}
 .practice-controls[hidden]{display:none}.practice-navigation{display:flex;align-items:center;gap:16px}
 .practice-navigation button{width:44px;height:44px;border:1px solid color-mix(in srgb,var(--text) 18%,transparent);border-radius:50%;font-size:22px;line-height:1}
 .practice-count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-#practice-toggle{font-size:13px;color:var(--muted);min-height:44px;text-decoration:underline;text-underline-offset:4px}
 @media(hover:hover) and (pointer:fine){.practice-navigation button:hover{background:var(--surface)}}
 @media(prefers-reduced-motion:no-preference){.thought-cloud{animation:thought-float 5s ease-in-out infinite;transform-origin:center}.thought-dot{animation:thought-pulse 5s ease-in-out infinite;transform-origin:29px 62px}.thought-dot-small{animation-delay:.5s;transform-origin:15px 73px}.brain-signal{animation:brain-pulse 4s ease-in-out infinite;transform-origin:36px 31px}.brain-signal-late{animation-delay:1.4s;transform-origin:61px 56px}.build-signal{animation:build-flow 4s var(--ease) infinite}.about:not([data-running=true]) .title-art svg *{animation-play-state:paused}@keyframes thought-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}@keyframes thought-pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(.75);opacity:1}}@keyframes brain-pulse{0%,100%{transform:scale(.7);opacity:.45}50%{transform:scale(1.15);opacity:1}}@keyframes build-flow{0%,20%{transform:translateY(-12px);opacity:0}40%,65%{opacity:1}80%,100%{transform:translateY(14px);opacity:0}}}
 @media(max-width:1100px) and (min-width:801px){.about-intro{padding:28px}.about-intro h2{font-size:44px}.title-art{height:62px}.thought-art{width:105px}.brain-art{width:78px}.build-art{width:84px}.about-title-line{gap:12px}.practice-list>div{padding-inline:20px}.practice-list dt{font-size:22px}.practice-carousel{--practice-row:220px}.practice-controls{padding-inline:20px}}

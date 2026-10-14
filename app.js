@@ -3,8 +3,6 @@ const translations = {
   "pt": {
     "skip": "Pular para o conteúdo",
     "toolsListLabel": "Ferramentas",
-    "pauseTools": "Pausar movimento",
-    "resumeTools": "Retomar movimento",
     "navProjects": "Projetos",
     "navAbout": "Sobre",
     "navCerts": "Certificações",
@@ -98,8 +96,6 @@ const translations = {
   "en": {
     "skip": "Skip to content",
     "toolsListLabel": "Tools",
-    "pauseTools": "Pause motion",
-    "resumeTools": "Resume motion",
     "navProjects": "Projects",
     "navAbout": "About",
     "navCerts": "Credentials",
@@ -217,11 +213,6 @@ themeButton.addEventListener('click', () => {
   updateThemeLabel();
 });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeLabel);
-function updateToolsLabel() {
-  const button = document.getElementById('tools-toggle');
-  const paused = button.getAttribute('aria-pressed') === 'true';
-  button.textContent = translations[language][paused ? 'resumeTools' : 'pauseTools'];
-}
 function applyLanguage(lang) {
   language = lang;
   const copy = translations[lang];
@@ -276,7 +267,6 @@ function applyLanguage(lang) {
   }
   schemaElement.textContent = JSON.stringify(schema);
   updateThemeLabel();
-  updateToolsLabel();
   savePreference('tc-language', lang);
   document.dispatchEvent(new Event('tc-language-change'));
 }
@@ -313,15 +303,8 @@ if (!reducedMotion.matches && 'IntersectionObserver' in window) {
   document.querySelectorAll('.section-heading,.about-intro,.practice-carousel,.project-preview,.project-content,.featured-credential,.contact>div').forEach(el=>entrances.observe(el));
 }
 
-// Keep the restored tools rail controllable and idle outside the viewport.
+// Keep the tools rail idle outside the viewport.
 const toolsStrip = document.querySelector('.tool-strip');
-const toolsToggle = document.getElementById('tools-toggle');
-toolsToggle.hidden = false;
-toolsToggle.addEventListener('click', () => {
-  const paused = toolsStrip.classList.toggle('paused');
-  toolsToggle.setAttribute('aria-pressed', String(paused));
-  updateToolsLabel();
-});
 let toolsInView = !('IntersectionObserver' in window);
 function updateToolsActivity() {
   toolsStrip.dataset.active = String(toolsInView && !document.hidden);
@@ -372,9 +355,8 @@ scheduleFooterReveal();
   const originals = [...track.children];
   const count = originals.length;
   const controls = rail.querySelector('.practice-controls');
-  const toggle = document.getElementById('practice-toggle');
   let index = count, timer = 0, settleTimer = 0;
-  let inView = false, paused = false, hovered = false, focused = false, traveling = false;
+  let inView = false, hovered = false, focused = false, traveling = false;
   const copies = () => originals.map(item => {
     const clone = item.cloneNode(true);
     clone.dataset.clone = 'true';
@@ -386,7 +368,7 @@ scheduleFooterReveal();
   const items = [...track.children];
   const position = () => (index % count + count) % count;
   const enhanced = () => !reducedMotion.matches;
-  const moving = () => enhanced() && inView && !document.hidden && !paused && !hovered && !focused;
+  const moving = () => enhanced() && inView && !document.hidden && !hovered && !focused;
   function paint(instant = false) {
     items.forEach((item, i) => {
       item.dataset.active = String(i === index);
@@ -435,13 +417,6 @@ scheduleFooterReveal();
     paint(true);
     schedule();
   }
-  toggle.addEventListener('click', () => {
-    paused = !paused;
-    toggle.setAttribute('aria-pressed', String(paused));
-    toggle.dataset.i18n = paused ? 'resumeTools' : 'pauseTools';
-    toggle.textContent = translations[language][toggle.dataset.i18n];
-    schedule();
-  });
   document.getElementById('practice-prev').addEventListener('click', () => advance(-1, true));
   document.getElementById('practice-next').addEventListener('click', () => advance(1, true));
   rail.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') { hovered = true; schedule(); } });

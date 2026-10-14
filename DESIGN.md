@@ -10,8 +10,10 @@ O crachá mantém a física, os assets do modelo e a aparência. Por pedido do t
 
 O rodapé usa a composição original do Shadcn Studio Footer 11: atalhos entre linhas, selo vermelho central entre as mensagens e assinatura abaixo. Preservar esse tratamento visual, inclusive as linhas e os detalhes originais. Por pedido do titular, o rodapé é revelado por trás do conteúdo, seguindo SiteFooterReveal da DuckDooh; o selo ocupa o centro horizontal com frases de cada lado.
 
-O trilho de ferramentas fica entre a apresentação e a biografia, com ícones existentes, controle de pausa e alternativa estática para movimento reduzido. Substitui o antigo bloco de texto sobre ferramentas.
+O trilho de ferramentas fica entre a apresentação e a biografia, com ícones existentes, pausa por hover e alternativa estática para movimento reduzido. Substitui o antigo bloco de texto sobre ferramentas.
 
 O contato encerra o conteúdo em uma composição centralizada e compacta: título, convite curto e ações lado a lado, com e-mail em destaque e LinkedIn com contorno discreto. O eixo central continua no selo e na assinatura do rodapé.
 
-A seção Sobre segue as referências fornecidas em 14/10: painel de apresentação com SVGs de pensamento, cérebro e conexões integrados ao título; lista contínua com item central destacado, bordas atenuadas e troca lenta. Mantém 12 segundos de leitura e deslocamento de 900 ms, controles manuais, pausa em hover/foco e alternativa estática para movimento reduzido. Os SVGs são ilustrações próprias, não assets copiados da referência.
+A seção Sobre segue as referências fornecidas em 14/10: painel de apresentação com SVGs de pensamento, cérebro e conexões integrados ao título; lista contínua com item central destacado, bordas atenuadas e troca lenta. Mantém 12 segundos de leitura e deslocamento de 900 ms, controles anterior/próximo, pausa em hover/foco e alternativa estática para movimento reduzido. Os SVGs são ilustrações próprias, não assets copiados da referência.
+
+Em 14/10, por pedido do titular, todos os botões de pausar/retomar foram removidos. As pausas automáticas por hover/foco, visibilidade e preferência de movimento reduzido permanecem.
