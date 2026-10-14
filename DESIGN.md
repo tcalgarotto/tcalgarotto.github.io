@@ -12,6 +12,8 @@ O rodapé usa a composição original do Shadcn Studio Footer 11: atalhos entre 
 
 O trilho de ferramentas fica entre a apresentação e a biografia, com ícones existentes, pausa por hover e alternativa estática para movimento reduzido. Substitui o antigo bloco de texto sobre ferramentas.
 
+O título de Certificações fica centralizado, na mesma simetria da grade de selos. Trabalhos selecionados permanece à esquerda, alinhado à imagem do projeto.
+
 O contato encerra o conteúdo em uma composição centralizada e compacta: título, convite curto e ações lado a lado, com e-mail em destaque e LinkedIn com contorno discreto. O eixo central continua no selo e na assinatura do rodapé.
 
 A seção Sobre segue as referências fornecidas em 14/10: painel de apresentação com SVGs de pensamento, cérebro e conexões integrados ao título; lista contínua com item central destacado, bordas atenuadas e troca lenta. Mantém 12 segundos de leitura e deslocamento de 900 ms, controles anterior/próximo, pausa em hover/foco e alternativa estática para movimento reduzido. Os SVGs são ilustrações próprias, não assets copiados da referência.
