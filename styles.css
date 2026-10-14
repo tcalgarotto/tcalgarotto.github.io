@@ -128,7 +128,8 @@ body.badge-rendered #lanyard-root{opacity:1}
 
 /* Animated Text 11 on the hero name. Two diagonal veils, brand green and amber. */
 .hero-name-line{display:block;width:max-content;position:relative}
-.hero-leak{position:absolute;inset:0;pointer-events:none;color:transparent}
+/* Extra box below the tight line-height keeps the g descender inside background-clip. */
+.hero-leak{position:absolute;top:0;right:-.04em;bottom:auto;left:-.04em;width:auto;height:calc(100% + .42em);padding:0 .04em .42em;box-sizing:border-box;pointer-events:none;color:transparent}
 @media(prefers-reduced-motion:reduce){.hero-leak{display:none}}
 @media(prefers-reduced-motion:no-preference){
   .hero-leak{background-repeat:no-repeat;background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;mix-blend-mode:multiply}
