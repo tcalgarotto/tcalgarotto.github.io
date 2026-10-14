@@ -2,7 +2,13 @@
 
 Meu portfólio: https://tcalgarotto.github.io/
 
-Projetos, certificações e contato, em português e inglês, com tema claro e escuro.
+Produtos web desenvolvidos de ponta a ponta: arquitetura, frontend, backend, APIs e banco de dados. Projetos, tecnologias, formação e contato, em português e inglês, com tema claro e escuro.
+
+## Prévia local
+
+Na raiz do repositório, execute `python3 -m http.server 8000` e abra `http://localhost:8000`. O site é estático; o conteúdo editorial não precisa de um build. O crachá interativo tem seu próprio source e build em `interactive-card-source/`.
+
+A tradução engloba conteúdo, rótulos acessíveis, metadados e dados estruturados. As URLs `?lang=pt` e `?lang=en` selecionam o idioma explicitamente.
 
 ## Projetos
 
