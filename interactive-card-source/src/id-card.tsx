@@ -20,7 +20,7 @@ import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Environment, Lightformer, useGLTF, useTexture } from '@react-three/drei'
-import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
+import { BallCollider, CuboidCollider, Physics, RigidBody, useBeforePhysicsStep, useRapier, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
 import type { RapierRigidBody, RigidBodyProps } from '@react-three/rapier'
 
 // Util Imports
@@ -180,6 +180,10 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   const resolvedTheme = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light')
   const isDark = resolvedTheme === 'dark'
 
+  const { world, rapier } = useRapier()
+  const [initialAnchorLift] = useState(getAnchorLift)
+  const anchorLift = useRef(initialAnchorLift)
+  const topJoint = useRef<ReturnType<typeof world.createImpulseJoint> | null>(null)
   const rope = useRef<THREE.Mesh>(null!)
   const fixed = useRef<RapierRigidBody>(null!)
   const j1 = useRef<LanyardRigidBody>(null!)
@@ -192,7 +196,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   const rot = new THREE.Vector3()
   const dragPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)
   const cardQuat = new THREE.Quaternion()
-  const cordDirection = new THREE.Vector3()
+  const anchorScreen = new THREE.Vector3()
 
   const segmentProps: RigidBodyProps = {
     type: 'dynamic',
@@ -321,7 +325,23 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
     return ()=>{document.removeEventListener('click',suppressClick,true);window.removeEventListener('touchmove',preventTouchScroll);window.removeEventListener('pointerup',finishDrag);window.removeEventListener('pointercancel',finishDrag);window.removeEventListener('blur',finishDrag);document.body.style.userSelect='';document.body.classList.remove('card-dragging')}
   },[])
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.85])
+  // Rapier rope joints have no length setter. Recreate only this joint on layout changes.
+  useBeforePhysicsStep(() => {
+    if (!fixed.current || !j1.current) return
+    const lift = getAnchorLift()
+    if (topJoint.current && Math.abs(lift - anchorLift.current) < 0.005) return
+    if (topJoint.current?.isValid()) world.removeImpulseJoint(topJoint.current, true)
+    fixed.current.setTranslation({ x: 0, y: 4 + lift, z: 0 }, true)
+    topJoint.current = world.createImpulseJoint(
+      rapier.JointData.rope(0.85 + lift, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }),
+      fixed.current, j1.current, true
+    )
+    anchorLift.current = lift
+  })
+  useEffect(() => () => {
+    if (topJoint.current?.isValid()) world.removeImpulseJoint(topJoint.current, true)
+    topJoint.current = null
+  }, [world])
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.85])
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.85])
   useSphericalJoint(j3, card, [
@@ -349,6 +369,12 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
       stage?.setAttribute('data-motion-energy',energy.toFixed(5))
       stage?.setAttribute('data-card-sleeping',String(card.current.isSleeping()))
       stage?.setAttribute('data-motion-state',dragged?'dragging':'dynamic')
+      if (fixed.current) {
+        const anchor = fixed.current.translation()
+        anchorScreen.set(anchor.x, anchor.y, anchor.z).project(state.camera)
+        stage?.setAttribute('data-anchor-x', ((anchorScreen.x + 1) * state.size.width / 2).toFixed(3))
+        stage?.setAttribute('data-anchor-page-y', ((1 - anchorScreen.y) * state.size.height / 2 + window.scrollY).toFixed(3))
+      }
     }
 
     if (fixed.current) {
@@ -372,19 +398,8 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
       curve.points[2].copy(getLerped(j1.current))
       curve.points[3].copy(fixed.current.translation())
 
-      // Keep the internal anchor out of sight in the two-column desktop layout.
-      // The stacked layout keeps its short cord below the text instead of crossing it.
-      if (window.innerWidth > 800) {
-        curve.points[4] ??= new THREE.Vector3()
-        cordDirection.subVectors(curve.points[3], curve.points[2])
-        cordDirection.z = 0
-        if (cordDirection.y < 0.1) cordDirection.set(0, 1, 0)
-        const viewportTop = state.camera.position.y + state.camera.position.z * Math.tan(CAMERA_FOV_DEG * Math.PI / 360)
-        const cordTop = Math.max(viewportTop + 1, curve.points[3].y + 1)
-        curve.points[4].copy(curve.points[3]).addScaledVector(cordDirection, (cordTop - curve.points[3].y) / cordDirection.y)
-      } else {
-        curve.points.length = 4
-      }
+      // All four points follow real bodies; the only fixed point is above the page.
+      curve.updateArcLengths()
 
       // Rebuild + swap each frame to follow the curve; dispose the old geometry.
       const oldRopeGeometry = rope.current.geometry
@@ -409,7 +424,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   return (
     <>
       <group position={[0, 4, 0]}>
-        <RigidBody ref={fixed} {...segmentProps} type='fixed' />
+        <RigidBody ref={fixed} position={[0, initialAnchorLift, 0]} {...segmentProps} type='fixed' />
         <RigidBody position={[0, -.85, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
@@ -510,8 +525,17 @@ const WORLD_UNITS_PER_PX = (2 * CAMERA_Z * Math.tan((CAMERA_FOV_DEG / 2) * (Math
 // Fixed to REFERENCE_HEIGHT_PX so px-per-world-unit stays pinned regardless of canvas size.
 const PX_PER_WORLD_UNIT = REFERENCE_HEIGHT_PX * WORLD_UNITS_PER_PX
 
-// A full-viewport camera keeps the same badge size while its fixed anchor
-// stays attached to the hero. Nothing is clipped by the hero column.
+// Keep the real desktop pivot 48px above the document, independent of scrolling.
+// Lengthen only the top segment so all dynamic bodies keep their original rest positions.
+function getAnchorLift() {
+  const hero = document.querySelector('.hero-card')
+  if (!hero || window.innerWidth <= 800) return 0
+  const anchorPageY = hero.getBoundingClientRect().top + window.scrollY - 35
+  return Math.max(0, (anchorPageY + 48) / PX_PER_WORLD_UNIT)
+}
+
+// Align the badge rest pose with the hero while the real desktop pivot stays above
+// the document. Nothing is clipped by the hero column.
 const CameraAlign = () => {
   useFrame(state => {
     const hero=document.querySelector('.hero-card')

@@ -18,6 +18,6 @@ A seção Sobre segue as referências fornecidas em 14/10: painel de apresentaç
 
 Em 14/10, por pedido do titular, todos os botões de pausar/retomar foram removidos. As pausas automáticas por hover/foco, visibilidade e preferência de movimento reduzido permanecem.
 
-No layout de duas colunas, o cordão do crachá entra pela borda superior sem expor sua ponta. A extensão visual não muda a posição do cartão nem a física do arraste.
+No layout de duas colunas, o cordão do crachá entra pela borda superior sem expor sua ponta. A âncora física fica 48px acima do documento, com o primeiro segmento alongado para preservar a posição de repouso do cartão. O desenho segue apenas os corpos físicos, sem prolongamento artificial.
 
 Na composição empilhada de até 800px, o cordão curto fica na área do crachá para não atravessar a apresentação.

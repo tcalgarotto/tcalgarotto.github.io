@@ -21,6 +21,6 @@ O build também atualiza os identificadores de conteúdo do módulo, do JavaScri
 
 A prévia de carregamento é gerada por `generate-preview.mjs`, com a mesma textura frontal e prendedor do modelo, os limites do GLB, a câmera, a âncora e a inclinação inicial. Os SVGs completos para cada tema evitam mostrar a textura plana como se fosse o crachá. A cena só sinaliza pronta após dois frames de renderização; a troca usa uma transição curta de opacidade.
 
-No layout de duas colunas, o cordão renderizado continua além da borda superior da tela, na mesma direção do último segmento. A âncora, as juntas e os comprimentos físicos permanecem iguais. A prévia estática também prolonga o cordão para evitar uma ponta visível antes do carregamento 3D.
+No layout de duas colunas, a âncora física fica 48px acima do documento. O primeiro segmento aumenta pelo deslocamento da âncora, preservando a posição de repouso do cartão. A junta superior é recriada apenas quando o layout muda; a rolagem não altera seu comprimento. A curva segue os quatro corpos reais e recalcula seus comprimentos durante o movimento. A prévia estática mantém o cordão até fora da tela.
 
 Na composição empilhada de até 800px, o cordão curto fica na área do crachá para não atravessar a apresentação.

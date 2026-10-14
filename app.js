@@ -277,7 +277,7 @@ applyLanguage(requestedLanguage === 'en' || requestedLanguage === 'pt' ? request
 async function startCard(){
  const fail=()=>{document.querySelector('.hero-card').classList.remove('card-ready');document.body.classList.remove('badge-rendered');document.getElementById('card-status').textContent=translations[language].cardFallback;queueMicrotask(()=>{cardInstance?.unmount();cardInstance=null})};
  try{
-  const {mountBadge}=await import('./assets/interactive-card/card.js?v=008b5bea38eb');
+  const {mountBadge}=await import('./assets/interactive-card/card.js?v=94209c72ccc3');
   cardInstance=mountBadge(document.getElementById('lanyard-root'),()=>{document.querySelector('.hero-card').classList.add('card-ready');document.body.classList.add('badge-rendered');document.getElementById('card-status').textContent=translations[language].cardReady},fail);
   const updateVisibility=()=>cardInstance?.setActive(!document.hidden);
   document.addEventListener('visibilitychange',updateVisibility);

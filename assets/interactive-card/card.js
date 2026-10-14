@@ -43833,11 +43833,21 @@ var bE = [
 		c,
 		r
 	]);
-}, LE = (e = {}) => yE(e, bE), RE = () => {
-	let e = (0, v.useContext)(HE);
+}, LE = (e = {}) => yE(e, bE), RE = (e) => {
+	let t = (0, v.useRef)(e);
+	return (0, v.useEffect)(() => {
+		t.current = e;
+	}, [e]), t;
+}, zE = () => {
+	let e = (0, v.useContext)(WE);
 	if (!e) throw Error("react-three-rapier: useRapier must be used within <Physics />!");
 	return e;
-}, zE = (e, t, n = !0) => {
+}, BE = (e) => {
+	let { beforeStepCallbacks: t } = zE(), n = RE(e);
+	(0, v.useEffect)(() => (t.add(n), () => {
+		t.delete(n);
+	}), []);
+}, VE = (e, t, n = !0) => {
 	let [r, i] = (0, v.useState)([]);
 	return (0, v.useEffect)(() => {
 		e.current && t.colliders !== !1 && i(NE({
@@ -43846,8 +43856,8 @@ var bE = [
 			ignoreMeshColliders: n
 		}));
 	}, [t.colliders]), r;
-}, BE = /*#__PURE__*/ (0, v.memo)(() => {
-	let { world: e } = RE(), t = (0, v.useRef)(null);
+}, HE = /*#__PURE__*/ (0, v.memo)(() => {
+	let { world: e } = zE(), t = (0, v.useRef)(null);
 	return G_(() => {
 		let n = t.current;
 		if (!n) return;
@@ -43860,7 +43870,7 @@ var bE = [
 		color: 16777215,
 		vertexColors: !0
 	}), /*#__PURE__*/ v.createElement("bufferGeometry", null)));
-}), VE = (e) => {
+}), UE = (e) => {
 	let t;
 	return {
 		proxy: new Proxy({}, {
@@ -43878,7 +43888,7 @@ var bE = [
 			t = e;
 		}
 	};
-}, HE = /*#__PURE__*/ (0, v.createContext)(void 0), UE = (e, t) => ({
+}, WE = /*#__PURE__*/ (0, v.createContext)(void 0), GE = (e, t) => ({
 	target: {
 		rigidBody: e.rigidBody.object,
 		collider: e.collider.object,
@@ -43895,15 +43905,15 @@ var bE = [
 	collider: t.collider.object,
 	colliderObject: t.collider.state?.object,
 	rigidBodyObject: t.rigidBody.state?.object
-}), WE = async () => {
+}), KE = async () => {
 	let e = await Promise.resolve().then(() => uS);
 	return await e.init(), e;
-}, GE = (e) => {
+}, qE = (e) => {
 	let { colliders: t = "cuboid", children: n, timeStep: r = 1 / 60, paused: i = !1, interpolate: a = !0, updatePriority: o, updateLoop: s = "follow", debug: c = !1, gravity: l = [
 		0,
 		-9.81,
 		0
-	], allowedLinearError: u = .001, predictionDistance: d = .002, numSolverIterations: f = 4, numInternalPgsIterations: p = 1, minIslandSize: m = 128, maxCcdSubsteps: h = 1, contactNaturalFrequency: g = 30, lengthUnit: _ = 1 } = e, y = zg(WE, ["@react-thee/rapier", WE]), { invalidate: b } = W_(), x = pE(() => /* @__PURE__ */ new Map()), S = pE(() => /* @__PURE__ */ new Map()), C = pE(() => /* @__PURE__ */ new Map()), w = pE(() => /* @__PURE__ */ new Map()), T = pE(() => new jT(!1)), E = pE(() => /* @__PURE__ */ new Set()), D = pE(() => /* @__PURE__ */ new Set()), O = pE(() => ({
+	], allowedLinearError: u = .001, predictionDistance: d = .002, numSolverIterations: f = 4, numInternalPgsIterations: p = 1, minIslandSize: m = 128, maxCcdSubsteps: h = 1, contactNaturalFrequency: g = 30, lengthUnit: _ = 1 } = e, y = zg(KE, ["@react-thee/rapier", KE]), { invalidate: b } = W_(), x = pE(() => /* @__PURE__ */ new Map()), S = pE(() => /* @__PURE__ */ new Map()), C = pE(() => /* @__PURE__ */ new Map()), w = pE(() => /* @__PURE__ */ new Map()), T = pE(() => new jT(!1)), E = pE(() => /* @__PURE__ */ new Set()), D = pE(() => /* @__PURE__ */ new Set()), O = pE(() => ({
 		filterContactPair: (...e) => {
 			for (let t of E) {
 				let n = t.current(...e);
@@ -43915,7 +43925,7 @@ var bE = [
 			for (let t of D) if (t.current(...e) === !1) return !1;
 			return !0;
 		}
-	})), k = pE(() => /* @__PURE__ */ new Set()), A = pE(() => /* @__PURE__ */ new Set()), { proxy: j, reset: M, set: N } = pE(() => VE(() => new y.World(oE(l))));
+	})), k = pE(() => /* @__PURE__ */ new Set()), A = pE(() => /* @__PURE__ */ new Set()), { proxy: j, reset: M, set: N } = pE(() => UE(() => new y.World(oE(l))));
 	(0, v.useEffect)(() => () => {
 		j.free(), M();
 	}, []), (0, v.useEffect)(() => {
@@ -43986,7 +43996,7 @@ var bE = [
 		}), T.drainCollisionEvents((e, n, r) => {
 			let i = ee(e), a = ee(n);
 			if (!(i != null && i.collider.object) || !(a != null && a.collider.object)) return;
-			let o = UE(i, a), s = UE(a, i);
+			let o = GE(i, a), s = GE(a, i);
 			if (r) t.contactPair(i.collider.object, a.collider.object, (e, t) => {
 				var n, r, c, l, u, d, f, p;
 				(n = i.rigidBody.events) == null || (r = n.onCollisionEnter) == null || r.call(n, $T($T({}, o), {}, {
@@ -44020,7 +44030,7 @@ var bE = [
 			var t, n, r, i, a, o, s, c;
 			let l = ee(e.collider1()), u = ee(e.collider2());
 			if (!(l != null && l.collider.object) || !(u != null && u.collider.object)) return;
-			let d = UE(l, u), f = UE(u, l);
+			let d = GE(l, u), f = GE(u, l);
 			(t = l.rigidBody.events) == null || (n = t.onContactForce) == null || n.call(t, $T($T({}, d), {}, {
 				totalForce: e.totalForce(),
 				totalForceMagnitude: e.totalForceMagnitude(),
@@ -44080,25 +44090,25 @@ var bE = [
 	]), re = (0, v.useCallback)((e) => {
 		i || te(e);
 	}, [i, te]);
-	return /*#__PURE__*/ v.createElement(HE.Provider, { value: ne }, /*#__PURE__*/ v.createElement(_E, {
+	return /*#__PURE__*/ v.createElement(WE.Provider, { value: ne }, /*#__PURE__*/ v.createElement(_E, {
 		onStep: re,
 		type: s,
 		updatePriority: o
-	}), c && /*#__PURE__*/ v.createElement(BE, null), n);
+	}), c && /*#__PURE__*/ v.createElement(HE, null), n);
 };
-function KE() {
-	return KE = Object.assign ? Object.assign.bind() : function(e) {
+function JE() {
+	return JE = Object.assign ? Object.assign.bind() : function(e) {
 		for (var t = 1; t < arguments.length; t++) {
 			var n = arguments[t];
 			for (var r in n) ({}).hasOwnProperty.call(n, r) && (e[r] = n[r]);
 		}
 		return e;
-	}, KE.apply(null, arguments);
+	}, JE.apply(null, arguments);
 }
-var qE = (e, t = null) => {
+var YE = (e, t = null) => {
 	let n = (0, v.useRef)(t);
 	return e && typeof e != "function" ? (e.current ||= n.current, e) : n;
-}, JE = (e, t, n) => {
+}, XE = (e, t, n) => {
 	let r = (0, v.useRef)(void 0), i = (0, v.useCallback)(() => (r.current ||= e(), r.current), n);
 	return (0, v.useEffect)(() => {
 		let e = i(), n = () => t(e);
@@ -44106,10 +44116,10 @@ var qE = (e, t = null) => {
 			n(), r.current = void 0;
 		};
 	}, [i]), i;
-}, YE = (e) => {
+}, ZE = (e) => {
 	let t = new bw(uE(e?.type || "dynamic"));
 	return t.canSleep = e?.canSleep ?? !0, t;
-}, XE = ({ rigidBody: e, object: t, setMatrix: n, getMatrix: r, worldScale: i, meshType: a = "mesh" }) => (t.updateWorldMatrix(!0, !1), {
+}, QE = ({ rigidBody: e, object: t, setMatrix: n, getMatrix: r, worldScale: i, meshType: a = "mesh" }) => (t.updateWorldMatrix(!0, !1), {
 	object: t,
 	rigidBody: e,
 	invertedWorldMatrix: t.parent.matrixWorld.clone().invert(),
@@ -44120,11 +44130,11 @@ var qE = (e, t = null) => {
 	scale: i || t.getWorldScale(aE).clone(),
 	isSleeping: !1,
 	meshType: a
-}), ZE = [
+}), $E = [
 	"args",
 	"colliders",
 	"canSleep"
-], QE = {
+], eD = {
 	gravityScale: (e, t) => {
 		e.setGravityScale(t, !0);
 	},
@@ -44182,18 +44192,18 @@ var qE = (e, t = null) => {
 	rotation: () => {},
 	quaternion: () => {},
 	scale: () => {}
-}, $E = Object.keys(QE), eD = (e, t, n, r = !0) => {
+}, tD = Object.keys(eD), nD = (e, t, n, r = !0) => {
 	if (!e) return;
 	let i = n.get(e.handle);
-	i && (r && (i.object.updateWorldMatrix(!0, !1), nE.copy(i.object.matrixWorld).decompose(rE, iE, aE), e.setTranslation(rE, !1), e.setRotation(iE, !1)), $E.forEach((n) => {
-		n in t && QE[n](e, t[n]);
+	i && (r && (i.object.updateWorldMatrix(!0, !1), nE.copy(i.object.matrixWorld).decompose(rE, iE, aE), e.setTranslation(rE, !1), e.setRotation(iE, !1)), tD.forEach((n) => {
+		n in t && eD[n](e, t[n]);
 	}));
-}, tD = (e, t, n, r = !0) => {
-	let i = (0, v.useMemo)(() => $E.flatMap((e) => fE(t[e])), [t]);
+}, rD = (e, t, n, r = !0) => {
+	let i = (0, v.useMemo)(() => tD.flatMap((e) => fE(t[e])), [t]);
 	(0, v.useEffect)(() => {
-		eD(e(), t, n, r);
+		nD(e(), t, n, r);
 	}, i);
-}, nD = (e, t, n) => {
+}, iD = (e, t, n) => {
 	let { onWake: r, onSleep: i, onCollisionEnter: a, onCollisionExit: o, onIntersectionEnter: s, onIntersectionExit: c, onContactForce: l } = t, u = {
 		onWake: r,
 		onSleep: i,
@@ -44217,13 +44227,13 @@ var qE = (e, t = null) => {
 		c,
 		l
 	]);
-}, rD = ({ x: e, y: t, z: n } = {
+}, aD = ({ x: e, y: t, z: n } = {
 	x: 0,
 	y: 0,
 	z: 0
-}) => new G(e, t, n), iD = /*#__PURE__*/ (0, v.memo)((e) => {
-	let { children: t, position: n, rotation: r, quaternion: i, scale: a, name: o } = e, { world: s, colliderEvents: c, colliderStates: l } = RE(), u = _D(), d = qE(e.ref), f = (0, v.useRef)(null), p = JE(() => {
-		let t = f.current.getWorldScale(rD()), n = SE(e, s, t, u?.getRigidBody);
+}) => new G(e, t, n), oD = /*#__PURE__*/ (0, v.memo)((e) => {
+	let { children: t, position: n, rotation: r, quaternion: i, scale: a, name: o } = e, { world: s, colliderEvents: c, colliderStates: l } = zE(), u = yD(), d = YE(e.ref), f = (0, v.useRef)(null), p = XE(() => {
+		let t = f.current.getWorldScale(aD()), n = SE(e, s, t, u?.getRigidBody);
 		return typeof e.ref == "function" && e.ref(n), d.current = n, n;
 	}, (e) => {
 		s.getCollider(e.handle) && s.removeCollider(e, !0);
@@ -44243,57 +44253,57 @@ var qE = (e, t = null) => {
 		ref: f,
 		name: o
 	}, t);
-}), aD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+}), sD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "cuboid",
 	ref: t
 })));
-aD.displayName = "CuboidCollider";
-var oD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+sD.displayName = "CuboidCollider";
+var cD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "roundCuboid",
 	ref: t
 })));
-oD.displayName = "RoundCuboidCollider";
-var sD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+cD.displayName = "RoundCuboidCollider";
+var lD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "ball",
 	ref: t
 })));
-sD.displayName = "BallCollider";
-var cD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+lD.displayName = "BallCollider";
+var uD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "capsule",
 	ref: t
 })));
-cD.displayName = "CapsuleCollider";
-var lD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+uD.displayName = "CapsuleCollider";
+var dD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "heightfield",
 	ref: t
 })));
-lD.displayName = "HeightfieldCollider";
-var uD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+dD.displayName = "HeightfieldCollider";
+var fD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "trimesh",
 	ref: t
 })));
-uD.displayName = "TrimeshCollider";
-var dD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+fD.displayName = "TrimeshCollider";
+var pD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "cone",
 	ref: t
 })));
-dD.displayName = "ConeCollider";
-var fD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+pD.displayName = "ConeCollider";
+var mD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "roundCone",
 	ref: t
 })));
-fD.displayName = "RoundConeCollider";
-var pD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+mD.displayName = "RoundConeCollider";
+var hD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "cylinder",
 	ref: t
 })));
-pD.displayName = "CylinderCollider", pD.displayName = "RoundCylinderCollider";
-var mD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(iD, KE({}, e, {
+hD.displayName = "CylinderCollider", hD.displayName = "RoundCylinderCollider";
+var gD = /*#__PURE__*/ v.forwardRef((e, t) => /*#__PURE__*/ v.createElement(oD, JE({}, e, {
 	shape: "convexHull",
 	ref: t
 })));
-mD.displayName = "ConvexHullCollider";
-var hD = [
+gD.displayName = "ConvexHullCollider";
+var _D = [
 	"ref",
 	"children",
 	"type",
@@ -44302,47 +44312,47 @@ var hD = [
 	"scale",
 	"quaternion",
 	"transformState"
-], gD = /*#__PURE__*/ (0, v.createContext)(void 0), _D = () => (0, v.useContext)(gD), vD = /*#__PURE__*/ (0, v.memo)((e) => {
-	let { ref: t, children: n, type: r, position: i, rotation: a, scale: o, quaternion: s, transformState: c } = e, l = yE(e, hD), u = (0, v.useRef)(null), d = qE(t), { world: f, rigidBodyStates: p, physicsOptions: m, rigidBodyEvents: h } = RE(), g = (0, v.useMemo)(() => $T($T($T({}, m), e), {}, { children: void 0 }), [m, e]), _ = ZE.flatMap((e) => Array.isArray(g[e]) ? [...g[e]] : g[e]), y = zE(u, g), b = JE(() => {
-		let e = YE(g), n = f.createRigidBody(e);
+], vD = /*#__PURE__*/ (0, v.createContext)(void 0), yD = () => (0, v.useContext)(vD), bD = /*#__PURE__*/ (0, v.memo)((e) => {
+	let { ref: t, children: n, type: r, position: i, rotation: a, scale: o, quaternion: s, transformState: c } = e, l = yE(e, _D), u = (0, v.useRef)(null), d = YE(t), { world: f, rigidBodyStates: p, physicsOptions: m, rigidBodyEvents: h } = zE(), g = (0, v.useMemo)(() => $T($T($T({}, m), e), {}, { children: void 0 }), [m, e]), _ = $E.flatMap((e) => Array.isArray(g[e]) ? [...g[e]] : g[e]), y = VE(u, g), b = XE(() => {
+		let e = ZE(g), n = f.createRigidBody(e);
 		return typeof t == "function" && t(n), d.current = n, n;
 	}, (e) => {
 		f.getRigidBody(e.handle) && f.removeRigidBody(e);
 	}, _);
 	(0, v.useEffect)(() => {
-		let t = b(), n = XE({
+		let t = b(), n = QE({
 			rigidBody: t,
 			object: u.current
 		});
 		return p.set(t.handle, e.transformState ? e.transformState(n) : n), () => {
 			p.delete(t.handle);
 		};
-	}, [b]), tD(b, g, p), nD(b, g, h);
+	}, [b]), rD(b, g, p), iD(b, g, h);
 	let x = (0, v.useMemo)(() => ({
 		ref: u,
 		getRigidBody: b,
 		options: g
 	}), [b]);
-	return /*#__PURE__*/ v.createElement(gD.Provider, { value: x }, /*#__PURE__*/ v.createElement("object3D", KE({ ref: u }, l, {
+	return /*#__PURE__*/ v.createElement(vD.Provider, { value: x }, /*#__PURE__*/ v.createElement("object3D", JE({ ref: u }, l, {
 		position: i,
 		rotation: a,
 		quaternion: s,
 		scale: o
-	}), n, y.map((e, t) => /*#__PURE__*/ v.createElement(iD, KE({ key: t }, e)))));
+	}), n, y.map((e, t) => /*#__PURE__*/ v.createElement(oD, JE({ key: t }, e)))));
 });
-vD.displayName = "RigidBody";
-var yD = /*#__PURE__*/ (0, v.memo)((e) => {
-	let { children: t, type: n } = e, { physicsOptions: r } = RE(), i = (0, v.useRef)(null), { options: a } = _D(), o = zE(i, (0, v.useMemo)(() => $T($T($T({}, r), a), {}, {
+bD.displayName = "RigidBody";
+var xD = /*#__PURE__*/ (0, v.memo)((e) => {
+	let { children: t, type: n } = e, { physicsOptions: r } = zE(), i = (0, v.useRef)(null), { options: a } = yD(), o = VE(i, (0, v.useMemo)(() => $T($T($T({}, r), a), {}, {
 		children: void 0,
 		colliders: n
 	}), [r, a]), !1);
 	return /*#__PURE__*/ v.createElement("object3D", {
 		ref: i,
 		userData: { r3RapierType: "MeshCollider" }
-	}, t, o.map((e, t) => /*#__PURE__*/ v.createElement(iD, KE({ key: t }, e))));
+	}, t, o.map((e, t) => /*#__PURE__*/ v.createElement(oD, JE({ key: t }, e))));
 });
-yD.displayName = "MeshCollider";
-var bD = ["ref"], xD = [
+xD.displayName = "MeshCollider";
+var SD = ["ref"], CD = [
 	"children",
 	"instances",
 	"colliderNodes",
@@ -44350,8 +44360,8 @@ var bD = ["ref"], xD = [
 	"rotation",
 	"quaternion",
 	"scale"
-], SD = /*#__PURE__*/ (0, v.memo)((e) => {
-	let { ref: t } = e, n = yE(e, bD), r = qE(t, []), i = (0, v.useRef)(null), a = (0, v.useRef)(null), { children: o, instances: s, colliderNodes: c = [], position: l, rotation: u, quaternion: d, scale: f } = n, p = yE(n, xD), m = zE(i, $T($T({}, n), {}, { children: void 0 })), h = () => {
+], wD = /*#__PURE__*/ (0, v.memo)((e) => {
+	let { ref: t } = e, n = yE(e, SD), r = YE(t, []), i = (0, v.useRef)(null), a = (0, v.useRef)(null), { children: o, instances: s, colliderNodes: c = [], position: l, rotation: u, quaternion: d, scale: f } = n, p = yE(n, CD), m = VE(i, $T($T({}, n), {}, { children: void 0 })), h = () => {
 		let e = a.current.children[0];
 		if (e && "isInstancedMesh" in e) return e;
 	};
@@ -44369,22 +44379,22 @@ var bD = ["ref"], xD = [
 			meshType: "instancedMesh"
 		}) : e;
 	};
-	return /*#__PURE__*/ v.createElement("object3D", KE({ ref: i }, p, {
+	return /*#__PURE__*/ v.createElement("object3D", JE({ ref: i }, p, {
 		position: l,
 		rotation: u,
 		quaternion: d,
 		scale: f
-	}), /*#__PURE__*/ v.createElement("object3D", { ref: a }, o), s?.map((e, t) => /*#__PURE__*/ v.createElement(vD, KE({}, p, e, {
+	}), /*#__PURE__*/ v.createElement("object3D", { ref: a }, o), s?.map((e, t) => /*#__PURE__*/ v.createElement(bD, JE({}, p, e, {
 		ref: (e) => {
 			r.current[t] = e;
 		},
 		transformState: (e) => g(e, t)
-	}), /*#__PURE__*/ v.createElement(v.Fragment, null, c.map((e, t) => /*#__PURE__*/ v.createElement(v.Fragment, { key: t }, e)), m.map((e, t) => /*#__PURE__*/ v.createElement(iD, KE({ key: t }, e)))))));
+	}), /*#__PURE__*/ v.createElement(v.Fragment, null, c.map((e, t) => /*#__PURE__*/ v.createElement(v.Fragment, { key: t }, e)), m.map((e, t) => /*#__PURE__*/ v.createElement(oD, JE({ key: t }, e)))))));
 });
-SD.displayName = "InstancedRigidBodies";
-var CD = (e, t, n) => {
-	let { world: r } = RE(), i = (0, v.useRef)(void 0);
-	return JE(() => {
+wD.displayName = "InstancedRigidBodies";
+var TD = (e, t, n) => {
+	let { world: r } = zE(), i = (0, v.useRef)(void 0);
+	return XE(() => {
 		if (e.current && t.current) {
 			let a = r.createImpulseJoint(n, e.current, t.current, !0);
 			return i.current = a, a;
@@ -44392,86 +44402,86 @@ var CD = (e, t, n) => {
 	}, (e) => {
 		e && (i.current = void 0, r.getImpulseJoint(e.handle) && r.removeImpulseJoint(e, !0));
 	}, []), i;
-}, wD = (e, t, [n, r]) => {
-	let { rapier: i } = RE();
-	return CD(e, t, i.JointData.spherical(cE(n), cE(r)));
-}, TD = (e, t, [n, r, i]) => {
-	let { rapier: a } = RE(), o = cE(n), s = cE(r);
-	return CD(e, t, a.JointData.rope(i, o, s));
-}, ED = 48, DD = (e, t = 0) => {
+}, ED = (e, t, [n, r]) => {
+	let { rapier: i } = zE();
+	return TD(e, t, i.JointData.spherical(cE(n), cE(r)));
+}, DD = (e, t, [n, r, i]) => {
+	let { rapier: a } = zE(), o = cE(n), s = cE(r);
+	return TD(e, t, a.JointData.rope(i, o, s));
+}, OD = 48, kD = (e, t = 0) => {
 	let n = new Int32Array(e.length);
-	for (let r = 0; r < e.length; r++) n[r] = e.charCodeAt(r) - ED - t;
+	for (let r = 0; r < e.length; r++) n[r] = e.charCodeAt(r) - OD - t;
 	return n;
-}, OD = (e) => {
+}, AD = (e) => {
 	let t = new Int32Array(e.length + 1);
 	for (let n = 0; n < e.length; n++) t[n + 1] = t[n] + e[n];
 	return t;
-}, kD = (e) => {
+}, jD = (e) => {
 	let t = new Int32Array(e.length), n = 0;
 	for (let r = 0; r < e.length; r++) {
-		let i = e.charCodeAt(r) - ED;
+		let i = e.charCodeAt(r) - OD;
 		n += i >>> 1 ^ -(i & 1), t[r] = n;
 	}
 	return t;
-}, AD = 384, jD = [], MD = OD(DD("E0500002005282000000002000150000020021820000011200000003022202000300004200120000200420001200021200301200010400162000010000220021010:2192001200220012000220012000200200200400010200040000000000400200108200110100000022010313000162002000020020012020080213000228200000000082000000000120002000120020020040101020300130001001010")), ND = OD(DD(":11111111211111119311546544411119731869:671397415686432441111111111161114151214313433415:78311132233313187211117221449443411141111151152226611131111112212518142224214215421421542142424242516171151615616347111111111197911327451111111111111111111113134714133513411111311111111111111111111112444411111342312715245411117:3")), PD = "@containerabcdefghinlmoprstunderlineviawzccentlignnimatespectuto-colsrowsaglorightnessckdrop-sisbcontrastfiltergrayscalehue-rotateinvertopacityslurrightnessaturateepia-coniclinearpositionradialsizeockurrderttom-belrstxyespacing-xyaretoursorlnt-umnsendspantartainentrasteividerop-shadowurationcorationlay-xyasendillexontromlter-featuresstretchapr-xyayscaleidow-colsrowsue-rotatedentlinesetvert-beringsxyeshadoweiadingftnest-clamp-imageabein-lrstxyskx--b-coniclpositionrsizet-x-y-fromto-fromto-inearfromto-fromto-adialfromto-fromtofromtofromtofromtoblockhinlinew-screenesblockhinlinewbjectpacityrutlinederigin-offsetbelrstxyesrspective-originaceholderioghtng-offsettateundedw-xyz-belrstlreseslr-endspantartaturatecepiahizekewpace-taleroll-xyz-barmpbelrstxyesbelrstxyes-thumbrackadowrink-xyxyartrokeabextora-shadowpckingnsformitionlate-xyz-offsetill-changeoom", FD = (() => {
-	let e = MD.length - 1, t = new Int32Array(e);
+}, MD = 384, ND = [], PD = AD(kD("E0500002005282000000002000150000020021820000011200000003022202000300004200120000200420001200021200301200010400162000010000220021010:2192001200220012000220012000200200200400010200040000000000400200108200110100000022010313000162002000020020012020080213000228200000000082000000000120002000120020020040101020300130001001010")), FD = AD(kD(":11111111211111119311546544411119731869:671397415686432441111111111161114151214313433415:78311132233313187211117221449443411141111151152226611131111112212518142224214215421421542142424242516171151615616347111111111197911327451111111111111111111113134714133513411111311111111111111111111112444411111342312715245411117:3")), ID = "@containerabcdefghinlmoprstunderlineviawzccentlignnimatespectuto-colsrowsaglorightnessckdrop-sisbcontrastfiltergrayscalehue-rotateinvertopacityslurrightnessaturateepia-coniclinearpositionradialsizeockurrderttom-belrstxyespacing-xyaretoursorlnt-umnsendspantartainentrasteividerop-shadowurationcorationlay-xyasendillexontromlter-featuresstretchapr-xyayscaleidow-colsrowsue-rotatedentlinesetvert-beringsxyeshadoweiadingftnest-clamp-imageabein-lrstxyskx--b-coniclpositionrsizet-x-y-fromto-fromto-inearfromto-fromto-adialfromto-fromtofromtofromtofromtoblockhinlinew-screenesblockhinlinewbjectpacityrutlinederigin-offsetbelrstxyesrspective-originaceholderioghtng-offsettateundedw-xyz-belrstlreseslr-endspantartaturatecepiahizekewpace-taleroll-xyz-barmpbelrstxyesbelrstxyes-thumbrackadowrink-xyxyartrokeabextora-shadowpckingnsformitionlate-xyz-offsetill-changeoom", LD = (() => {
+	let e = PD.length - 1, t = new Int32Array(e);
 	for (let n = e - 1; n >= 0; n--) {
 		let e = 1, r = n + 1;
-		for (let i = MD[n]; i < MD[n + 1]; i++) e += t[r], r += t[r];
+		for (let i = PD[n]; i < PD[n + 1]; i++) e += t[r], r += t[r];
 		t[n] = e;
 	}
-	let n = new Int32Array(MD[e]), r = 0;
+	let n = new Int32Array(PD[e]), r = 0;
 	for (let i = 0; i < e; i++) {
 		let e = i + 1;
-		for (let a = MD[i]; a < MD[i + 1]; a++) n[r++] = e, e += t[e];
+		for (let a = PD[i]; a < PD[i + 1]; a++) n[r++] = e, e += t[e];
 	}
 	return n;
-})(), ID = DD("02000000000000900<=0?000B000F00F00ŏI0J0LNPRTVX0000]_a00000000000000000000000rst0000000zŏ00000000000ŏ0000000ŏ00000000000000000000000000000000000000000000000000000000000000Ë000000000000000000000Þ000000000000000000ð0000000ø0ùúûüýþÿĀāĂăĄąĆ000000000000000000000000000000000000000000ħ0ĨĪ00000000000000000000ļĽ00000Ŭ000000", 1), LD = OD(DD("123333359346463635126536711576")), RD = DD("93203242332583253248325D>E?F@03263243255B:032523853:0325B:8GA032542H<C=12727B:0328432553;D>E?3257D>032585:0325B:;0328B:032"), zD = DD("012113445661666666789111:5;;;;;;;;444;;;:62999<1161=62>>?61:21@ABCD4446996:64E:::;:?::64:F114GHHIHHHHIHH1HH1HH1HHHHHH::EEJ4444::EE4444441691;644444114244444:;K6666555555555555555999666664444444444444444444444226?6:66644L9M?D:111::::6DE199"), BD = kD("020200202020020020020020020020200200200200200200200002020202001003040106000200200200200200200200200200200200200200200200200200200200200200200200200200200200020020020020020020002020200202002002002002002002002002002020002002020020200220200200200200200200200200200200020020020000200020002000200200200020020020002000200200200020020202002020202000200200020022000200200020020002002000200220002002000200W0Z00020020002002020002002000200g0j0002002000200200020020002002000200200020020002000200002000002002002002002000200020000200002002002002002002002020020020200200200200200200200200202020020020020020020020020002002002020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020002002002002002002000200200200200200200200200200020202020002000200020002002002002000020200200"), VD = (() => {
-	let e = (/* @__PURE__ */ new Int32Array(319)).fill(-1), t = kD("02422242:222222242224222242442222222422222244442242226224222426222422442462222422622222222626222462242622422622422424242422222222422222222242422222222222222222622442224222222222222224424442262222222222222222222226224222424242422224422422422222"), n = kD("02222222222222222222202222222222222222222222221422222222222222222222222222222222222Y\\222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222221422222222222222222222222222222222222222Ŀł222222222222222222");
+})(), RD = kD("02000000000000900<=0?000B000F00F00ŏI0J0LNPRTVX0000]_a00000000000000000000000rst0000000zŏ00000000000ŏ0000000ŏ00000000000000000000000000000000000000000000000000000000000000Ë000000000000000000000Þ000000000000000000ð0000000ø0ùúûüýþÿĀāĂăĄąĆ000000000000000000000000000000000000000000ħ0ĨĪ00000000000000000000ļĽ00000Ŭ000000", 1), zD = AD(kD("123333359346463635126536711576")), BD = kD("93203242332583253248325D>E?F@03263243255B:032523853:0325B:8GA032542H<C=12727B:0328432553;D>E?3257D>032585:0325B:;0328B:032"), VD = kD("012113445661666666789111:5;;;;;;;;444;;;:62999<1161=62>>?61:21@ABCD4446996:64E:::;:?::64:F114GHHIHHHHIHH1HH1HH1HHHHHH::EEJ4444::EE4444441691;644444114244444:;K6666555555555555555999666664444444444444444444444226?6:66644L9M?D:111::::6DE199"), HD = jD("020200202020020020020020020020200200200200200200200002020202001003040106000200200200200200200200200200200200200200200200200200200200200200200200200200200200020020020020020020002020200202002002002002002002002002002020002002020020200220200200200200200200200200200200020020020000200020002000200200200020020020002000200200200020020202002020202000200200020022000200200020020002002000200220002002000200W0Z00020020002002020002002000200g0j0002002000200200020020002002000200200020020002000200002000002002002002002000200020000200002002002002002002002020020020200200200200200200200200202020020020020020020020020002002002020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020020002002002002002002000200200200200200200200200200020202020002000200020002002002002000020200200"), UD = (() => {
+	let e = (/* @__PURE__ */ new Int32Array(319)).fill(-1), t = jD("02422242:222222242224222242442222222422222244442242226224222426222422442462222422622222222626222462242622422622422424242422222222422222222242422222222222222222622442224222222222222224424442262222222222222222222226224222424242422224422422422222"), n = jD("02222222222222222222202222222222222222222222221422222222222222222222222222222222222Y\\222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222221422222222222222222222222222222222222222Ŀł222222222222222222");
 	for (let r = 0; r < t.length; r++) e[t[r]] = n[r];
 	return e;
-})(), HD = "container |break-after- all auto avoid avoid-page column left page right|break-before- all auto avoid avoid-page column left page right|break-inside-a uto void void-column void-page|box-decoration- clone slice|box- border content| contents flow-root hidden table table-caption table-cell table-column table-column-group table-footer-group table-header-group table-row table-row-group| not-sr-only sr-only|float- end left none right start|clear- both end left none right start|isolat e ion-auto|overflow- auto clip hidden scroll visible|overflow-x- auto clip hidden scroll visible|overflow-y- auto clip hidden scroll visible|overscroll- auto contain none|overscroll-x- auto contain none|overscroll-y- auto contain none| absolute fixed relative static sticky| collapse invisible visible|justify- around baseline between center center-safe end end-safe evenly normal start stretch|justify-items- center center-safe end end-safe normal start stretch|justify-self- auto center center-safe end end-safe start stretch|items- baseline baseline-last center center-safe end end-safe start stretch|self- auto baseline baseline-last center center-safe end end-safe start stretch|place-content- around baseline between center center-safe end end-safe evenly start stretch|place-items- baseline center center-safe end end-safe start stretch|place-self- auto center center-safe end end-safe start stretch| antialiased subpixel-antialiased| italic not-italic|normal-nums |ordinal |slashed-zero | lining-nums oldstyle-nums| proportional-nums tabular-nums| diagonal-fractions stacked-fractions| no-underline overline| capitalize lowercase normal-case uppercase|truncate |whitespace- break-spaces normal nowrap pre pre-line pre-wrap|break- all keep normal words|wrap- anywhere break-word normal|hyphens- auto manual none|mix-blend- color color-burn color-dodge darken difference exclusion hard-light hue lighten luminosity multiply normal overlay plus-darker plus-lighter saturation screen soft-light|table- auto fixed|caption- bottom top|backface- hidden visible|appearance- auto none|scheme- dark light light-dark normal only-dark only-light|field-sizing- content fixed|pointer-events- auto none|resize  -none -x -y|snap- align-none center end start|snap- always normal|snap- both none x y|snap- mandatory proximity|touch- auto manipulation none|touch-pan- left right x|touch-pan- down up y|touch-pinch-zoom |select- all auto none text|forced-color-adjust- auto none| normal size| baseline bottom middle sub super text-bottom text-top top| bounce none ping pulse spin| auto square video| auto fr max min px|none | auto full px| fixed local scroll|clip- border content padding text|origin- border content padding| bottom bottom-left bottom-right center left left-bottom left-top right right-bottom right-top top top-left top-right| no-repeat repeat repeat-round repeat-space repeat-x repeat-y| auto contain cover| gradient-to-b gradient-to-bl gradient-to-br gradient-to-l gradient-to-r gradient-to-t gradient-to-tl gradient-to-tr none|blend- color color-burn color-dodge darken difference exclusion hard-light hue lighten luminosity multiply normal overlay saturation screen soft-light|to- b bl br l r t tl tr| auto dvh fit full lh lvh max min px screen svh| dashed dotted double hidden none solid| collapse separate|px |auto |full | content none strict| inline-size size|layout |paint |style | around baseline between center center-safe end end-safe evenly normal start stretch| alias all-scroll auto cell col-resize context-menu copy crosshair default e-resize ew-resize grab grabbing help move n-resize ne-resize nesw-resize no-drop none not-allowed ns-resize nw-resize nwse-resize pointer progress row-resize s-resize se-resize sw-resize text vertical-text w-resize wait zoom-in zoom-out| dashed dotted double solid wavy| auto from-font|reverse |initial | in in-out initial linear out| col col-reverse row row-reverse| nowrap wrap wrap-reverse| auto initial none| black bold extrabold extralight light medium normal semibold thin| condensed expanded extra-condensed extra-expanded normal semi-condensed semi-expanded ultra-condensed ultra-expanded|flow- col col-dense dense row row-dense| none subgrid| auto dvh dvw fit full lh lvh lvw max min px screen svh svw| block flex grid table| auto dvw fit full lvw max min px screen svw| loose none normal px relaxed snug tight|through |item | inside outside| decimal disc none| auto px| clip-border clip-content clip-fill clip-padding clip-stroke clip-view no-clip| add exclude intersect subtract| alpha luminance match|origin- border content fill padding stroke view|type- alpha luminance| circle ellipse| closest-corner closest-side farthest-corner farthest-side|at- bottom bottom-left bottom-right center left left-bottom left-top right right-bottom right-top top top-left top-right| dvh fit full lh lvh max min none px screen svh| auto dvh dvw fit full lh lvh lvw max min none px screen svh svw| dvw fit full lvw max min none px screen svw| auto dvh dvw fit full lvh lvw max min none prose px svh svw| auto dvh dvw fit full lvh lvw max min none px screen svh svw| contain cover fill none scale-down| first last none| distant dramatic midrange near none normal|inset | full none|3d | auto smooth|gutter- auto both stable| auto none thin| inner none| auto dvh dvw fit full lvh lvw max min px svh svw|base | center end justify left right start| clip ellipsis| balance nowrap pretty wrap| normal tight tighter wide wider widest| cpu gpu none| 3d flat| all colors none opacity shadow transform| discrete normal| full px| auto dvh dvw fit full lvh lvw max min px screen svh svw| auto contents scroll transform".split("|").map((e) => {
+})(), WD = "container |break-after- all auto avoid avoid-page column left page right|break-before- all auto avoid avoid-page column left page right|break-inside-a uto void void-column void-page|box-decoration- clone slice|box- border content| contents flow-root hidden table table-caption table-cell table-column table-column-group table-footer-group table-header-group table-row table-row-group| not-sr-only sr-only|float- end left none right start|clear- both end left none right start|isolat e ion-auto|overflow- auto clip hidden scroll visible|overflow-x- auto clip hidden scroll visible|overflow-y- auto clip hidden scroll visible|overscroll- auto contain none|overscroll-x- auto contain none|overscroll-y- auto contain none| absolute fixed relative static sticky| collapse invisible visible|justify- around baseline between center center-safe end end-safe evenly normal start stretch|justify-items- center center-safe end end-safe normal start stretch|justify-self- auto center center-safe end end-safe start stretch|items- baseline baseline-last center center-safe end end-safe start stretch|self- auto baseline baseline-last center center-safe end end-safe start stretch|place-content- around baseline between center center-safe end end-safe evenly start stretch|place-items- baseline center center-safe end end-safe start stretch|place-self- auto center center-safe end end-safe start stretch| antialiased subpixel-antialiased| italic not-italic|normal-nums |ordinal |slashed-zero | lining-nums oldstyle-nums| proportional-nums tabular-nums| diagonal-fractions stacked-fractions| no-underline overline| capitalize lowercase normal-case uppercase|truncate |whitespace- break-spaces normal nowrap pre pre-line pre-wrap|break- all keep normal words|wrap- anywhere break-word normal|hyphens- auto manual none|mix-blend- color color-burn color-dodge darken difference exclusion hard-light hue lighten luminosity multiply normal overlay plus-darker plus-lighter saturation screen soft-light|table- auto fixed|caption- bottom top|backface- hidden visible|appearance- auto none|scheme- dark light light-dark normal only-dark only-light|field-sizing- content fixed|pointer-events- auto none|resize  -none -x -y|snap- align-none center end start|snap- always normal|snap- both none x y|snap- mandatory proximity|touch- auto manipulation none|touch-pan- left right x|touch-pan- down up y|touch-pinch-zoom |select- all auto none text|forced-color-adjust- auto none| normal size| baseline bottom middle sub super text-bottom text-top top| bounce none ping pulse spin| auto square video| auto fr max min px|none | auto full px| fixed local scroll|clip- border content padding text|origin- border content padding| bottom bottom-left bottom-right center left left-bottom left-top right right-bottom right-top top top-left top-right| no-repeat repeat repeat-round repeat-space repeat-x repeat-y| auto contain cover| gradient-to-b gradient-to-bl gradient-to-br gradient-to-l gradient-to-r gradient-to-t gradient-to-tl gradient-to-tr none|blend- color color-burn color-dodge darken difference exclusion hard-light hue lighten luminosity multiply normal overlay saturation screen soft-light|to- b bl br l r t tl tr| auto dvh fit full lh lvh max min px screen svh| dashed dotted double hidden none solid| collapse separate|px |auto |full | content none strict| inline-size size|layout |paint |style | around baseline between center center-safe end end-safe evenly normal start stretch| alias all-scroll auto cell col-resize context-menu copy crosshair default e-resize ew-resize grab grabbing help move n-resize ne-resize nesw-resize no-drop none not-allowed ns-resize nw-resize nwse-resize pointer progress row-resize s-resize se-resize sw-resize text vertical-text w-resize wait zoom-in zoom-out| dashed dotted double solid wavy| auto from-font|reverse |initial | in in-out initial linear out| col col-reverse row row-reverse| nowrap wrap wrap-reverse| auto initial none| black bold extrabold extralight light medium normal semibold thin| condensed expanded extra-condensed extra-expanded normal semi-condensed semi-expanded ultra-condensed ultra-expanded|flow- col col-dense dense row row-dense| none subgrid| auto dvh dvw fit full lh lvh lvw max min px screen svh svw| block flex grid table| auto dvw fit full lvw max min px screen svw| loose none normal px relaxed snug tight|through |item | inside outside| decimal disc none| auto px| clip-border clip-content clip-fill clip-padding clip-stroke clip-view no-clip| add exclude intersect subtract| alpha luminance match|origin- border content fill padding stroke view|type- alpha luminance| circle ellipse| closest-corner closest-side farthest-corner farthest-side|at- bottom bottom-left bottom-right center left left-bottom left-top right right-bottom right-top top top-left top-right| dvh fit full lh lvh max min none px screen svh| auto dvh dvw fit full lh lvh lvw max min none px screen svh svw| dvw fit full lvw max min none px screen svw| auto dvh dvw fit full lvh lvw max min none prose px svh svw| auto dvh dvw fit full lvh lvw max min none px screen svh svw| contain cover fill none scale-down| first last none| distant dramatic midrange near none normal|inset | full none|3d | auto smooth|gutter- auto both stable| auto none thin| inner none| auto dvh dvw fit full lvh lvw max min px svh svw|base | center end justify left right start| clip ellipsis| balance nowrap pretty wrap| normal tight tighter wide wider widest| cpu gpu none| 3d flat| all colors none opacity shadow transform| discrete normal| full px| auto dvh dvw fit full lvh lvw max min px screen svh svw| auto contents scroll transform".split("|").map((e) => {
 	let t = e.split(" "), n = t.shift();
 	for (let e = 0; e < t.length; e++) t[e] = n + t[e];
 	return t;
-}), UD = kD("0000000000000000000000000000000000000000000000000000000000000262242:6@200000006:240B428:4422400002046044222426220026642642462026224222824220022400000000\\00N222422242222222224062242222222422226264222422222222222222442804222422222222222222222222220<4<0204260002444020204224422"), WD = kD("ɠ222222222222222222222222222222222222222222222222222222222222˕4222226>ʶ22ʷʺʷ2ʸʷ42ʴ2ʓ22>621422ɶ222ɹɼɷɺɷɺ22ɱ42222ɨ2ɧ26622ɘɓ244ƸƵ222]d24242ǖǓƚÄȫ2263ȨȥȨ2222222ǣ222222222222222222ǂƽ2ƾƵ2222222422222ƜƑ22222222222222222222144Ŧţ22Ţş222222222222222222222ĸ2ı68ĦģĦɡŰ4Ġ«®ĝ822ĔđĔ2ē2222622"), GD = kD("02222222222222222222222222222222222222222222222222222222222222222202022222222222EH2200IL021042222Y\\222IL0cf2e10j2222U00X202[^2y0000120|{~22:22|22222222222G000qOVI00000}2>40000B00000I¨©000¬00000000000000021M®­00°000000000000000000000222HGHa1º222¿2À2222ÉÌ000­°2±"), KD = /* @__PURE__ */ new Int32Array(995), qD = /* @__PURE__ */ new Int32Array(995), JD = /* @__PURE__ */ new Int32Array(995), YD = "", XD = /* @__PURE__ */ new Int32Array(1038);
+}), GD = jD("0000000000000000000000000000000000000000000000000000000000000262242:6@200000006:240B428:4422400002046044222426220026642642462026224222824220022400000000\\00N222422242222222224062242222222422226264222422222222222222442804222422222222222222222222220<4<0204260002444020204224422"), KD = jD("ɠ222222222222222222222222222222222222222222222222222222222222˕4222226>ʶ22ʷʺʷ2ʸʷ42ʴ2ʓ22>621422ɶ222ɹɼɷɺɷɺ22ɱ42222ɨ2ɧ26622ɘɓ244ƸƵ222]d24242ǖǓƚÄȫ2263ȨȥȨ2222222ǣ222222222222222222ǂƽ2ƾƵ2222222422222ƜƑ22222222222222222222144Ŧţ22Ţş222222222222222222222ĸ2ı68ĦģĦɡŰ4Ġ«®ĝ822ĔđĔ2ē2222622"), qD = jD("02222222222222222222222222222222222222222222222222222222222222222202022222222222EH2200IL021042222Y\\222IL0cf2e10j2222U00X202[^2y0000120|{~22:22|22222222222G000qOVI00000}2>40000B00000I¨©000¬00000000000000021M®­00°000000000000000000000222HGHa1º222¿2À2222ÉÌ000­°2±"), JD = /* @__PURE__ */ new Int32Array(995), YD = /* @__PURE__ */ new Int32Array(995), XD = /* @__PURE__ */ new Int32Array(995), ZD = "", QD = /* @__PURE__ */ new Int32Array(1038);
 {
 	let e = /* @__PURE__ */ new Map(), t = 0, n = 0;
-	for (let r = 0; r < UD.length; r++) for (let i of HD[GD[r]]) {
+	for (let r = 0; r < GD.length; r++) for (let i of WD[qD[r]]) {
 		let a = e.get(i);
-		a === void 0 && (a = t++, e.set(i, a), XD[a * 2] = YD.length, XD[a * 2 + 1] = i.length, YD += i), KD[n] = UD[r], qD[n] = WD[r], JD[n] = a, n++;
+		a === void 0 && (a = t++, e.set(i, a), QD[a * 2] = ZD.length, QD[a * 2 + 1] = i.length, ZD += i), JD[n] = GD[r], YD[n] = KD[r], XD[n] = a, n++;
 	}
 }
-var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD(DD("1::24444432:442:44:44>222222:44:4421322511111311111114")), $D = kD("24A;33N=C@H4A;33N=C@<27;83:;8393NQ:3NQʰ222ˉºŴŽ2R2=18cƴÅŇ=cĞÛC1ƈǝȈ:ħ25=11D3A@4=<1;1DEr25;11B3?<6;:371BCn9@7=<8192>2E121@9@EHE@9>2T25511<398454131<=V25511<398454131<=ƧNž2Đå242L222290000f22500ɛ000ǘ222"), eO = DD("ĳ"), tO = DD(""), nO = DD("1"), rO = {
-	GROUP_COUNT: AD,
-	customValidatorNames: jD,
-	edgeStart: MD,
-	labelStart: ND,
-	labelText: PD,
-	edgeTarget: FD,
-	nodeGroup: ID,
-	nodeVlist: VD,
-	vlistPat: LD,
-	vlistOps: RD,
-	vlistRef: zD,
-	vlistGroup: BD,
-	litAnchor: KD,
-	litGroup: qD,
-	litPool: JD,
-	poolOffsets: XD,
-	poolText: YD,
-	adjGid: ZD,
-	adjStart: QD,
-	adjTgt: $D,
-	patGid: eO,
-	patTgt: tO,
-	postfixLookupGroups: nO,
+var $D = jD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), eO = AD(kD("1::24444432:442:44:44>222222:44:4421322511111311111114")), tO = jD("24A;33N=C@H4A;33N=C@<27;83:;8393NQ:3NQʰ222ˉºŴŽ2R2=18cƴÅŇ=cĞÛC1ƈǝȈ:ħ25=11D3A@4=<1;1DEr25;11B3?<6;:371BCn9@7=<8192>2E121@9@EHE@9>2T25511<398454131<=V25511<398454131<=ƧNž2Đå242L222290000f22500ɛ000ǘ222"), nO = kD("ĳ"), rO = kD(""), iO = kD("1"), aO = {
+	GROUP_COUNT: MD,
+	customValidatorNames: ND,
+	edgeStart: PD,
+	labelStart: FD,
+	labelText: ID,
+	edgeTarget: LD,
+	nodeGroup: RD,
+	nodeVlist: UD,
+	vlistPat: zD,
+	vlistOps: BD,
+	vlistRef: VD,
+	vlistGroup: HD,
+	litAnchor: JD,
+	litGroup: YD,
+	litPool: XD,
+	poolOffsets: QD,
+	poolText: ZD,
+	adjGid: $D,
+	adjStart: eO,
+	adjTgt: tO,
+	patGid: nO,
+	patTgt: rO,
+	postfixLookupGroups: iO,
 	orderSensitiveModifiers: "* ** after backdrop before details-content file first-letter first-line marker placeholder selection"
-}, iO = "line" in /* @__PURE__ */ Error(), aO = -1, oO = -1, sO = (e, t, n) => {
+}, oO = "line" in /* @__PURE__ */ Error(), sO = -1, cO = -1, lO = (e, t, n) => {
 	let r = 2166136261;
 	for (let i = t; i < n; i++) r = Math.imul(r ^ e.charCodeAt(i), 16777619);
 	return r;
-}, cO = (e, t, n) => {
+}, uO = (e, t, n) => {
 	let r = n - t, i = Math.imul(r, 2654435761) ^ e.charCodeAt(t);
 	if (r > 3) {
 		let a = r >> 2, o = r >> 1;
@@ -44479,7 +44489,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 		for (let r = t + 3, a = n - 4; r < t + 8 && r < a; r++, a--) i = Math.imul(i ^ e.charCodeAt(r) ^ e.charCodeAt(a) << 8, 16777619);
 	}
 	return i ^ i >>> 15;
-}, lO = (e, t, n = {}) => {
+}, dO = (e, t, n = {}) => {
 	let { GROUP_COUNT: r, edgeStart: i, labelStart: a, labelText: o, edgeTarget: s, nodeGroup: c, nodeVlist: l, vlistPat: u, vlistOps: d, vlistRef: f, vlistGroup: p, litAnchor: m, litGroup: h, litPool: g, poolOffsets: _, poolText: v, adjGid: y, adjStart: b, adjTgt: x, patGid: S, patTgt: C, postfixLookupGroups: w, customValidatorNames: T, orderSensitiveModifiers: E } = e, D = new Int32Array(r).fill(-1);
 	for (let e = 0; e < y.length; e++) D[y[e]] = e;
 	let O = 0;
@@ -44505,12 +44515,12 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 	for (; te < m.length * 2;) te <<= 1;
 	let ne = new Int32Array(te).fill(-1);
 	for (let e = 0; e < m.length; e++) {
-		let t = _[g[e] * 2], n = (sO(v, t, t + _[g[e] * 2 + 1]) ^ Math.imul(m[e], 2654435761) | 0) & te - 1;
+		let t = _[g[e] * 2], n = (lO(v, t, t + _[g[e] * 2 + 1]) ^ Math.imul(m[e], 2654435761) | 0) & te - 1;
 		for (; ne[n] !== -1;) n = n + 1 & te - 1;
 		ne[n] = e;
 	}
 	let re = (e, t, n, r) => {
-		let i = (sO(t, n, r) ^ Math.imul(e, 2654435761) | 0) & te - 1, a = r - n;
+		let i = (lO(t, n, r) ^ Math.imul(e, 2654435761) | 0) & te - 1, a = r - n;
 		for (;;) {
 			let r = ne[i];
 			if (r === -1) return -1;
@@ -44622,7 +44632,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 			default: return Se(t, n, r);
 		}
 	}, Ee = new Set(typeof E == "string" ? E.split(" ") : E), De = (e, t, n, r, i, a) => {
-		let o = sO(t, n, r) ^ (i ? 2654435769 : 0), s = e.get(o);
+		let o = lO(t, n, r) ^ (i ? 2654435769 : 0), s = e.get(o);
 		if (s !== void 0) outer: for (let e = 0; e < s.length; e++) {
 			let a = s[e];
 			if (a.imp === i && a.k.length === r - n) {
@@ -44687,7 +44697,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 				r = i;
 				break;
 			}
-			return r === -1 || r === t + 1 ? aO : De(Me, e, t + 1, r, 0, Pe);
+			return r === -1 || r === t + 1 ? sO : De(Me, e, t + 1, r, 0, Pe);
 		}
 		if (r >= 0 && c[r] >= 0) return c[r];
 		for (let t = i - 1; t >= 0; t--) {
@@ -44709,7 +44719,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 			let h = A[o] - c;
 			for (let t = c; t < m; t++) if (Te(d[t], e, r, n)) return p[h + t];
 		}
-		return aO;
+		return sO;
 	}, ut = (e) => {
 		let t = e.length, n = 0, c = 0, u = !1;
 		(z > Ae || Oe.size > Ae) && (Oe = /* @__PURE__ */ new Map(), ke = /* @__PURE__ */ new Map(), z = 2, Ue()), B > Ne && (Me = /* @__PURE__ */ new Map(), B = r, Ue());
@@ -44756,7 +44766,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 			let b = p;
 			if (se !== 0) {
 				if (h - p <= se || !e.startsWith(oe, p)) {
-					Je[_] = aO, He(y, e, p, h, v, aO, 0, 0);
+					Je[_] = sO, He(y, e, p, h, v, sO, 0, 0);
 					continue;
 				}
 				b = p + se;
@@ -44784,12 +44794,12 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 			D - E > 1 && e.charCodeAt(E) === 45 && (M = E + 1);
 			let ee = 0, P = 0, te = 0, ne = -1, re = 0;
 			(l[0] >= 0 || N[0] === 1) && (et[0] = 0, tt[0] = M, re = 1);
-			let ie = oO, ae = 0;
-			for (let t = M; t < D; t++) if (t === A && (ie = P < te ? oO : ee, ae = re), ee !== oO) {
+			let ie = cO, ae = 0;
+			for (let t = M; t < D; t++) if (t === A && (ie = P < te ? cO : ee, ae = re), ee !== cO) {
 				let n = e.charCodeAt(t), r = -1;
-				if (P < te) o.charCodeAt(P) === n ? (P++, P === te && (r = ee = ne)) : ee = oO;
+				if (P < te) o.charCodeAt(P) === n ? (P++, P === te && (r = ee = ne)) : ee = cO;
 				else {
-					let e = i[ee], t = i[ee + 1], c = oO;
+					let e = i[ee], t = i[ee + 1], c = cO;
 					for (let i = e; i < t; i++) {
 						let e = a[i];
 						if (o.charCodeAt(e) === n) {
@@ -44810,16 +44820,16 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 					et[re] = r, tt[re] = t + 2, re++;
 				}
 			}
-			A === D && (ie = P < te ? oO : ee, ae = re);
-			let ce = P < te ? oO : ee, F, le = !1;
+			A === D && (ie = P < te ? cO : ee, ae = re);
+			let ce = P < te ? cO : ee, F, le = !1;
 			if (A >= 0) {
-				if (le = !0, F = lt(e, E, A, ie, ae), F !== aO && F < r && j[F]) {
+				if (le = !0, F = lt(e, E, A, ie, ae), F !== sO && F < r && j[F]) {
 					let t = lt(e, E, D, ce, re);
-					t !== aO && t !== F && (F = t, le = !1);
-				} else F === aO && (F = lt(e, E, D, ce, re), le = !1);
+					t !== sO && t !== F && (F = t, le = !1);
+				} else F === sO && (F = lt(e, E, D, ce, re), le = !1);
 			} else F = lt(e, E, D, ce, re);
 			let ue = 0, de = 0;
-			F === aO ? Je[_] = aO : (de = +!!le, ue = b >= C ? +!!O : De(Oe, e, b, C, +!!O, (e) => je(e, O)), Je[_] = F, Xe[_] = de, Ye[_] = ue), He(y, e, p, h, v, F, ue, de);
+			F === sO ? Je[_] = sO : (de = +!!le, ue = b >= C ? +!!O : De(Oe, e, b, C, +!!O, (e) => je(e, O)), Je[_] = F, Xe[_] = de, Ye[_] = ue), He(y, e, p, h, v, F, ue, de);
 		}
 		if (n === 0) return "";
 		if (n === 1) return Ke[0] === 0 && qe[0] === t ? e : e.slice(Ke[0], qe[0]);
@@ -44832,7 +44842,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 		let f = !1;
 		for (let e = n - 1; e >= 0; e--) {
 			let t = Je[e];
-			if (t === aO) {
+			if (t === sO) {
 				Ze[e] = 1;
 				continue;
 			}
@@ -44861,29 +44871,29 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 	}, St = (e) => {
 		let t = ht[e];
 		if (t !== void 0) return t;
-		let n = cO(e, 0, e.length), r = (n & 16383) + pt, i = ft[r] === (n ^ mt) || ft[r ^ dt] === (n ^ mt - 1);
+		let n = uO(e, 0, e.length), r = (n & 16383) + pt, i = ft[r] === (n ^ mt) || ft[r ^ dt] === (n ^ mt - 1);
 		return i && (t = gt[e], t !== void 0) ? (ht[e] = t, t) : (t = ut(e), i ? (ht[e] = t, ++yt > ie && (yt = 0, gt = ht, ht = Object.create(null), xt())) : (ft[r] = n ^ mt, ++bt > dt && xt()), t);
 	}, Ct = (e) => {
 		let t = _t.get(e);
 		if (t !== void 0) return t;
-		let n = cO(e, 0, e.length), r = (n & 16383) + pt, i = ft[r] === (n ^ mt) || ft[r ^ dt] === (n ^ mt - 1);
+		let n = uO(e, 0, e.length), r = (n & 16383) + pt, i = ft[r] === (n ^ mt) || ft[r ^ dt] === (n ^ mt - 1);
 		return i && (t = vt.get(e), t !== void 0) ? (_t.set(e, t), t) : (t = ut(e), i ? (_t.set(e, t), ++yt > ie && (yt = 0, vt = _t, _t = /* @__PURE__ */ new Map(), xt())) : (ft[r] = n ^ mt, ++bt > dt && xt()), t);
 	}, wt = (e) => {
-		let t = cO(e, 0, e.length), n = (t & 16383) + pt;
+		let t = uO(e, 0, e.length), n = (t & 16383) + pt;
 		return ft[n] === (t ^ mt) || ft[n ^ dt] === (t ^ mt - 1) || (ft[n] = t ^ mt, ++bt > dt && xt(), !1);
-	}, Tt = ie === 0 ? ut : iO ? (e) => {
+	}, Tt = ie === 0 ? ut : oO ? (e) => {
 		let t = _t.get(e);
 		return t === void 0 ? Ct(e) : t;
 	} : St;
 	return {
 		merge: function() {
-			return arguments.length === 1 && typeof arguments[0] == "string" ? Tt(arguments[0]) : Tt(fO.apply(null, arguments));
+			return arguments.length === 1 && typeof arguments[0] == "string" ? Tt(arguments[0]) : Tt(mO.apply(null, arguments));
 		},
 		mergeString: Tt,
 		seenBefore: ie === 0 ? () => !1 : wt,
 		mergeUncached: ut
 	};
-}, uO = (e, t) => {
+}, fO = (e, t) => {
 	if (!e) return "";
 	if (typeof e == "string") return e;
 	let n = "";
@@ -44892,7 +44902,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 		for (let e = 0; e < r.length; e++) {
 			let i = r[e];
 			if (!i) continue;
-			let a = typeof i == "string" ? i : uO(i, t);
+			let a = typeof i == "string" ? i : fO(i, t);
 			a && (n && (n += " "), n += a);
 		}
 		return n;
@@ -44902,21 +44912,21 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 		if (typeof e == "object") for (let t in e) e[t] && (n && (n += " "), n += t);
 	}
 	return n;
-}, dO = (e, t) => {
+}, pO = (e, t) => {
 	let n = "";
 	for (let r = 0; r < e.length; r++) {
 		let i = e[r];
 		if (!i) continue;
-		let a = typeof i == "string" ? i : uO(i, t);
+		let a = typeof i == "string" ? i : fO(i, t);
 		a && (n && (n += " "), n += a);
 	}
 	return n;
-}, fO = function() {
-	return dO(arguments, !1);
-}, pO = 256, mO = 16, hO = 1024, gO = 4096, _O = (e, t) => {
+}, mO = function() {
+	return pO(arguments, !1);
+}, hO = 256, gO = 16, _O = 1024, vO = 4096, yO = (e, t) => {
 	let n = t === void 0 ? () => !0 : t.seenBefore, r = t === void 0 ? e : t.mergeUncached, i = /* @__PURE__ */ new Map(), a = /* @__PURE__ */ new Map(), o = 0, s = null, c = null, l = [], u = [], d = 0, f = (t, n, r) => {
-		c === null && (c = Array(gO).fill(""), l = Array(gO).fill(""), u = Array(gO).fill(""));
-		let i = cO(t, 0, t.length) & 4094;
+		c === null && (c = Array(vO).fill(""), l = Array(vO).fill(""), u = Array(vO).fill(""));
+		let i = uO(t, 0, t.length) & 4094;
 		if (c[i] === t && l[i] === n) return u[i];
 		if (c[i | 1] === t && l[i | 1] === n) return u[i | 1];
 		let a = e(r ? n + " " + t : t), o = c[i] === "" ? i : i | (c[i | 1] === "" ? 1 : d++ & 1);
@@ -44957,7 +44967,7 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 			let n = t[e];
 			if (n) {
 				if (typeof n != "string") {
-					if (n = t[e] = uO(n, !0), !n) continue;
+					if (n = t[e] = fO(n, !0), !n) continue;
 					g = !0;
 				}
 				p < 0 && (d = n, p = e), h++;
@@ -45016,12 +45026,12 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 				miss: 0,
 				skip: 0,
 				at: 0
-			}) : ++_.miss > mO && (_.miss = mO, _.skip = hO, _.e.length = 0, _.at = 0);
+			}) : ++_.miss > gO && (_.miss = gO, _.skip = _O, _.e.length = 0, _.at = 0);
 			let u = _.e;
-			u.length < pO ? u.push(v) : (u[_.at] = v, _.at = _.at + 1 & 255), ++o > 1e3 && (o = 0, a = i, i = /* @__PURE__ */ new Map());
+			u.length < hO ? u.push(v) : (u[_.at] = v, _.at = _.at + 1 & 255), ++o > 1e3 && (o = 0, a = i, i = /* @__PURE__ */ new Map());
 		}
 		return s !== null && s !== v && (s.n = v), s = v, v.r;
-	}, g = (t) => Array.isArray(t) ? h(t.slice(), !1) : e(uO(t, !0));
+	}, g = (t) => Array.isArray(t) ? h(t.slice(), !1) : e(fO(t, !0));
 	return function(t, n, r) {
 		let a = arguments.length;
 		if ((a | 1) == 3) {
@@ -45078,21 +45088,21 @@ var ZD = kD("0b2N:222@R>F@286¦2@H2D266226FB22B2>BD\\6N22222Z222D222p"), QD = OD
 		for (let e = 0; e < a; e++) c.push(arguments[e]);
 		return h(c, !0);
 	};
-}, vO = /* @__PURE__ */ lO(rO), yO = /* @__PURE__ */ _O(vO.mergeString, vO);
-vO.merge;
+}, bO = /* @__PURE__ */ dO(aO), xO = /* @__PURE__ */ yO(bO.mergeString, bO);
+bO.merge;
 //#endregion
 //#region src/id-card.tsx
-var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1.1, TO = .06, EO = "/assets/interactive-card/pin.png", DO = 1024 / 1536, OO = 1.4, kO = OO * DO, AO = .8352083333333334, jO = 0, MO = .16, NO = 0, PO = .942, FO = .055, IO = [.2308, .0443], LO = [.0375, .0405], RO = 2048, zO = {
+var SO = "/assets/interactive-card/card.glb", CO = .1, wO = 24, TO = .06, EO = 1.1, DO = .06, OO = "/assets/interactive-card/pin.png", kO = 1024 / 1536, AO = 1.4, jO = AO * kO, MO = .8352083333333334, NO = 0, PO = .16, FO = 0, IO = .942, LO = .055, RO = [.2308, .0443], zO = [.0375, .0405], BO = 2048, VO = {
 	x: 0,
 	y: 0,
 	w: .5,
 	h: .755
-}, BO = {
+}, HO = {
 	x: .5,
 	y: 0,
 	w: .5,
 	h: .755
-}, VO = .03, HO = (e) => (e.lerped ||= new G().copy(e.translation()), e.lerped), UO = (e, t, n, r, i) => {
+}, UO = .03, WO = (e) => (e.lerped ||= new G().copy(e.translation()), e.lerped), GO = (e, t, n, r, i) => {
 	let a = e.computeFrenetFrames(t, !1), o = [], s = [], c = [], l = [], u = new G(), d = new G();
 	for (let l = 0; l <= t; l++) {
 		let f = l / t, p = e.getPointAt(f), m = a.normals[l], h = a.binormals[l], g = f < i ? f / i * n : n;
@@ -45107,14 +45117,14 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 	}
 	let f = new J();
 	return f.setIndex(l), f.setAttribute("position", new q(o, 3)), f.setAttribute("normal", new q(s, 3)), f.setAttribute("uv", new q(c, 2)), f;
-}, WO = ({ frontImage: e, isMobile: t, accentColor: n, onReady: r }) => {
-	let i = (document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark", a = (0, v.useRef)(null), o = (0, v.useRef)(null), s = (0, v.useRef)(null), c = (0, v.useRef)(null), l = (0, v.useRef)(null), u = (0, v.useRef)(null), d = new G(), f = new G(), p = new G(), m = new na(new G(0, 0, 1), 0), h = new Fn(), g = new G(), _ = {
+}, KO = ({ frontImage: e, isMobile: t, accentColor: n, onReady: r }) => {
+	let i = (document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark", { world: a, rapier: o } = zE(), [s] = (0, v.useState)(ZO), c = (0, v.useRef)(s), l = (0, v.useRef)(null), u = (0, v.useRef)(null), d = (0, v.useRef)(null), f = (0, v.useRef)(null), p = (0, v.useRef)(null), m = (0, v.useRef)(null), h = (0, v.useRef)(null), g = new G(), _ = new G(), y = new G(), b = new na(new G(0, 0, 1), 0), x = new Fn(), S = new G(), C = {
 		type: "dynamic",
 		canSleep: !0,
 		colliders: !1,
 		angularDamping: 1.5,
 		linearDamping: 1.5
-	}, { nodes: y, materials: b } = Ex(bO), x = Sx(e);
+	}, { nodes: w, materials: T } = Ex(SO), E = Sx(e);
 	(0, v.useEffect)(() => {
 		let e = 0, t = requestAnimationFrame(() => {
 			e = requestAnimationFrame(() => r?.());
@@ -45123,27 +45133,27 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			cancelAnimationFrame(t), cancelAnimationFrame(e);
 		};
 	}, [r]);
-	let S = Sx(EO), C = (0, v.useMemo)(() => {
-		let e = b.base.map, t = e.image, r = RO, i = RO, a = document.createElement("canvas");
+	let D = Sx(OO), O = (0, v.useMemo)(() => {
+		let e = T.base.map, t = e.image, r = BO, i = BO, a = document.createElement("canvas");
 		a.width = r, a.height = i;
 		let o = a.getContext("2d");
 		if (!o) return e;
 		o.drawImage(t, 0, 0, r, i);
-		let s = x.image;
-		for (let e of [zO, BO]) {
+		let s = E.image;
+		for (let e of [VO, HO]) {
 			let t = e.x * r, a = e.y * i, c = e.w * r, l = e.h * i, u = Math.max(c / s.width, l / s.height), d = s.width * u, f = s.height * u, p = t + (c - d) / 2, m = a + (l - f) / 2;
-			o.save(), o.beginPath(), o.rect(t, a, c, l), o.clip(), o.imageSmoothingEnabled = !0, o.imageSmoothingQuality = "high", o.drawImage(s, p, m, d, f), o.fillStyle = n, o.fillRect(t, a, c, l * VO), o.restore();
+			o.save(), o.beginPath(), o.rect(t, a, c, l), o.clip(), o.imageSmoothingEnabled = !0, o.imageSmoothingQuality = "high", o.drawImage(s, p, m, d, f), o.fillStyle = n, o.fillRect(t, a, c, l * UO), o.restore();
 		}
 		let c = new ms(a);
 		return c.colorSpace = _t, c.flipY = e.flipY, c.anisotropy = 16, c.generateMipmaps = !0, c.minFilter = P, c.magFilter = M, c.needsUpdate = !0, c;
 	}, [
-		x,
-		b.base.map,
+		E,
+		T.base.map,
 		n
-	]), w = (0, v.useMemo)(() => {
-		let e = C.clone();
-		return e.offset.set(...IO), e.repeat.set(...LO), e.needsUpdate = !0, e;
-	}, [C]), [T] = (0, v.useState)(() => {
+	]), k = (0, v.useMemo)(() => {
+		let e = O.clone();
+		return e.offset.set(...RO), e.repeat.set(...zO), e.needsUpdate = !0, e;
+	}, [O]), [A] = (0, v.useState)(() => {
 		let e = new Bs([
 			new G(),
 			new G(),
@@ -45151,21 +45161,39 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			new G()
 		]);
 		return e.curveType = "chordal", e;
-	}), [E, D] = (0, v.useState)(!1), O = (0, v.useRef)(!1), k = (0, v.useRef)(0), A = (0, v.useRef)(0), j = () => {
-		O.current && (O.current = !1, A.current = performance.now() + 300, D(!1), document.body.style.userSelect = "", document.body.classList.remove("card-dragging"));
+	}), [j, N] = (0, v.useState)(!1), ee = (0, v.useRef)(!1), te = (0, v.useRef)(0), ne = (0, v.useRef)(0), re = () => {
+		ee.current && (ee.current = !1, ne.current = performance.now() + 300, N(!1), document.body.style.userSelect = "", document.body.classList.remove("card-dragging"));
 	};
 	return (0, v.useEffect)(() => {
 		let e = (e) => {
-			(O.current || performance.now() < A.current) && (e.preventDefault(), e.stopImmediatePropagation());
+			(ee.current || performance.now() < ne.current) && (e.preventDefault(), e.stopImmediatePropagation());
 		};
 		document.addEventListener("click", e, !0);
 		let t = (e) => {
-			O.current && e.preventDefault();
+			ee.current && e.preventDefault();
 		};
-		return window.addEventListener("touchmove", t, { passive: !1 }), window.addEventListener("pointerup", j), window.addEventListener("pointercancel", j), window.addEventListener("blur", j), () => {
-			document.removeEventListener("click", e, !0), window.removeEventListener("touchmove", t), window.removeEventListener("pointerup", j), window.removeEventListener("pointercancel", j), window.removeEventListener("blur", j), document.body.style.userSelect = "", document.body.classList.remove("card-dragging");
+		return window.addEventListener("touchmove", t, { passive: !1 }), window.addEventListener("pointerup", re), window.addEventListener("pointercancel", re), window.addEventListener("blur", re), () => {
+			document.removeEventListener("click", e, !0), window.removeEventListener("touchmove", t), window.removeEventListener("pointerup", re), window.removeEventListener("pointercancel", re), window.removeEventListener("blur", re), document.body.style.userSelect = "", document.body.classList.remove("card-dragging");
 		};
-	}, []), TD(o, s, [
+	}, []), BE(() => {
+		if (!d.current || !f.current) return;
+		let e = ZO();
+		l.current && Math.abs(e - c.current) < .005 || (l.current?.isValid() && a.removeImpulseJoint(l.current, !0), d.current.setTranslation({
+			x: 0,
+			y: 4 + e,
+			z: 0
+		}, !0), l.current = a.createImpulseJoint(o.JointData.rope(.85 + e, {
+			x: 0,
+			y: 0,
+			z: 0
+		}, {
+			x: 0,
+			y: 0,
+			z: 0
+		}), d.current, f.current, !0), c.current = e);
+	}), (0, v.useEffect)(() => () => {
+		l.current?.isValid() && a.removeImpulseJoint(l.current, !0), l.current = null;
+	}, [a]), DD(f, p, [
 		[
 			0,
 			0,
@@ -45177,7 +45205,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			0
 		],
 		.85
-	]), TD(s, c, [
+	]), DD(p, m, [
 		[
 			0,
 			0,
@@ -45189,74 +45217,61 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			0
 		],
 		.85
-	]), TD(c, l, [
-		[
-			0,
-			0,
-			0
-		],
-		[
-			0,
-			0,
-			0
-		],
-		.85
-	]), wD(l, u, [[
+	]), ED(m, h, [[
 		0,
 		0,
 		0
 	], [
 		0,
-		wO,
+		EO,
 		0
 	]]), G_((e, n) => {
-		if (E) {
-			e.raycaster.setFromCamera(e.pointer, e.camera), e.raycaster.ray.intersectPlane(m, d);
+		if (j) {
+			e.raycaster.setFromCamera(e.pointer, e.camera), e.raycaster.ray.intersectPlane(b, g);
 			let t = (1 - e.pointer.y) * e.size.height / 2, n = t < 64 ? -12 * (1 - t / 64) : t > e.size.height - 64 ? 12 * (1 - (e.size.height - t) / 64) : 0;
 			n && window.scrollBy({
 				top: n,
 				behavior: "instant"
 			}), [
-				u,
-				s,
-				c,
-				l,
-				o
-			].forEach((e) => e.current?.wakeUp()), u.current?.setNextKinematicTranslation({
-				x: d.x - E.x,
-				y: d.y - E.y,
-				z: d.z - E.z
+				h,
+				f,
+				p,
+				m,
+				d
+			].forEach((e) => e.current?.wakeUp()), h.current?.setNextKinematicTranslation({
+				x: g.x - j.x,
+				y: g.y - j.y,
+				z: g.z - j.z
 			});
 		}
-		if (k.current += n, k.current > .2 && u.current) {
-			k.current = 0;
-			let e = [
-				u,
-				s,
-				c,
-				l
+		if (te.current += n, te.current > .2 && h.current) {
+			te.current = 0;
+			let t = [
+				h,
+				f,
+				p,
+				m
 			].reduce((e, t) => {
 				let n = t.current.linvel(), r = t.current.angvel();
 				return e + n.x * n.x + n.y * n.y + n.z * n.z + r.x * r.x + r.y * r.y + r.z * r.z;
-			}, 0), t = document.getElementById("lanyard-root");
-			t?.setAttribute("data-motion-energy", e.toFixed(5)), t?.setAttribute("data-card-sleeping", String(u.current.isSleeping())), t?.setAttribute("data-motion-state", E ? "dragging" : "dynamic");
+			}, 0), n = document.getElementById("lanyard-root");
+			if (n?.setAttribute("data-motion-energy", t.toFixed(5)), n?.setAttribute("data-card-sleeping", String(h.current.isSleeping())), n?.setAttribute("data-motion-state", j ? "dragging" : "dynamic"), d.current) {
+				let t = d.current.translation();
+				S.set(t.x, t.y, t.z).project(e.camera), n?.setAttribute("data-anchor-x", ((S.x + 1) * e.size.width / 2).toFixed(3)), n?.setAttribute("data-anchor-page-y", ((1 - S.y) * e.size.height / 2 + window.scrollY).toFixed(3));
+			}
 		}
-		if (o.current) {
-			[s, c].forEach((e) => {
-				let t = HO(e.current), r = Math.max(.1, Math.min(1, t.distanceTo(e.current.translation())));
+		if (d.current) {
+			[f, p].forEach((e) => {
+				let t = WO(e.current), r = Math.max(.1, Math.min(1, t.distanceTo(e.current.translation())));
 				t.lerp(e.current.translation(), 1 - Math.exp(-n * 50 * r));
 			});
-			let r = u.current.translation(), i = u.current.rotation();
-			if (h.set(i.x, i.y, i.z, i.w), T.points[0].set(0, .6000000000000001, 0).applyQuaternion(h).add(d.set(r.x, r.y, r.z)), T.points[1].copy(HO(c.current)), T.points[2].copy(HO(s.current)), T.points[3].copy(o.current.translation()), window.innerWidth > 800) {
-				T.points[4] ??= new G(), g.subVectors(T.points[3], T.points[2]), g.z = 0, g.y < .1 && g.set(0, 1, 0);
-				let t = e.camera.position.y + e.camera.position.z * Math.tan(JO * Math.PI / 360), n = Math.max(t + 1, T.points[3].y + 1);
-				T.points[4].copy(T.points[3]).addScaledVector(g, (n - T.points[3].y) / g.y);
-			} else T.points.length = 4;
-			let l = a.current.geometry;
-			a.current.geometry = UO(T, t ? 16 : 32, xO, SO, CO), l.dispose(), !E && !u.current.isSleeping() && (f.copy(u.current.angvel()), p.copy(u.current.rotation()), u.current.setAngvel({
-				x: f.x,
-				y: f.y - p.y * .25 * Math.min(n, 1 / 30) * 60,
-				z: f.z
+			let e = h.current.translation(), r = h.current.rotation();
+			x.set(r.x, r.y, r.z, r.w), A.points[0].set(0, .6000000000000001, 0).applyQuaternion(x).add(g.set(e.x, e.y, e.z)), A.points[1].copy(WO(p.current)), A.points[2].copy(WO(f.current)), A.points[3].copy(d.current.translation()), A.updateArcLengths();
+			let i = u.current.geometry;
+			u.current.geometry = GO(A, t ? 16 : 32, CO, wO, TO), i.dispose(), !j && !h.current.isSleeping() && (_.copy(h.current.angvel()), y.copy(h.current.rotation()), h.current.setAngvel({
+				x: _.x,
+				y: _.y - y.y * .25 * Math.min(n, 1 / 30) * 60,
+				z: _.z
 			}, !1));
 		}
 	}), /* @__PURE__ */ (0, Eg.jsxs)(Eg.Fragment, { children: [/* @__PURE__ */ (0, Eg.jsxs)("group", {
@@ -45266,57 +45281,62 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			0
 		],
 		children: [
-			/* @__PURE__ */ (0, Eg.jsx)(vD, {
-				ref: o,
-				..._,
+			/* @__PURE__ */ (0, Eg.jsx)(bD, {
+				ref: d,
+				position: [
+					0,
+					s,
+					0
+				],
+				...C,
 				type: "fixed"
 			}),
-			/* @__PURE__ */ (0, Eg.jsx)(vD, {
+			/* @__PURE__ */ (0, Eg.jsx)(bD, {
 				position: [
 					0,
 					-.85,
 					0
 				],
-				ref: s,
-				..._,
-				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
+				ref: f,
+				...C,
+				children: /* @__PURE__ */ (0, Eg.jsx)(lD, { args: [.1] })
 			}),
-			/* @__PURE__ */ (0, Eg.jsx)(vD, {
+			/* @__PURE__ */ (0, Eg.jsx)(bD, {
 				position: [
 					0,
 					-1.7,
 					0
 				],
-				ref: c,
-				..._,
-				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
+				ref: p,
+				...C,
+				children: /* @__PURE__ */ (0, Eg.jsx)(lD, { args: [.1] })
 			}),
-			/* @__PURE__ */ (0, Eg.jsx)(vD, {
+			/* @__PURE__ */ (0, Eg.jsx)(bD, {
 				position: [
 					0,
 					-2.55,
 					0
 				],
-				ref: l,
-				..._,
-				children: /* @__PURE__ */ (0, Eg.jsx)(sD, { args: [.1] })
+				ref: m,
+				...C,
+				children: /* @__PURE__ */ (0, Eg.jsx)(lD, { args: [.1] })
 			}),
-			/* @__PURE__ */ (0, Eg.jsxs)(vD, {
+			/* @__PURE__ */ (0, Eg.jsxs)(bD, {
 				position: [
-					Math.sin(TO) * wO,
-					-2.55 - Math.cos(TO) * wO,
+					Math.sin(DO) * EO,
+					-2.55 - Math.cos(DO) * EO,
 					0
 				],
 				rotation: [
 					0,
 					0,
-					TO
+					DO
 				],
-				ref: u,
-				..._,
-				type: E ? "kinematicPosition" : "dynamic",
+				ref: h,
+				...C,
+				type: j ? "kinematicPosition" : "dynamic",
 				children: [
-					/* @__PURE__ */ (0, Eg.jsx)(aD, { args: [
+					/* @__PURE__ */ (0, Eg.jsx)(sD, { args: [
 						1.42,
 						2,
 						.018
@@ -45329,37 +45349,37 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 							-.09
 						],
 						onPointerUp: (e) => {
-							e.target.releasePointerCapture(e.pointerId), j();
+							e.target.releasePointerCapture(e.pointerId), re();
 						},
 						onPointerDown: (e) => {
-							e.stopPropagation(), e.nativeEvent.preventDefault(), e.target.setPointerCapture(e.pointerId), O.current = !0, D(new G().copy(e.point).sub(d.copy(u.current.translation()))), document.body.style.userSelect = "none", document.body.classList.add("card-dragging");
+							e.stopPropagation(), e.nativeEvent.preventDefault(), e.target.setPointerCapture(e.pointerId), ee.current = !0, N(new G().copy(e.point).sub(g.copy(h.current.translation()))), document.body.style.userSelect = "none", document.body.classList.add("card-dragging");
 						},
 						children: [/* @__PURE__ */ (0, Eg.jsx)("mesh", {
-							geometry: y.card.geometry,
+							geometry: w.card.geometry,
 							children: /* @__PURE__ */ (0, Eg.jsx)("meshBasicMaterial", {
-								map: C,
+								map: O,
 								toneMapped: !1
 							})
 						}), /* @__PURE__ */ (0, Eg.jsxs)("mesh", {
 							position: [
-								NO,
-								PO,
+								FO,
+								IO,
 								.006
 							],
-							children: [/* @__PURE__ */ (0, Eg.jsx)("planeGeometry", { args: [FO, FO] }), /* @__PURE__ */ (0, Eg.jsx)("meshBasicMaterial", {
-								map: w,
+							children: [/* @__PURE__ */ (0, Eg.jsx)("planeGeometry", { args: [LO, LO] }), /* @__PURE__ */ (0, Eg.jsx)("meshBasicMaterial", {
+								map: k,
 								toneMapped: !1
 							})]
 						})]
 					}),
 					/* @__PURE__ */ (0, Eg.jsxs)("mesh", {
 						position: [
-							jO,
-							AO,
-							MO
+							NO,
+							MO,
+							PO
 						],
-						children: [/* @__PURE__ */ (0, Eg.jsx)("planeGeometry", { args: [kO, OO] }), /* @__PURE__ */ (0, Eg.jsx)("meshBasicMaterial", {
-							map: S,
+						children: [/* @__PURE__ */ (0, Eg.jsx)("planeGeometry", { args: [jO, AO] }), /* @__PURE__ */ (0, Eg.jsx)("meshBasicMaterial", {
+							map: D,
 							transparent: !0,
 							alphaTest: .1,
 							toneMapped: !1
@@ -45369,7 +45389,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			})
 		]
 	}), /* @__PURE__ */ (0, Eg.jsx)("mesh", {
-		ref: a,
+		ref: u,
 		frustumCulled: !1,
 		children: /* @__PURE__ */ (0, Eg.jsx)("meshStandardMaterial", {
 			color: i ? "#d4d4d8" : "#262626",
@@ -45377,7 +45397,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			metalness: .15
 		})
 	})] });
-}, GO = () => /* @__PURE__ */ (0, Eg.jsxs)(cS, {
+}, qO = () => /* @__PURE__ */ (0, Eg.jsxs)(cS, {
 	blur: .75,
 	children: [
 		/* @__PURE__ */ (0, Eg.jsx)(lS, {
@@ -45457,12 +45477,19 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			]
 		})
 	]
-}), KO = 520, qO = 20, JO = 20, YO = KO * (40 * Math.tan(JO / 2 * (Math.PI / 180))) ** -1, XO = () => (G_((e) => {
+}), JO = 520, YO = 20, XO = JO * (40 * Math.tan(Math.PI / 180 * 10)) ** -1;
+function ZO() {
+	let e = document.querySelector(".hero-card");
+	if (!e || window.innerWidth <= 800) return 0;
+	let t = e.getBoundingClientRect().top + window.scrollY - 35;
+	return Math.max(0, (t + 48) / XO);
+}
+var QO = () => (G_((e) => {
 	let t = document.querySelector(".hero-card");
 	if (!t) return;
-	let n = t.getBoundingClientRect(), r = YO * (window.innerWidth < 768 ? .78 : 1), i = n.left + n.width / 2, a = n.top - 35 * (window.innerWidth < 768 ? .78 : 1);
-	e.camera.position.set((e.size.width / 2 - i) / r, 4 + (a - e.size.height / 2) / r, qO * (e.size.height / KO) * (YO / r)), e.camera.updateMatrixWorld();
-}, -1), null), ZO = ({ frontImage: e, className: t, onReady: n, active: r = !0 }) => {
+	let n = t.getBoundingClientRect(), r = XO * (window.innerWidth < 768 ? .78 : 1), i = n.left + n.width / 2, a = n.top - 35 * (window.innerWidth < 768 ? .78 : 1);
+	e.camera.position.set((e.size.width / 2 - i) / r, 4 + (a - e.size.height / 2) / r, YO * (e.size.height / JO) * (XO / r)), e.camera.updateMatrixWorld();
+}, -1), null), $O = ({ frontImage: e, className: t, onReady: n, active: r = !0 }) => {
 	let [i, a] = (0, v.useState)(() => typeof window < "u" && window.innerWidth < 768), [o, s] = (0, v.useState)(0), c = (0, v.useRef)(typeof document < "u" ? document.body : null), l = (0, v.useRef)(null), [u, d] = (0, v.useState)("#000000");
 	return (0, v.useEffect)(() => {
 		let e = () => a(window.innerWidth < 768);
@@ -45486,7 +45513,7 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 			attributeFilter: ["data-theme"]
 		}), t.push(n), () => t.forEach((e) => e.disconnect());
 	}, []), /* @__PURE__ */ (0, Eg.jsxs)("div", {
-		className: yO("pointer-events-none drop-shadow-xl", t),
+		className: xO("pointer-events-none drop-shadow-xl", t),
 		children: [/* @__PURE__ */ (0, Eg.jsx)("span", {
 			ref: l,
 			className: "fill-primary hidden",
@@ -45517,9 +45544,9 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 				} });
 			},
 			children: [
-				/* @__PURE__ */ (0, Eg.jsx)(XO, {}),
+				/* @__PURE__ */ (0, Eg.jsx)(QO, {}),
 				/* @__PURE__ */ (0, Eg.jsx)("ambientLight", { intensity: Math.PI }),
-				/* @__PURE__ */ (0, Eg.jsx)(GE, {
+				/* @__PURE__ */ (0, Eg.jsx)(qE, {
 					paused: !r,
 					numSolverIterations: 8,
 					gravity: [
@@ -45528,18 +45555,18 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 						0
 					],
 					timeStep: i ? 1 / 30 : 1 / 60,
-					children: /* @__PURE__ */ (0, Eg.jsx)(WO, {
+					children: /* @__PURE__ */ (0, Eg.jsx)(KO, {
 						frontImage: e,
 						isMobile: i,
 						accentColor: u,
 						onReady: n
 					})
 				}),
-				/* @__PURE__ */ (0, Eg.jsx)(GO, {})
+				/* @__PURE__ */ (0, Eg.jsx)(qO, {})
 			]
 		}, o)]
 	});
-}, QO = class extends v.Component {
+}, ek = class extends v.Component {
 	state = { failed: !1 };
 	static getDerivedStateFromError() {
 		return { failed: !0 };
@@ -45551,12 +45578,12 @@ var bO = "/assets/interactive-card/card.glb", xO = .1, SO = 24, CO = .06, wO = 1
 		return this.state.failed ? null : this.props.children;
 	}
 };
-function $O(e, t, n) {
-	let r = (0, y.createRoot)(e), i = (e) => r.render(/* @__PURE__ */ (0, Eg.jsx)(QO, {
+function tk(e, t, n) {
+	let r = (0, y.createRoot)(e), i = (e) => r.render(/* @__PURE__ */ (0, Eg.jsx)(ek, {
 		onError: n,
 		children: /* @__PURE__ */ (0, Eg.jsx)(v.Suspense, {
 			fallback: null,
-			children: /* @__PURE__ */ (0, Eg.jsx)(ZO, {
+			children: /* @__PURE__ */ (0, Eg.jsx)($O, {
 				frontImage: "/assets/interactive-card/portrait.svg?v=d6d077a9e791",
 				className: "lanyard-stage",
 				onReady: t,
@@ -45570,4 +45597,4 @@ function $O(e, t, n) {
 	};
 }
 //#endregion
-export { $O as mountBadge };
+export { tk as mountBadge };
