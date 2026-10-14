@@ -11,3 +11,5 @@ O crachá mantém a física, os assets do modelo e a aparência. Por pedido do t
 O rodapé usa a composição original do Shadcn Studio Footer 11: atalhos entre linhas, selo vermelho central entre as mensagens e assinatura abaixo. Preservar esse tratamento visual, inclusive as linhas e os detalhes originais. Por pedido do titular, o rodapé é revelado por trás do conteúdo, seguindo SiteFooterReveal da DuckDooh; o selo ocupa o centro horizontal com frases de cada lado.
 
 O trilho de ferramentas fica entre a apresentação e a biografia, com ícones existentes, controle de pausa e alternativa estática para movimento reduzido. Substitui o antigo bloco de texto sobre ferramentas.
+
+O contato encerra o conteúdo em uma composição centralizada e compacta: título, convite curto e ações lado a lado, com e-mail em destaque e LinkedIn com contorno discreto. O eixo central continua no selo e na assinatura do rodapé.
