@@ -92,17 +92,17 @@ body.badge-rendered #lanyard-root{opacity:1}
 
 
 /* The supplied heading's original vector artwork, proportions and color blocks. */
-.about{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(0,1fr);gap:56px;align-items:center;padding-block:72px}
+.about{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(0,1fr);gap:36px 56px;align-items:center;padding-block:72px}
+.about-title{grid-column:1/-1;font-size:clamp(52px,6.4vw,96px);line-height:.92;letter-spacing:-.05em;font-weight:600;max-width:none}
 .about-intro{padding:0;background:none;border-radius:0;min-width:0}
-.about-intro h2{font-size:clamp(48px,4.8vw,68px);line-height:1;letter-spacing:-.045em;font-weight:600;max-width:none}
-.about-title-art{display:flex;flex-direction:column;gap:22px}
-.about-title-line{display:flex;align-items:center;gap:16px;white-space:nowrap}
-.concept-band,.build-capsule{display:inline-flex;align-items:center;flex-shrink:0;overflow:hidden;height:80px}
-.concept-band{width:250px;justify-content:flex-start;gap:20px;padding:14px 18px;background:#0089ce;border-radius:24px}
-.concept-mark{flex-shrink:0;width:48px;height:48px;max-width:none;object-fit:contain}
-.build-capsule{width:190px;padding:8px;border-radius:24px;background:#e77c00}
-.build-mark{width:64px;height:64px;max-width:none;flex-shrink:0;object-fit:contain}
-.about-copy{display:block;margin-top:36px}.about-intro p{font-size:18px;line-height:1.65;max-width:51ch;margin:0}.about-intro p+p{font-size:16px;color:var(--muted);margin-top:20px}
+.about-title-art{display:flex;flex-direction:column;gap:.28em}
+.about-title-line{display:flex;align-items:center;gap:.2em;white-space:nowrap}
+.concept-band,.build-capsule{display:inline-flex;align-items:center;flex-shrink:0;overflow:hidden;height:.78em}
+.concept-band{width:auto;justify-content:flex-start;gap:.16em;padding:.1em .2em;background:#0089ce;border-radius:.28em}
+.concept-mark{flex-shrink:0;width:.46em;height:.46em;max-width:none;object-fit:contain}
+.build-capsule{width:auto;padding:.06em .14em;border-radius:.28em;background:#e77c00}
+.build-mark{width:.6em;height:.6em;max-width:none;flex-shrink:0;object-fit:contain}
+.about-copy{display:block;margin-top:0}.about-intro p{font-size:18px;line-height:1.65;max-width:51ch;margin:0}.about-intro p+p{font-size:16px;color:var(--muted);margin-top:20px}
 .practice-carousel{min-width:0;align-self:center;--practice-row:200px}
 .practice-viewport{position:relative}
 .practice-list{margin:0;padding:0;display:block}.practice-list>div{padding:24px 28px;min-width:0;border-bottom:1px solid color-mix(in srgb,var(--text) 13%,transparent)}
@@ -119,12 +119,12 @@ body.badge-rendered #lanyard-root{opacity:1}
 .practice-navigation button{width:44px;height:44px;border:1px solid color-mix(in srgb,var(--text) 18%,transparent);border-radius:50%;font-size:22px;line-height:1}
 .practice-count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 @media(hover:hover) and (pointer:fine){.practice-navigation button:hover{background:var(--surface)}}
-@media(prefers-reduced-motion:no-preference){.concept-swirl{animation:concept-turn 30s linear infinite}.concept-pinwheel{animation:concept-turn 24s linear infinite reverse}.concept-asterisk{animation:concept-rock 10s ease-in-out infinite}.build-mark{animation:construction-drift 8s var(--ease) infinite alternate}.about:not([data-running=true]) .concept-mark,.about:not([data-running=true]) .build-mark{animation-play-state:paused}@keyframes concept-turn{to{transform:rotate(360deg)}}@keyframes concept-rock{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}@keyframes construction-drift{from{transform:translateX(0) rotate(0)}to{transform:translateX(110px) rotate(90deg)}}}
-@media(max-width:1100px) and (min-width:801px){.about{gap:32px}.about-intro h2{font-size:42px}.about-title-line{gap:12px}.about-title-art{gap:18px}.concept-band,.build-capsule{height:58px}.concept-band{width:144px;gap:12px;padding:10px 12px;border-radius:18px}.concept-mark{width:32px;height:32px}.build-capsule{width:104px;padding:6px;border-radius:18px}.build-mark{width:46px;height:46px}.practice-list>div{padding-inline:20px}.practice-list dt{font-size:22px}.practice-carousel{--practice-row:220px}.practice-controls{padding-inline:20px}.about-copy{margin-top:30px}@keyframes construction-drift{to{transform:translateX(46px) rotate(90deg)}}}
-@media(max-width:800px){.about{grid-template-columns:1fr;gap:20px;padding-block:48px}.about-intro{padding:0}.about-intro h2{font-size:clamp(36px,7.3vw,60px)}.about-title-line{gap:14px}.concept-band,.build-capsule{height:72px}.concept-band{width:190px;gap:16px;padding:12px 16px}.concept-mark{width:42px;height:42px}.build-capsule{width:132px;padding:8px}.build-mark{width:56px;height:56px}.practice-carousel{--practice-row:220px}.practice-list>div{padding:24px}.practice-list dt{font-size:22px}.practice-controls{padding-inline:24px}.about-copy{margin-top:30px}@keyframes construction-drift{to{transform:translateX(60px) rotate(90deg)}}}
-@media(max-width:600px){.about-intro h2{font-size:clamp(30px,7.4vw,44px)}.about-title-line{gap:10px}.about-title-art{gap:16px}.concept-band,.build-capsule{height:56px}.concept-band{width:140px;gap:13px;padding:8px 12px;border-radius:17px}.concept-mark{width:30px;height:30px}.build-capsule{width:94px;padding:6px;border-radius:17px}.build-mark{width:44px;height:44px}@keyframes construction-drift{to{transform:translateX(38px) rotate(90deg)}}}
-@media(max-width:420px){.about-intro h2{font-size:30px}.about-title-line{gap:10px}.concept-band,.build-capsule{height:44px}.concept-band{width:106px;gap:8px;padding:7px 10px;border-radius:14px}.concept-mark{width:23px;height:23px}.build-capsule{width:76px;padding:5px;border-radius:14px}.build-mark{width:34px;height:34px}.about-intro p{font-size:17px}.about-intro p+p{font-size:16px}.practice-carousel{--practice-row:240px}.practice-list>div{padding:20px}.practice-list dt{font-size:20px}.practice-controls{padding-inline:8px;gap:8px}.practice-navigation{gap:10px}@keyframes construction-drift{to{transform:translateX(30px) rotate(90deg)}}}
-@media(max-width:359px){.practice-carousel{--practice-row:260px}.about-intro h2{font-size:28px}.about-title-line{gap:8px}.concept-band{width:94px;gap:7px;padding-inline:8px}.concept-mark{width:21px;height:21px}.build-capsule{width:64px}.practice-controls{padding-inline:0}.practice-navigation{gap:6px}@keyframes construction-drift{to{transform:translateX(20px) rotate(90deg)}}}
+@media(prefers-reduced-motion:no-preference){.concept-swirl{animation:concept-turn 30s linear infinite}.concept-pinwheel{animation:concept-turn 24s linear infinite reverse}.concept-asterisk{animation:concept-rock 10s ease-in-out infinite}.build-mark{animation:construction-drift 8s var(--ease) infinite alternate}.about:not([data-running=true]) .concept-mark,.about:not([data-running=true]) .build-mark{animation-play-state:paused}@keyframes concept-turn{to{transform:rotate(360deg)}}@keyframes concept-rock{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}@keyframes construction-drift{from{transform:translateX(0) rotate(0)}to{transform:translateX(.4em) rotate(90deg)}}}
+@media(max-width:1100px) and (min-width:801px){.about{gap:28px 32px}.about-title{font-size:clamp(48px,6vw,72px)}.practice-list>div{padding-inline:20px}.practice-list dt{font-size:22px}.practice-carousel{--practice-row:220px}.practice-controls{padding-inline:20px}.about-copy{margin-top:30px}@keyframes construction-drift{to{transform:translateX(.32em) rotate(90deg)}}}
+@media(max-width:800px){.about{grid-template-columns:1fr;gap:20px;padding-block:48px}.about-intro{padding:0}.about-title{font-size:clamp(34px,7vw,56px)}.practice-carousel{--practice-row:220px}.practice-list>div{padding:24px}.practice-list dt{font-size:22px}.practice-controls{padding-inline:24px}.about-copy{margin-top:30px}@keyframes construction-drift{to{transform:translateX(.36em) rotate(90deg)}}}
+@media(max-width:600px){.about-title{font-size:clamp(26px,6.4vw,40px)}@keyframes construction-drift{to{transform:translateX(.28em) rotate(90deg)}}}
+@media(max-width:420px){.about-title{font-size:clamp(22px,6.6vw,30px)}.about-intro p{font-size:17px}.about-intro p+p{font-size:16px}.practice-carousel{--practice-row:240px}.practice-list>div{padding:20px}.practice-list dt{font-size:20px}.practice-controls{padding-inline:8px;gap:8px}.practice-navigation{gap:10px}@keyframes construction-drift{to{transform:translateX(.24em) rotate(90deg)}}}
+@media(max-width:359px){.practice-carousel{--practice-row:260px}.about-title{font-size:22px}.practice-controls{padding-inline:0}.practice-navigation{gap:6px}@keyframes construction-drift{to{transform:translateX(.2em) rotate(90deg)}}}
 
 /* Animated Text 11 on the hero name. Two diagonal veils, brand green and amber. */
 .hero-name-line{display:block;width:max-content;position:relative}

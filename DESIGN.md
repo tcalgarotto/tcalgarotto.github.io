@@ -18,7 +18,7 @@ A seção Sobre segue as referências fornecidas em 14/10: painel de apresentaç
 
 Em 14/10, por pedido do titular, todos os botões de pausar/retomar foram removidos. As pausas automáticas por hover/foco, visibilidade e preferência de movimento reduzido permanecem.
 
-Revisão do título em 14/10 após comparação do titular: o título ocupa duas linhas e usa as formas SVG originais. Em seguida, por pedido do titular, o losango verde sai. A primeira linha é «Como penso» seguida da faixa azul; a segunda é a cápsula laranja seguida de «e construo». A frase acessível continua «Como penso e construo». A paleta azul e laranja pertence apenas a essa composição.
+Revisão do título em 14/10 após comparação do titular: o título ocupa a largura da seção, em duas linhas, com as formas SVG originais na altura do texto. O losango verde fica de fora. A primeira linha é «Como penso cada parte» seguida da faixa azul; a segunda é a cápsula laranja seguida de «e construo por inteiro». A paleta azul e laranja pertence apenas a essa composição.
 
 No layout de duas colunas, o cordão do crachá entra pela borda superior sem expor sua ponta. A âncora física fica 48px acima do documento, com o primeiro segmento alongado para preservar a posição de repouso do cartão. O desenho segue apenas os corpos físicos, sem prolongamento artificial.
 
