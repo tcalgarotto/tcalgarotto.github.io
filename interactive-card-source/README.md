@@ -20,3 +20,7 @@ A interpolação visual da corda é exponencial e estável em frames lentos. O r
 O build também atualiza os identificadores de conteúdo do módulo, do JavaScript principal, do CSS e dos badges nos URLs da página. Isso evita servir versões anteriores pelo cache após uma atualização.
 
 A prévia de carregamento é gerada por `generate-preview.mjs`, com a mesma textura frontal e prendedor do modelo, os limites do GLB, a câmera, a âncora e a inclinação inicial. Os SVGs completos para cada tema evitam mostrar a textura plana como se fosse o crachá. A cena só sinaliza pronta após dois frames de renderização; a troca usa uma transição curta de opacidade.
+
+No layout de duas colunas, o cordão renderizado continua além da borda superior da tela, na mesma direção do último segmento. A âncora, as juntas e os comprimentos físicos permanecem iguais. A prévia estática também prolonga o cordão para evitar uma ponta visível antes do carregamento 3D.
+
+Na composição empilhada de até 800px, o cordão curto fica na área do crachá para não atravessar a apresentação.

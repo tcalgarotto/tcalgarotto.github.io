@@ -192,6 +192,7 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
   const rot = new THREE.Vector3()
   const dragPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)
   const cardQuat = new THREE.Quaternion()
+  const cordDirection = new THREE.Vector3()
 
   const segmentProps: RigidBodyProps = {
     type: 'dynamic',
@@ -370,6 +371,20 @@ const Band = ({ frontImage, isMobile, accentColor, onReady }: BandProps) => {
       curve.points[1].copy(getLerped(j2.current))
       curve.points[2].copy(getLerped(j1.current))
       curve.points[3].copy(fixed.current.translation())
+
+      // Keep the internal anchor out of sight in the two-column desktop layout.
+      // The stacked layout keeps its short cord below the text instead of crossing it.
+      if (window.innerWidth > 800) {
+        curve.points[4] ??= new THREE.Vector3()
+        cordDirection.subVectors(curve.points[3], curve.points[2])
+        cordDirection.z = 0
+        if (cordDirection.y < 0.1) cordDirection.set(0, 1, 0)
+        const viewportTop = state.camera.position.y + state.camera.position.z * Math.tan(CAMERA_FOV_DEG * Math.PI / 360)
+        const cordTop = Math.max(viewportTop + 1, curve.points[3].y + 1)
+        curve.points[4].copy(curve.points[3]).addScaledVector(cordDirection, (cordTop - curve.points[3].y) / cordDirection.y)
+      } else {
+        curve.points.length = 4
+      }
 
       // Rebuild + swap each frame to follow the curve; dispose the old geometry.
       const oldRopeGeometry = rope.current.geometry

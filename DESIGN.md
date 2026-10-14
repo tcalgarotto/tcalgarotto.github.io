@@ -17,3 +17,7 @@ O contato encerra o conteúdo em uma composição centralizada e compacta: títu
 A seção Sobre segue as referências fornecidas em 14/10: painel de apresentação com SVGs de pensamento, cérebro e conexões integrados ao título; lista contínua com item central destacado, bordas atenuadas e troca lenta. Mantém 12 segundos de leitura e deslocamento de 900 ms, controles anterior/próximo, pausa em hover/foco e alternativa estática para movimento reduzido. Os SVGs são ilustrações próprias, não assets copiados da referência.
 
 Em 14/10, por pedido do titular, todos os botões de pausar/retomar foram removidos. As pausas automáticas por hover/foco, visibilidade e preferência de movimento reduzido permanecem.
+
+No layout de duas colunas, o cordão do crachá entra pela borda superior sem expor sua ponta. A extensão visual não muda a posição do cartão nem a física do arraste.
+
+Na composição empilhada de até 800px, o cordão curto fica na área do crachá para não atravessar a apresentação.

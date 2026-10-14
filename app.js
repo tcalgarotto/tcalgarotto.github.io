@@ -189,7 +189,7 @@ const translations = {
 };
 let language = 'pt';
 let cardInstance = null;
-const badgePreviews={light:'assets/interactive-card/fallback-light.svg?v=336a7536511b',dark:'assets/interactive-card/fallback-dark.svg?v=ef60970b65f3'};
+const badgePreviews={light:'assets/interactive-card/fallback-light.svg?v=3e633baca10e',dark:'assets/interactive-card/fallback-dark.svg?v=f1400990bb81'};
 const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch {} };
 const readPreference = key => { try { return localStorage.getItem(key); } catch { return null; } };
 const themeButton = document.getElementById('theme-toggle');
@@ -277,7 +277,7 @@ applyLanguage(requestedLanguage === 'en' || requestedLanguage === 'pt' ? request
 async function startCard(){
  const fail=()=>{document.querySelector('.hero-card').classList.remove('card-ready');document.body.classList.remove('badge-rendered');document.getElementById('card-status').textContent=translations[language].cardFallback;queueMicrotask(()=>{cardInstance?.unmount();cardInstance=null})};
  try{
-  const {mountBadge}=await import('./assets/interactive-card/card.js?v=a779557e8d9b');
+  const {mountBadge}=await import('./assets/interactive-card/card.js?v=008b5bea38eb');
   cardInstance=mountBadge(document.getElementById('lanyard-root'),()=>{document.querySelector('.hero-card').classList.add('card-ready');document.body.classList.add('badge-rendered');document.getElementById('card-status').textContent=translations[language].cardReady},fail);
   const updateVisibility=()=>cardInstance?.setActive(!document.hidden);
   document.addEventListener('visibilitychange',updateVisibility);
